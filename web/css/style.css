@@ -1,0 +1,142 @@
+html{
+	position: relative;
+	min-height: 100%;
+}
+body{
+	font-family: 'Noto Sans', sans-serif;
+	margin-bottom: 200px;
+}
+.mb20{
+	margin-bottom: 20px;
+}
+section{
+	margin-top: 60px;
+}
+
+/*HEADER*/
+header .top-navbar{
+	height: 50px;
+	margin: 30px 0 5px 0;
+
+}
+header .top-navbar .logo{
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 20px;
+}
+header .top-navbar .logo span{
+	color: #E5B673; 
+}
+#top-menu ul li{
+	line-height: 50px;
+	display: inline;
+	padding-left: 30px; 
+}
+header .header-img{
+	height: 500px;
+	background: url('../img/header.jpg');
+	border-radius: 3px;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+
+/*ORDER*/
+.order .order-info{
+	background-color: #F2F2F2;
+	padding: 15px 20px;
+}
+.order .order-info > form{
+	margin-top: 30px;
+}
+.order .order-btn{
+	margin-top: 30px;
+}
+.site-info h1{
+	margin-top: 0;
+}
+
+/*SELECTION*/
+.selection .type{
+	text-align: center;
+}
+.selection .type > div{
+	padding: 20px 10px 0 10px;
+}
+.selection .type > div img{
+	width: 100%;
+}
+.selection .type > div h4{
+	text-align: center;
+}
+.selection .type > div p{
+	text-align: center;
+	word-wrap: break-word;
+}
+
+/*BRAND*/
+.brand-list{
+	text-align: center;
+	margin-bottom: 60px;
+}
+.brand .brand-item{
+	display: inline-block;
+	position: relative;
+	margin-right: 20px;
+}
+.brand .brand-item:last-child{
+	margin-right: 0px;
+}
+.brand-item:hover .brand-desc{
+	opacity: .9
+}
+.brand-desc{
+	background-color: #333;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	padding-top: 35px;
+	opacity: 0;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+}
+.brand .brand-item img{
+	width: 80px;
+}
+
+/*ADVENTAGES*/
+.advantages .advantages-item{
+	margin-bottom: 30px;
+	padding: 5px 15px;
+	text-align: center;
+}
+/*FOOTER*/
+footer{
+	background-color: #EEEEEE;
+	position: absolute;
+	bottom: 0;
+	height: 200px;
+	width: 100%;
+	padding-top: 20px;
+}
+footer .bottom-menu li a{
+	color: #333333; 
+}
+footer .site-info{
+	text-align: right;
+}
+footer .phone{
+	font-size: 25px;
+	padding: 10px 0;
+}
+footer .soc-icons{
+	font-size: 21px;
+	margin-top: 10px;
+}
+footer .soc-icons a{
+	padding: 0 3px;
+	color: #333;
+}
+footer .soc-icons a:hover{
+	color: #000;
+}

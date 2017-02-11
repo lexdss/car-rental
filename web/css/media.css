@@ -1,0 +1,58 @@
+@media screen and (max-width: 992px){
+
+	body{
+		margin-bottom: 350px;
+	}
+	footer{
+		height: 350px;
+		text-align: center;
+	}
+	footer .site-info{
+		text-align: center;
+	}
+	.selection .type > div{
+		height: 310px;
+	}
+	.datetime-rent>div{
+		margin-bottom: 10px;
+	}
+	.site-info h1{
+		margin-top: 30px;
+	}
+	
+}
+
+@media screen and (max-width: 768px){
+
+	header .top-navbar{
+		margin-top: 0;
+	}
+	#top-menu{
+		padding: 0;
+		margin: 0;
+	}
+	#top-menu ul{
+		background-color: #262626;
+		width: 100%;
+		margin: 0;
+	}
+	#top-menu ul li{
+		display: block;
+		padding-left: 0;
+		text-align: center;
+		color: #fff;
+	}
+	#top-menu ul li:hover{
+		background-color: #4C4C4C;
+	}
+	.btn-hamburger{
+		background-color: #E1DED8;
+	}
+	.selection .type > div{
+		height: auto;
+	}
+	.selection .type > div img{
+		width: 160px;
+	}
+
+}
