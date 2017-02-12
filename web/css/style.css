@@ -110,6 +110,17 @@ header .header-img{
 	padding: 5px 15px;
 	text-align: center;
 }
+/*CAR LIST*/
+section.car-list td{
+	vertical-align: middle !important;
+}
+section.car-list td > img{
+	width: 150px;
+}
+section.car-list td > button{
+	margin-right: 10px;
+}
+
 /*FOOTER*/
 footer{
 	background-color: #EEEEEE;
