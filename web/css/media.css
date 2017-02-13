@@ -54,5 +54,8 @@
 	.selection .type > div img{
 		width: 160px;
 	}
+	section.car-list .year{
+		display: none;
+	}
 
 }

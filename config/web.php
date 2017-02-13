@@ -38,14 +38,26 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
+                '' => 'site/index',
+                '<type:(economy|middle|business|vip)>' => 'site/type', //Car class
+                '<model:\S+>' => 'site/model' //Car model
             ],
+
         ],
-        */
+        
+        /*'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'model' => 'site/index'
+            ],
+        ],*/
+        
     ],
     'params' => $params,
 ];

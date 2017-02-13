@@ -114,11 +114,11 @@ header .header-img{
 section.car-list td{
 	vertical-align: middle !important;
 }
+section.car-list td:last-child{
+	border-top: transparent !important;
+}
 section.car-list td > img{
 	width: 150px;
-}
-section.car-list td > button{
-	margin-right: 10px;
 }
 
 /*FOOTER*/
