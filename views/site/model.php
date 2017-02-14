@@ -1,9 +1,15 @@
+<?php 
+
+	use yii\helpers\Url;	
+
+?>
+
 <section>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
 				<ol class="breadcrumb">
-					<li><a href="">Главная</a></li>
+					<li><a href="<?= Url::to(['/site/index']); ?>">Главная</a></li>
 					<li class="active">Бизнес класс</li>
 				</ol>
 			</div>

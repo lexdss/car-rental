@@ -9,7 +9,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<ol class="breadcrumb">
-					<li><a href="<?= Url::to(['index']); ?>">Главная</a></li>
+					<li><a href="<?= Url::to(['/site/index']); ?>">Главная</a></li>
 					<li class="active">Бизнес класс</li>
 				</ol>
 			</div>

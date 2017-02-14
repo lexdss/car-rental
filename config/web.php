@@ -41,11 +41,12 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => false,
+            'enableStrictParsing' => true,
             'rules' => [
                 '' => 'site/index',
                 '<type:(economy|middle|business|vip)>' => 'site/type', //Car class
-                '<model:\S+>' => 'site/model' //Car model
+                'admin' => 'admin/add', //Add new car
+                '<model:\S+>' => 'site/model', //Car model
             ],
 
         ],
