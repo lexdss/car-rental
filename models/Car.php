@@ -16,4 +16,22 @@ class Car extends Model
 	public $transmission;
 	public $privod;
 	public $description;
+	public $foto;
+
+	public function attributeLabels()
+	{
+		return [
+			'name' => 'Название',
+			'model' => 'Модель',
+			'type' => 'Класс авто',
+			'year' => 'Год производства',
+			'speed' => 'Скорость',
+			'engine' => 'Двигатель',
+			'color' => 'Цвет',
+			'transmission' => 'КПП',
+			'privod' => 'Привод',
+			'description' => 'Описание',
+			'foto' => 'Фото',
+		];
+	}
 }

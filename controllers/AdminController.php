@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use yii\web\Controller;
+use app\models\Car;
 
 class AdminController extends Controller
 {
@@ -11,7 +12,8 @@ class AdminController extends Controller
 
 	public function actionAdd()
 	{
-		return $this->render('add_car');
+		$model = new Car;
+		return $this->render('add_car', ['model' => $model]);
 	}
-	
+
 }
