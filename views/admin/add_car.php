@@ -33,7 +33,7 @@
 					<?php $form->field($model, 'year'); ?>
 					
 					<?= $form->field($model, 'speed', [
-						'template' => '{label}<div class="input-group">{input}<span class="input-group-addon">км/ч</span></div>'
+						'template' => '{label}<div class="input-group">{input}<span class="input-group-addon">км/ч</span></div><div class="help-block">{error}</div>'
 					]); ?>
 					
 					<?= $form->field($model, 'engine'); ?>

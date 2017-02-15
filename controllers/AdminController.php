@@ -13,6 +13,7 @@ class AdminController extends Controller
 	public function actionAdd()
 	{
 		$model = new Car;
+		
 		return $this->render('add_car', ['model' => $model]);
 	}
 
