@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use yii\web\Controller;
 use app\models\Car;
+use yii\web\UploadedFile;
 
 class AdminController extends Controller
 {
@@ -12,9 +13,26 @@ class AdminController extends Controller
 
 	public function actionAdd()
 	{
+		$request = \Yii::$app->request;
 		$model = new Car;
+
+		if ($request->isPost && $model->load($request->post())) {
+			
+			$model->foto = UploadedFile::getInstance($model, 'foto');
+
+			if ($model->validate()) {
+
+				$path = '/upload/' . $model->foto->baseName . '.' . $model->foto->extension;
+				$model->foto->saveAs(\Yii::getAlias('@webroot') . $path);
+				$model->foto = \Yii::getAlias('@web') . $path;
+				$model->save(false);
+
+			}
+
+		}
+
+		return $this->render('add_car', ['model' => (new Car)]);
 		
-		return $this->render('add_car', ['model' => $model]);
 	}
 
 }

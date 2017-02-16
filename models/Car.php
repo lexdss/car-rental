@@ -2,22 +2,11 @@
 
 namespace app\models;
 
-use yii\base\Model;
+use yii\db\ActiveRecord;
 
-class Car extends Model
+class Car extends ActiveRecord
 {
-	public $name;
-	public $model;
-	public $type;
-	public $year;
-	public $speed;
-	public $engine;
-	public $color;
-	public $transmission;
-	public $privod;
-	public $description;
-	public $foto;
-
+	
 	public function attributeLabels()
 	{
 		return [
@@ -56,4 +45,5 @@ class Car extends Model
 			['foto', 'image', 'extensions' => ['jpg', 'gif', 'png'], 'maxSize' => 1024 * 1024 * 5, 'notImage' => 'Это не изображение', 'tooBig' => 'До 5 мб']
 		];
 	}
+  
 }
