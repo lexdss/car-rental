@@ -22,7 +22,8 @@ class AdminController extends Controller
 
 			if ($model->validate()) {
 
-				$path = '/' . $model->foto->baseName . '.' . $model->foto->extension;
+				$fname = \Yii::$app->security->generateRandomString(15);
+				$path = '/' . $fname . '.' . $model->foto->extension;
 				$model->foto->saveAs(\Yii::getAlias('@uploadroot') . $path);
 				$model->foto = \Yii::getAlias('@upload') . $path;
 				$model->save(false);
