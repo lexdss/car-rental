@@ -46,6 +46,7 @@ $config = [
                 '' => 'site/index',
                 '<type:(economy|middle|business|vip)>' => 'site/type', //Car class
                 'admin' => 'admin/add', //Add new car
+                'test' => 'site/test', //For tests
                 '<model:\S+>' => 'site/model', //Car model
             ],
 
@@ -59,6 +60,10 @@ $config = [
             ],
         ],*/
         
+    ],
+    'aliases' => [
+        '@uploadroot' => $_SERVER['DOCUMENT_ROOT'] . '/upload',
+        '@upload' => '/upload/'
     ],
     'params' => $params,
 ];
