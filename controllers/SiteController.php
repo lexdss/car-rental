@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Car;
 
 class SiteController extends Controller
 {
@@ -60,7 +61,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $models = Car::find(['name', 'model', 'year', 'color', 'engine', 'transmission', 'privod', 'speed'])->limit(4)->orderBy(['id' => SORT_DESC])->asArray()->all();
+        return $this->render('index', ['models' => $models]);
+    
     }
 
     public function actionType()

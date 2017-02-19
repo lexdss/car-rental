@@ -11,7 +11,14 @@ class AdminController extends Controller
 
 	public $layout = 'admin';
 
-	public function actionAdd()
+	public function actionIndex()
+	{
+
+		return $this->render('index');
+
+	}
+
+	public function actionAddCar()
 	{
 		$request = \Yii::$app->request;
 		$model = new Car;
@@ -32,7 +39,7 @@ class AdminController extends Controller
 
 		}
 
-		return $this->render('add_car', ['model' => (new Car)]);
+		return $this->render('add-car', ['model' => (new Car)]);
 		
 	}
 

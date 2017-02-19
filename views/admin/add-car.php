@@ -3,6 +3,8 @@
 	use yii\widgets\ActiveForm;
 	use yii\helpers\Html;
 
+	$this->title = 'Добавить автомобиль';
+
 ?>
 
 <section class="add_car_form">

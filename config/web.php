@@ -44,10 +44,11 @@ $config = [
             'enableStrictParsing' => true,
             'rules' => [
                 '' => 'site/index',
-                '<type:(economy|middle|business|vip)>' => 'site/type', //Car class
-                'admin' => 'admin/add', //Add new car
-                'test' => 'site/test', //For tests
-                '<model:\S+>' => 'site/model', //Car model
+                '<type:(economy|middle|business|vip)>' => 'site/type', // Car class
+                'admin' => 'admin/index', // Main admin page
+                'admin/add-car' => 'admin/add-car', // Add new car
+                'test' => 'site/test', // For tests
+                '<model:\S+>' => 'site/model', // Car model
             ],
 
         ],

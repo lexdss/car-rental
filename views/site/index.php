@@ -64,196 +64,8 @@
 							</div>
 
 							<p><strong>Начало проката</strong>: <i class="fa fa-calendar s-calendar calendar" aria-hidden="true"></i></p>
-							
-							<!-- <div class="form-group">
-								<div class="row datetime-rent">
-									<div class="col-xs-12 col-md-3">
-										<select name="year" class="form-control">
-											<option value="0">Год</option>
-											<option value="2016">2016</option>
-											<option value="2017">2017</option>
-										</select>
-									</div>
-									<div class="col-xs-12 col-md-3">
-										<select name="month" class="form-control">
-											<option value="0">Месяц</option>
-											<option value="1">Январь</option>
-											<option value="2">Февраль</option>
-											<option value="3">Март</option>
-											<option value="4">Апрель</option>
-											<option value="5">Май</option>
-											<option value="6">Июнь</option>
-											<option value="7">Июль</option>
-											<option value="8">Август</option>
-											<option value="9">Сентябр</option>
-											<option value="10">Октябрь</option>
-											<option value="11">Ноябрь</option>
-											<option value="12">Декабрь</option>
-										</select>
-									</div>
-									<div class="col-xs-12 col-md-3">
-										<select name="day" class="form-control">
-											<option value="0">День</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-											<option value="11">11</option>
-											<option value="12">12</option>
-											<option value="13">13</option>
-											<option value="14">14</option>
-											<option value="15">15</option>
-											<option value="16">16</option>
-											<option value="17">17</option>
-											<option value="18">18</option>
-											<option value="19">19</option>
-											<option value="20">20</option>
-											<option value="21">21</option>
-											<option value="22">22</option>
-											<option value="23">23</option>
-											<option value="24">24</option>
-											<option value="25">25</option>
-											<option value="26">26</option>
-											<option value="27">27</option>
-											<option value="28">28</option>
-											<option value="29">29</option>
-											<option value="30">30</option>
-											<option value="31">31</option>
-										</select>
-									</div>
-									<div class="col-xs-12 col-md-3">
-										<select name="time" class="form-control">
-											<option value="">Время</option>
-											<option value="0">00:00</option>
-											<option value="1">01:00</option>
-											<option value="2">02:00</option>
-											<option value="3">03:00</option>
-											<option value="4">04:00</option>
-											<option value="5">05:00</option>
-											<option value="6">06:00</option>
-											<option value="7">07:00</option>
-											<option value="8">08:00</option>
-											<option value="9">09:00</option>
-											<option value="10">10:00</option>
-											<option value="11">11:00</option>
-											<option value="12">12:00</option>
-											<option value="13">13:00</option>
-											<option value="14">14:00</option>
-											<option value="15">15:00</option>
-											<option value="16">16:00</option>
-											<option value="17">17:00</option>
-											<option value="18">18:00</option>
-											<option value="19">19:00</option>
-											<option value="20">20:00</option>
-											<option value="21">21:00</option>
-											<option value="22">22:00</option>
-											<option value="23">23:00</option>
-										</select>
-									</div>
-								</div>
-							</div> -->
 
 							<p><strong>Конец проката</strong>: <i class="fa fa-calendar f-calendar calendar" aria-hidden="true"></i></p>
-
-							<!-- <div class="form-group">
-								<div class="row datetime-rent">
-									<div class="col-xs-12 col-md-3">
-										<select name="year" class="form-control">
-											<option value="0">Год</option>
-											<option value="2016">2016</option>
-											<option value="2017">2017</option>
-										</select>
-									</div>
-									<div class="col-xs-12 col-md-3">
-										<select name="month" class="form-control">
-											<option value="0">Месяц</option>
-											<option value="1">Январь</option>
-											<option value="2">Февраль</option>
-											<option value="3">Март</option>
-											<option value="4">Апрель</option>
-											<option value="5">Май</option>
-											<option value="6">Июнь</option>
-											<option value="7">Июль</option>
-											<option value="8">Август</option>
-											<option value="9">Сентябр</option>
-											<option value="10">Октябрь</option>
-											<option value="11">Ноябрь</option>
-											<option value="12">Декабрь</option>
-										</select>
-									</div>
-									<div class="col-xs-12 col-md-3">
-										<select name="day" class="form-control">
-											<option value="0">День</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-											<option value="11">11</option>
-											<option value="12">12</option>
-											<option value="13">13</option>
-											<option value="14">14</option>
-											<option value="15">15</option>
-											<option value="16">16</option>
-											<option value="17">17</option>
-											<option value="18">18</option>
-											<option value="19">19</option>
-											<option value="20">20</option>
-											<option value="21">21</option>
-											<option value="22">22</option>
-											<option value="23">23</option>
-											<option value="24">24</option>
-											<option value="25">25</option>
-											<option value="26">26</option>
-											<option value="27">27</option>
-											<option value="28">28</option>
-											<option value="29">29</option>
-											<option value="30">30</option>
-											<option value="31">31</option>
-										</select>
-									</div>
-									<div class="col-xs-12 col-md-3">
-										<select name="time" class="form-control">
-											<option value="">Время</option>
-											<option value="0">00:00</option>
-											<option value="1">01:00</option>
-											<option value="2">02:00</option>
-											<option value="3">03:00</option>
-											<option value="4">04:00</option>
-											<option value="5">05:00</option>
-											<option value="6">06:00</option>
-											<option value="7">07:00</option>
-											<option value="8">08:00</option>
-											<option value="9">09:00</option>
-											<option value="10">10:00</option>
-											<option value="11">11:00</option>
-											<option value="12">12:00</option>
-											<option value="13">13:00</option>
-											<option value="14">14:00</option>
-											<option value="15">15:00</option>
-											<option value="16">16:00</option>
-											<option value="17">17:00</option>
-											<option value="18">18:00</option>
-											<option value="19">19:00</option>
-											<option value="20">20:00</option>
-											<option value="21">21:00</option>
-											<option value="22">22:00</option>
-											<option value="23">23:00</option>
-										</select>
-									</div>
-								</div>
-							</div> -->
 							
 							<button class="btn btn-primary btn-lg center-block order-btn">Заказать</button>
 
@@ -307,37 +119,33 @@
 		<div class="row">
 			<h2 class="text-center mb20">Популярные предложения</h2>
 
+			<?php foreach($models as $car): ?>
+
 			<div class="col-xs-12 col-sm-6 col-md-3">
 
 				<div class="thumbnail thumbnail-item">
-					<img src="img/popular-1.jpg" class="img-response">
+					<img src="<?= $car['foto'];?>" class="img-response">
 					<div class="caption">
 
-						<h3>BMW 5er VI</h3>
+						<h3><?= $car['model'] . ' ' . $car['name'];?></h3>
 						<ul class="list-unstyled">
 							<li>
-								Год выпуска: <mark>2010</mark>
+								Год выпуска: <mark><?= $car['year'];?></mark>
 							</li>
 							<li>
-								Пробег: <mark>140 000 км</mark>
+								Цвет: <mark><?= $car['color'];?></mark>
 							</li>
 							<li>
-								Двигатель: <mark>3.0 л / дизель</mark>
+								Двигатель: <mark><?= $car['engine'];?></mark>
 							</li>
 							<li>
-								Коробка: <mark>Автоматическая</mark>
+								Коробка: <mark><?= $car['transmission'];?></mark>
 							</li>
 							<li>
-								Привод: <mark>Полный</mark>
+								Привод: <mark><?= $car['privod'];?></mark>
 							</li>
 							<li>
-								Руль: <mark>Левый</mark>
-							</li>
-							<li>
-								Количество дверей: <mark>5</mark>
-							</li>
-							<li>
-								Макс. скорость: <mark>190 км/ч</mark>
+								Макс. скорость: <mark><?= $car['speed'];?></mark>
 							</li>
 						</ul>
 
@@ -349,13 +157,14 @@
 				</div>
 
 			</div>
+		<?php endforeach; ?>
 
-			<div class="col-xs-12 col-sm-6 col-md-3">
-
+			<!-- <div class="col-xs-12 col-sm-6 col-md-3">
+			
 				<div class="thumbnail thumbnail-item">
 					<img src="img/popular-2.jpg" class="img-response">
 					<div class="caption">
-
+			
 						<h3>Hyundai ix55</h3>
 						<ul class="list-unstyled">
 							<li>
@@ -383,18 +192,18 @@
 								Макс. скорость: <mark>190 км/ч</mark>
 							</li>
 						</ul>
-
+			
 						<button class="btn btn-success">
 							Подробнее
 						</button>
-
+			
 					</div>
 				</div>
 				
 			</div>
-
+			
 			<div class="col-xs-12 col-sm-6 col-md-3">
-
+			
 				<div class="thumbnail thumbnail-item">
 					<img src="img/popular-3.jpg" class="img-response">
 					<div class="caption">
@@ -426,22 +235,22 @@
 								Макс. скорость: <mark>190 км/ч</mark>
 							</li>
 						</ul>
-
+			
 						<button class="btn btn-success">
 							Подробнее
 						</button>
-
+			
 					</div>
 				</div>
 				
 			</div>
-
+			
 			<div class="col-xs-12 col-sm-6 col-md-3">
-
+			
 				<div class="thumbnail thumbnail-item">
 					<img src="img/popular-4.jpg" class="img-response">
 					<div class="caption">
-
+			
 						<h3>Chevrolet Lacetti</h3>
 						<ul class="list-unstyled">
 							<li>
@@ -469,15 +278,15 @@
 								Макс. скорость: <mark>190 км/ч</mark>
 							</li>
 						</ul>
-
+			
 						<button class="btn btn-success">
 							Подробнее
 						</button>
-
+			
 					</div>
 				</div>
 				
-			</div>
+			</div> -->
 
 		</div><!-- /row --> 
 	</div>
