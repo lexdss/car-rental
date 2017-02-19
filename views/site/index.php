@@ -127,7 +127,7 @@
 					<img src="<?= $car['foto'];?>" class="img-response">
 					<div class="caption">
 
-						<h3><?= $car['model'] . ' ' . $car['name'];?></h3>
+						<h3><?= $car['company'] . ' ' . $car['name'];?></h3>
 						<ul class="list-unstyled">
 							<li>
 								Год выпуска: <mark><?= $car['year'];?></mark>

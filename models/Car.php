@@ -11,7 +11,7 @@ class Car extends ActiveRecord
 	{
 		return [
 			'name' => 'Название',
-			'model' => 'Модель',
+			'company' => 'Модель',
 			'type' => 'Класс авто',
 			'year' => 'Год производства',
 			'speed' => 'Скорость',
@@ -29,7 +29,7 @@ class Car extends ActiveRecord
 		return [
 			[[
 				'name',
-				'model',
+				'company',
 				'type',
 				'year',
 				'speed',

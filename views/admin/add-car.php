@@ -17,7 +17,7 @@
 					
 					<?= $form->field($model, 'name'); ?>
 					
-					<?= $form->field($model, 'model')->dropDownList([
+					<?= $form->field($model, 'company')->dropDownList([
 																		'' => '',
 																		'bmw' => 'BMW', 
 																		'audi' => 'Audi', 
