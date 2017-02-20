@@ -33,7 +33,7 @@ $this->beginPage();
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Добавить <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?= Url::to(['admin/add-car']); ?>">Авто</a></li>
-								<li><a href="">Марку</a></li>
+								<li><a href="<?= Url::to(['admin/add-company']); ?>">Марку</a></li>
 							</ul>
 					  	</li>
 					  	<li role="presentation"><a href="#">Messages</a></li>
@@ -43,7 +43,12 @@ $this->beginPage();
 		</div>
 	</section>
 
-	<?= $content; ?>
+
+
+					<?= $content; ?>
+
+
+
 	<?php $this->endBody(); ?>
 </body>
 </html>

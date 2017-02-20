@@ -61,8 +61,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-        $models = Car::find(['name', 'model', 'year', 'color', 'engine', 'transmission', 'privod', 'speed'])->limit(4)->orderBy(['id' => SORT_DESC])->asArray()->all();
+        $models = Car::find()->joinWith('company')->asArray()->all();
+        //$models = Car::find()->limit(4)->orderBy(['id' => SORT_DESC])->asArray()->all();
         return $this->render('index', ['models' => $models]);
     
     }

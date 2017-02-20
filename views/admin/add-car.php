@@ -10,16 +10,15 @@
 <section class="add_car_form">
 	<div class="container">
 		<div class="row">
-			<h1 class="text-center">Добавление автомобиля</h1>
 			<div class="col-xs-12 col-md-4 col-md-offset-4">
 				
 				<?php $form = ActiveForm::begin(['id' => 'add_car_form', 'options' => ['enctype' => 'multipart/form-data']]); ?>
 					
 					<?= $form->field($model, 'name'); ?>
 					
-					<?= $form->field($model, 'company')->dropDownList([
+					<?= $form->field($model, 'company_id')->dropDownList([
 																		'' => '',
-																		'bmw' => 'BMW', 
+																		'2' => 'BMW', 
 																		'audi' => 'Audi', 
 																		'nissan' => 'Nissan'
 																	]); ?>

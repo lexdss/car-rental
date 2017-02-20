@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\db\ActiveRecord;
+use app\models\Company;
 
 class Car extends ActiveRecord
 {
@@ -11,7 +12,7 @@ class Car extends ActiveRecord
 	{
 		return [
 			'name' => 'Название',
-			'company' => 'Модель',
+			'company_id' => 'Модель',
 			'type' => 'Класс авто',
 			'year' => 'Год производства',
 			'speed' => 'Скорость',
@@ -29,7 +30,7 @@ class Car extends ActiveRecord
 		return [
 			[[
 				'name',
-				'company',
+				'company_id',
 				'type',
 				'year',
 				'speed',
@@ -44,6 +45,13 @@ class Car extends ActiveRecord
 			['description', 'string', 'max' => 2000, 'tooLong' => 'Слишком большое описание'],
 			['foto', 'image', 'extensions' => ['jpg', 'gif', 'png'], 'maxSize' => 1024 * 1024 * 5, 'notImage' => 'Это не изображение', 'tooBig' => 'До 5 мб']
 		];
+	}
+
+	public function getCompany()
+	{
+
+		return $this->hasOne(Company::className(), ['id' => 'company_id']);
+
 	}
   
 }

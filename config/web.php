@@ -47,6 +47,7 @@ $config = [
                 '<type:(economy|middle|business|vip)>' => 'site/type', // Car class
                 'admin' => 'admin/index', // Main admin page
                 'admin/add-car' => 'admin/add-car', // Add new car
+                'admin/add-company' => 'admin/add-company', // Add new company
                 'test' => 'site/test', // For tests
                 '<model:\S+>' => 'site/model', // Car model
             ],

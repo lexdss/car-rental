@@ -3,8 +3,9 @@
 namespace app\controllers;
 
 use yii\web\Controller;
-use app\models\Car;
 use yii\web\UploadedFile;
+use app\models\Car;
+use app\models\Company;
 
 class AdminController extends Controller
 {
@@ -23,7 +24,7 @@ class AdminController extends Controller
 		$request = \Yii::$app->request;
 		$model = new Car;
 
-		if ($request->isPost && $model->load($request->post())) {
+		if ( $request->isPost && $model->load($request->post()) ) {
 			
 			$model->foto = UploadedFile::getInstance($model, 'foto');
 
@@ -41,6 +42,32 @@ class AdminController extends Controller
 
 		return $this->render('add-car', ['model' => (new Car)]);
 		
+	}
+
+	public function actionAddCompany()
+	{
+
+		$request = \Yii::$app->request;
+		$model = new Company;
+
+		if ( $request->isPost && $model->load($request->post()) ) {
+
+			$model->logo = UploadedFile::getInstance($model, 'logo');
+
+			if ($model->validate()) {
+
+				$fname = \Yii::$app->security->generateRandomString(5);
+				$path = '/' . $fname . '.' . $model->logo->extension;
+				$model->logo->saveAs(\Yii::getAlias('@uploadroot') . $path);
+				$model->logo = \Yii::getAlias('@upload') . $path;
+				$model->save(false);
+
+			}
+
+		}
+
+		return $this->render('add-company', ['model' => $model]);
+
 	}
 
 }
