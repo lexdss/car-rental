@@ -1,9 +1,11 @@
 <?php 
 
-	use yii\widgets\ActiveForm;
-	use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 
-	$this->title = 'Добавить автомобиль';
+$this->title = 'Добавить автомобиль';
+$session = \Yii::$app->session;
+$session->open();
 
 ?>
 
@@ -11,7 +13,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-4 col-md-offset-4">
-				
+
+				<p class="text-warning"><strong><?= $session->getFlash('message'); ?></strong></p>
 				<?php $form = ActiveForm::begin(['id' => 'add_car_form', 'options' => ['enctype' => 'multipart/form-data']]); ?>
 					
 					<?= $form->field($model, 'name'); ?>

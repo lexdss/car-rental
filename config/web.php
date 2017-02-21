@@ -51,17 +51,11 @@ $config = [
                 'test' => 'site/test', // For tests
                 '<model:\S+>' => 'site/model', // Car model
             ],
-
+            'normalizer' => [
+                'class' => 'yii\web\UrlNormalizer',
+                'action' => 301,
+            ]
         ],
-        
-        /*'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                'model' => 'site/index'
-            ],
-        ],*/
-        
     ],
     'aliases' => [
         '@uploadroot' => $_SERVER['DOCUMENT_ROOT'] . '/upload',

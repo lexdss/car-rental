@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Car;
+use yii\base\Exception;
 
 class SiteController extends Controller
 {
@@ -46,6 +47,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'view' => '@app/views/site/error.php'
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -62,9 +64,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $models = Car::find()->joinWith('company')->asArray()->all();
-        //$models = Car::find()->limit(4)->orderBy(['id' => SORT_DESC])->asArray()->all();
         return $this->render('index', ['models' => $models]);
-    
     }
 
     public function actionType()
