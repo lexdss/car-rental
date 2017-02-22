@@ -42,8 +42,7 @@ class AdminController extends Controller
 
 		}
 
-		$company = ArrayHelper::map(Company::find()->asArray()->all(), 'name', 'name');
-		$company = array_merge(['' => ''], $company); // Add empty element
+		$company = ['' => ''] + ArrayHelper::map(Company::find()->asArray()->all(), 'id', 'name');
 
 		return $this->render('add-car', ['model' => (new Car), 'company' => $company]);
 		
