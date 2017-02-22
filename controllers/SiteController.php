@@ -63,7 +63,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $models = Car::find()->joinWith('company')->asArray()->all();
+        $models = Car::find()->joinWith('company')->orderBy(['id' => SORT_DESC])->asArray()->all();
         return $this->render('index', ['models' => $models]);
     }
 
