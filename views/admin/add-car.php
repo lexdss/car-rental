@@ -21,13 +21,7 @@ $session->open();
 					
 					<?= $form->field($model, 'company_id')->dropDownList($company); ?>
 					
-					<?= $form->field($model, 'type')->dropDownList([
-																	'' => '',
-																	'business' => 'Бизнес класс', 
-																	'middle' => 'Средний класс', 
-																	'vip' => 'VIP класс',
-																	'economy' => 'Эконом класс'
-																]); ?>
+					<?= $form->field($model, 'type')->dropDownList(\Yii::$app->params['type']); ?>
 					
 					<?= $form->field($model, 'year'); ?>
 					
@@ -39,18 +33,9 @@ $session->open();
 					
 					<?= $form->field($model, 'color'); ?>
 					
-					<?= $form->field($model, 'transmission')->dropDownList([
-																				'' => '',
-																				'automat' => 'Автомат',
-																				'mechanic' => 'Механика'
-																			]);?>
+					<?= $form->field($model, 'transmission')->dropDownList(\Yii::$app->params['transmission']);?>
 					
-					<?= $form->field($model, 'privod')->dropDownList([
-																		'' => '',
-																		'all' => 'Полный',
-																		'front' => 'Передний', 
-																		'rear' => 'Задний'
-																	]);?>
+					<?= $form->field($model, 'privod')->dropDownList(\Yii::$app->params['privod']);?>
 
 					<?= $form->field($model, 'description')->textarea();?>
 
