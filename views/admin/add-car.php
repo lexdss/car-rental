@@ -19,12 +19,7 @@ $session->open();
 					
 					<?= $form->field($model, 'name'); ?>
 					
-					<?= $form->field($model, 'company_id')->dropDownList([
-																		'' => '',
-																		'2' => 'BMW', 
-																		'audi' => 'Audi', 
-																		'nissan' => 'Nissan'
-																	]); ?>
+					<?= $form->field($model, 'company_id')->dropDownList($company); ?>
 					
 					<?= $form->field($model, 'type')->dropDownList([
 																	'' => '',

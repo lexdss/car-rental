@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use yii\web\Controller;
 use yii\web\UploadedFile;
+use yii\helpers\ArrayHelper;
 use app\models\Car;
 use app\models\Company;
 
@@ -41,7 +42,10 @@ class AdminController extends Controller
 
 		}
 
-		return $this->render('add-car', ['model' => (new Car)]);
+		$company = ArrayHelper::map(Company::find()->asArray()->all(), 'name', 'name');
+		$company = array_merge(['' => ''], $company); // Add empty element
+
+		return $this->render('add-car', ['model' => (new Car), 'company' => $company]);
 		
 	}
 
