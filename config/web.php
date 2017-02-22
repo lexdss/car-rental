@@ -48,6 +48,8 @@ $config = [
                 'admin' => 'admin/index', // Main admin page
                 'admin/add-car' => 'admin/add-car', // Add new car
                 'admin/add-company' => 'admin/add-company', // Add new company
+                'admin/car' => 'admin/car', // Car list
+                'admin/company' => 'admin/company', // Company list
                 'test' => 'site/test', // For tests
                 '<model:\S+>' => 'site/model', // Car model
             ],
