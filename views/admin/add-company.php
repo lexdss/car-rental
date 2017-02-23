@@ -19,7 +19,7 @@ $session->open();
 
 					<?= $form->field($model, 'name'); ?>
 
-					<?= $form->field($model, 'logo')->fileInput(); ?>
+					<?= $form->field($model, 'img')->fileInput(); ?>
 
 					<?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']); ?>
 

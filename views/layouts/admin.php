@@ -30,10 +30,17 @@ $this->beginPage();
 					<ul class="nav nav-tabs">
 						<li role="presentation"><a href="<?= Url::to(['admin/index']); ?>">Главная</a></li>
 						<li role="presentation" class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Добавить <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Авто <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="<?= Url::to(['admin/add-car']); ?>">Авто</a></li>
-								<li><a href="<?= Url::to(['admin/add-company']); ?>">Марку</a></li>
+								<li><a href="<?= Url::to(['admin/car']); ?>">Все</a></li>
+								<li><a href="<?= Url::to(['admin/add-car']); ?>">Добавить</a></li>
+							</ul>
+					  	</li>
+					  	<li role="presentation" class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Компании <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?= Url::to(['admin/company']); ?>">Все</a></li>
+								<li><a href="<?= Url::to(['admin/add-company']); ?>">Добавить</a></li>
 							</ul>
 					  	</li>
 					  	<li role="presentation"><a href="#">Messages</a></li>
