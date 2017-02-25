@@ -151,3 +151,8 @@ footer .soc-icons a{
 footer .soc-icons a:hover{
 	color: #000;
 }
+
+/*ADMIN*/
+.change-form img{
+	height: 150px;
+}
