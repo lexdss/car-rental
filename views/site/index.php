@@ -124,7 +124,7 @@
 			<div class="col-xs-12 col-sm-6 col-md-3">
 
 				<div class="thumbnail thumbnail-item">
-					<img src="<?= $car['foto'];?>" class="img-response">
+					<img src="<?= $car['img'];?>" class="img-response">
 					<div class="caption">
 
 						<h3><?= $car['company']['name'] . ' ' . $car['name'];?></h3>
