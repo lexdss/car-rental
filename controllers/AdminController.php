@@ -40,6 +40,39 @@ class AdminController extends Controller
 	}
 
 	/*
+	* All car list
+	*/
+	public function actionCar()
+	{
+		$model = Car::find()->joinWith('company')->orderBy(['id' => SORT_DESC])->asArray()->all();
+
+		return $this->render('car', ['model' => $model]);
+	}
+
+	public function actionChangeCar()
+	{
+		if (!$model = Car::findOne(\Yii::$app->request->get('id')))
+			throw new NotFoundHttpException('Такой страницы не существует');
+		$company = ['' => ''] + ArrayHelper::map(Company::find()->orderBy(['id' => SORT_DESC])->asArray()->all(), 'id', 'name');
+
+		$model->scenario = Company::SCENARIO_CHANGE;
+
+		if (\Yii::$app->request->isPost){
+			$change_model = new Car;
+			$change_model->load(\Yii::$app->request->post());
+			$change_model->img = $this->saveFile(UploadedFile::getInstance($change_model, 'img')) ?: $model->img;
+			$change_model = $change_model->toArray();
+
+			$model->attributes = $change_model;
+			$model->save();
+
+			return $this->redirect(['admin/car']);
+		}
+
+		return $this->render('change-car', ['model' => $model, 'company' => $company]);
+	}
+
+	/*
 	* Add company page
 	*/
 	public function actionAddCompany()
@@ -88,8 +121,7 @@ class AdminController extends Controller
 			return $this->redirect(['admin/company']);
 		}
 		
-
-		return $this->render('company-change', ['model' => $model]);
+		return $this->render('change-company', ['model' => $model]);
 	}
 
 	private function saveModel($model, $type)
