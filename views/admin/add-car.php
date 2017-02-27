@@ -39,7 +39,7 @@ $session->open();
 
 					<?= $form->field($model, 'description')->textarea();?>
 
-					<?= $form->field($model, 'foto')->fileInput(); ?>
+					<?= $form->field($model, 'img')->fileInput(); ?>
 
 					<div class="form-group">
 						<?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']); ?>
