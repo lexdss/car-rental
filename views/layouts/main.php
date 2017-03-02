@@ -1,6 +1,8 @@
 <?php
 
 	use app\assets\AppAsset;
+	use yii\helpers\Html;
+
 	AppAsset::register($this);
 
 	$this->beginPage(); 
@@ -11,7 +13,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title><?= Html::encode($this->title); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet"> 
 	<link href="https://fonts.googleapis.com/css?family=Exo|Noto+Sans" rel="stylesheet"> 
