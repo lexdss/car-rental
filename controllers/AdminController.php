@@ -20,6 +20,16 @@ class AdminController extends Controller
 	}
 
 	/*
+	* All car list
+	*/
+	public function actionCar()
+	{
+		$model = Car::find()->orderBy(['id' => SORT_DESC])->all();
+
+		return $this->render('car', ['model' => $model]);
+	}
+
+	/*
 	* Add car page
 	*/
 	public function actionAddCar()
@@ -34,42 +44,37 @@ class AdminController extends Controller
         	return $this->redirect(['admin/add-car']);
 		}
 
-		$company = ['' => ''] + ArrayHelper::map(Company::find()->orderBy(['id' => SORT_DESC])->asArray()->all(), 'id', 'name');
+		$company = ArrayHelper::map(Company::find()->orderBy(['id' => SORT_DESC])->asArray()->all(), 'id', 'name'); // For dropDown list
 
 		return $this->render('add-car', ['model' => (new Car), 'company' => $company]);
-	}
-
-	/*
-	* All car list
-	*/
-	public function actionCar()
-	{
-		$model = Car::find()->joinWith('company')->orderBy(['id' => SORT_DESC])->asArray()->all();
-
-		return $this->render('car', ['model' => $model]);
 	}
 
 	public function actionChangeCar()
 	{
 		if (!$model = Car::findOne(\Yii::$app->request->get('id')))
 			throw new NotFoundHttpException('Такой страницы не существует');
-		$company = ['' => ''] + ArrayHelper::map(Company::find()->orderBy(['id' => SORT_DESC])->asArray()->all(), 'id', 'name');
+		$company = ArrayHelper::map(Company::find()->orderBy(['id' => SORT_DESC])->asArray()->all(), 'id', 'name'); // For dropDown list
 
 		$model->scenario = Company::SCENARIO_CHANGE;
 
 		if (\Yii::$app->request->isPost){
-			$change_model = new Car;
-			$change_model->load(\Yii::$app->request->post());
-			$change_model->img = $this->saveFile(UploadedFile::getInstance($change_model, 'img')) ?: $model->img;
-			$change_model = $change_model->toArray();
-
-			$model->attributes = $change_model;
-			$model->save();
+			$changeModel = new Car;
+			$this->changeModel($model, $changeModel);
 
 			return $this->redirect(['admin/car']);
 		}
 
 		return $this->render('change-car', ['model' => $model, 'company' => $company]);
+	}
+
+	/*
+	* All company list
+	*/
+	public function actionCompany()
+	{
+		$model = Company::find()->orderBy(['id' => SORT_DESC])->all();
+
+		return $this->render('company', ['model' => $model]);
 	}
 
 	/*
@@ -91,16 +96,6 @@ class AdminController extends Controller
 	}
 
 	/*
-	* All company list
-	*/
-	public function actionCompany()
-	{
-		$model = Company::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
-
-		return $this->render('company', ['model' => $model]);
-	}
-
-	/*
 	* Change company page
 	*/
 	public function actionChangeCompany()
@@ -111,12 +106,8 @@ class AdminController extends Controller
 		$model->scenario = Company::SCENARIO_CHANGE;
 
 		if (\Yii::$app->request->isPost){
-			$change_model = new Company;
-			$change_model->load(\Yii::$app->request->post());
-
-			$model->img = $this->saveFile(UploadedFile::getInstance($change_model, 'img')) ?: $model->img;
-			$model->name = $change_model->name;
-			$model->save();
+			$changeModel = new Company;
+			$this->changeModel($model, $changeModel);
 
 			return $this->redirect(['admin/company']);
 		}
@@ -132,6 +123,15 @@ class AdminController extends Controller
 			$model->img = $this->saveFile($model->img);
 			$model->save(false);
 		}
+	}
+
+	private function changeModel($model, $changeModel)
+	{
+		$changeModel->load(\Yii::$app->request->post());
+		$changeModel->img = $this->saveFile(UploadedFile::getInstance($changeModel, 'img')) ?: $model->img;
+		$model->attributes = $changeModel->toArray();
+
+		$model->save();
 	}
 
 	/**
