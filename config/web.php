@@ -52,6 +52,7 @@ $config = [
                 'admin/add-company' => 'admin/add-company', // Add new company
                 'admin/company' => 'admin/company', // Company list
                 'admin/company/<id:\d+>' => 'admin/change-company',
+                'car/<id:\d+>' => 'car/index',
                 'test' => 'site/test', // For tests
                 '<model:\S+>' => 'site/model', // Car model
             ],
