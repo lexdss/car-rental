@@ -3,7 +3,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'Редактировать автомобиль';
+$this->title = 'Редактировать автомобиль ' . $model->fullName;
 
 ?>
 

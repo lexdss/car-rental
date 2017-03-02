@@ -14,8 +14,8 @@ $this->title = 'Все компании';
 				<table class="table table-hover">
 					<?php foreach($model as $company): ?>
 						<tr>
-							<td><a href=""><?= $company['name']; ?></a></td>
-							<td><a href="<?= Url::to(['admin/change-company', 'id' => $company['id']]); ?>" class="btn btn-primary">Редактировать</a> <a href="<?= Url::to(['admin/company', 'del' => $company['id']]); ?>" class="btn btn-warning">Удалить</a></td>
+							<td><a href=""><?= $company->name; ?></a></td>
+							<td><a href="<?= Url::to(['admin/change-company', 'id' => $company->id]); ?>" class="btn btn-primary">Редактировать</a> <a href="<?= Url::to(['admin/company', 'del' => $company->id]); ?>" class="btn btn-warning">Удалить</a></td>
 						</tr>
 					<?php endforeach; ?>
 				</table>				

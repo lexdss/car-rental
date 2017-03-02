@@ -119,33 +119,33 @@
 		<div class="row">
 			<h2 class="text-center mb20">Популярные предложения</h2>
 
-			<?php foreach($models as $car): ?>
+			<?php foreach($model as $car): ?>
 
 			<div class="col-xs-12 col-sm-6 col-md-3">
 
 				<div class="thumbnail thumbnail-item">
-					<img src="<?= $car['img'];?>" class="img-response">
+					<img src="<?= $car->img ;?>" class="img-response">
 					<div class="caption">
 
-						<h3><?= $car['company']['name'] . ' ' . $car['name'];?></h3>
+						<h3><?= $car->fullName; ?></h3>
 						<ul class="list-unstyled">
 							<li>
-								Год выпуска: <mark><?= $car['year'];?></mark>
+								Год выпуска: <mark><?= $car->year; ?></mark>
 							</li>
 							<li>
-								Цвет: <mark><?= $car['color'];?></mark>
+								Цвет: <mark><?= $car->color; ?></mark>
 							</li>
 							<li>
-								Двигатель: <mark><?= $car['engine'];?></mark>
+								Двигатель: <mark><?= $car->engine; ?></mark>
 							</li>
 							<li>
-								Коробка: <mark><?= $car['transmission'];?></mark>
+								Коробка: <mark><?= $car->transmission; ?></mark>
 							</li>
 							<li>
-								Привод: <mark><?= $car['privod'];?></mark>
+								Привод: <mark><?= $car->privod; ?></mark>
 							</li>
 							<li>
-								Макс. скорость: <mark><?= $car['speed'];?></mark>
+								Макс. скорость: <mark><?= $car->speed; ?></mark>
 							</li>
 						</ul>
 
@@ -158,135 +158,6 @@
 
 			</div>
 		<?php endforeach; ?>
-
-			<!-- <div class="col-xs-12 col-sm-6 col-md-3">
-			
-				<div class="thumbnail thumbnail-item">
-					<img src="img/popular-2.jpg" class="img-response">
-					<div class="caption">
-			
-						<h3>Hyundai ix55</h3>
-						<ul class="list-unstyled">
-							<li>
-								Год выпуска: <mark>2010</mark>
-							</li>
-							<li>
-								Пробег: <mark>140 000 км</mark>
-							</li>
-							<li>
-								Двигатель: <mark>3.0 л / дизель</mark>
-							</li>
-							<li>
-								Коробка: <mark>Автоматическая</mark>
-							</li>
-							<li>
-								Привод: <mark>Полный</mark>
-							</li>
-							<li>
-								Руль: <mark>Левый</mark>
-							</li>
-							<li>
-								Количество дверей: <mark>5</mark>
-							</li>
-							<li>
-								Макс. скорость: <mark>190 км/ч</mark>
-							</li>
-						</ul>
-			
-						<button class="btn btn-success">
-							Подробнее
-						</button>
-			
-					</div>
-				</div>
-				
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-3">
-			
-				<div class="thumbnail thumbnail-item">
-					<img src="img/popular-3.jpg" class="img-response">
-					<div class="caption">
-						
-						<h3>Audi A5 I</h3>
-						<ul class="list-unstyled">
-							<li>
-								Год выпуска: <mark>2010</mark>
-							</li>
-							<li>
-								Пробег: <mark>140 000 км</mark>
-							</li>
-							<li>
-								Двигатель: <mark>3.0 л / дизель</mark>
-							</li>
-							<li>
-								Коробка: <mark>Автоматическая</mark>
-							</li>
-							<li>
-								Привод: <mark>Полный</mark>
-							</li>
-							<li>
-								Руль: <mark>Левый</mark>
-							</li>
-							<li>
-								Количество дверей: <mark>5</mark>
-							</li>
-							<li>
-								Макс. скорость: <mark>190 км/ч</mark>
-							</li>
-						</ul>
-			
-						<button class="btn btn-success">
-							Подробнее
-						</button>
-			
-					</div>
-				</div>
-				
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-3">
-			
-				<div class="thumbnail thumbnail-item">
-					<img src="img/popular-4.jpg" class="img-response">
-					<div class="caption">
-			
-						<h3>Chevrolet Lacetti</h3>
-						<ul class="list-unstyled">
-							<li>
-								Год выпуска: <mark>2010</mark>
-							</li>
-							<li>
-								Пробег: <mark>140 000 км</mark>
-							</li>
-							<li>
-								Двигатель: <mark>3.0 л / дизель</mark>
-							</li>
-							<li>
-								Коробка: <mark>Автоматическая</mark>
-							</li>
-							<li>
-								Привод: <mark>Полный</mark>
-							</li>
-							<li>
-								Руль: <mark>Левый</mark>
-							</li>
-							<li>
-								Количество дверей: <mark>5</mark>
-							</li>
-							<li>
-								Макс. скорость: <mark>190 км/ч</mark>
-							</li>
-						</ul>
-			
-						<button class="btn btn-success">
-							Подробнее
-						</button>
-			
-					</div>
-				</div>
-				
-			</div> -->
 
 		</div><!-- /row --> 
 	</div>
