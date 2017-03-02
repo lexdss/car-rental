@@ -156,3 +156,11 @@ footer .soc-icons a:hover{
 .change-form img{
 	height: 150px;
 }
+
+/*DETAIL PAGE*/
+.detail-car-img{
+	margin-bottom: 15px;
+}
+.detail-car-info button{
+	margin-bottom: 10px;
+}
