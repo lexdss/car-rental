@@ -72,11 +72,6 @@ class SiteController extends Controller
         return $this->render('type');
     }
 
-    public function actionModel()
-    {
-        return $this->render('model');
-    }
-
     /**
      * Login action.
      *
