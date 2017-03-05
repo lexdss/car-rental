@@ -14,4 +14,14 @@ class CarController extends Controller
 			throw new HotFoundHttpException('Страница не найдена');
 		return $this->render('detail-page', ['model' => $model]);
 	}
+
+	public function actionCompany()
+	{
+		return $this->render('company');
+	}
+
+	public function actionType()
+	{
+		return $this->render('type');
+	}
 }
