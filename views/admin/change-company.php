@@ -16,6 +16,8 @@ $this->title = 'Редактировать марку автомобиля';
 
 					<?= $form->field($model, 'name'); ?>
 
+					<?= $form->field($model, 'code'); ?>
+
 					<div><img src="<?= $model->img; ?>" class="img-response"></div>
 
 					<?= $form->field($model, 'img')->fileInput(); ?>

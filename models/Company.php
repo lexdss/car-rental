@@ -13,7 +13,8 @@ class Company extends ActiveRecord
 
 		return [
 			'name' => 'Название',
-			'img' => 'Логотип'
+			'img' => 'Логотип',
+			'code' => 'Символьный код'
 		];
 
 	}
@@ -22,9 +23,9 @@ class Company extends ActiveRecord
 	{
 
 		return [
-			[['name', 'img'], 'required', 'message' => 'Не заполнено', 'except' => self::SCENARIO_CHANGE],
+			[['name', 'img', 'code'], 'required', 'message' => 'Не заполнено', 'except' => self::SCENARIO_CHANGE],
 			['img', 'image', 'extensions' => ['jpg', 'gif', 'png'], 'maxSize' => 1024 * 1024 * 5, 'notImage' => 'Это не изображение', 'tooBig' => 'До 5 мб'],
-			['name', 'required', 'message' => 'Не заполнено', 'on' => self::SCENARIO_CHANGE],
+			[['name', 'code'], 'required', 'message' => 'Не заполнено', 'on' => self::SCENARIO_CHANGE],
 		];
 
 	}

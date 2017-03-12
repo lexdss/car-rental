@@ -19,6 +19,8 @@ $session->open();
 
 					<?= $form->field($model, 'name'); ?>
 
+					<?= $form->field($model, 'code'); ?>
+
 					<?= $form->field($model, 'img')->fileInput(); ?>
 
 					<?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']); ?>

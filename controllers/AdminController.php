@@ -89,7 +89,7 @@ class AdminController extends Controller
 			$this->saveModel($model, 'company');
 			\Yii::$app->session->setFlash('message', 'Марка добавлена', false);
 
-     		return $this->redirect(['admin/add-' . $type]);
+     		return $this->redirect(['admin/add-company']);
 		}
 
 		return $this->render('add-company', ['model' => $model]);
