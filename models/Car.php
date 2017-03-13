@@ -14,6 +14,7 @@ class Car extends ActiveRecord
 	{
 		return [
 			'name' => 'Название',
+			'code' => 'Символьный код',
 			'company_id' => 'Модель',
 			'type' => 'Класс авто',
 			'year' => 'Год производства',
@@ -40,7 +41,8 @@ class Car extends ActiveRecord
 				'color',
 				'transmission',
 				'privod',
-				'img'
+				'img',
+				'code'
 			], 'required', 'message' => 'Не заполнено', 'except' => self::SCENARIO_CHANGE],
 			[['name', 'engine', 'color'], 'string', 'length' => [2, 20], 'tooLong' => 'До 20 символов', 'tooShort' => 'От 2 символов'],
 			['speed', 'integer', 'min' => 10, 'max' => 100, 'message' => 'Введите число', 'tooBig' => 'Слишком большая скорость', 'tooSmall' => 'Слишком маленькая скорость'],
@@ -55,7 +57,8 @@ class Car extends ActiveRecord
 				'engine',
 				'color',
 				'transmission',
-				'privod'
+				'privod',
+				'code',
 			], 'required', 'message' => 'Не заполнено', 'on' => self::SCENARIO_CHANGE],
 		];
 	}

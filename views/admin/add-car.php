@@ -18,6 +18,8 @@ $session->open();
 				<?php $form = ActiveForm::begin(['id' => 'add_car_form', 'options' => ['enctype' => 'multipart/form-data']]); ?>
 					
 					<?= $form->field($model, 'name'); ?>
+
+					<?= $form->field($model, 'code'); ?>
 					
 					<?= $form->field($model, 'company_id')->dropDownList($company, ['prompt' => '']); ?>
 					
