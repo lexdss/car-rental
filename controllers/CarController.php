@@ -10,8 +10,11 @@ class CarController extends Controller
 {
 	public function actionIndex()
 	{
-		if (!$model = Car::find()->where(['car.id' => \Yii::$app->request->get('id')])->one())
-			throw new HotFoundHttpException('Страница не найдена');
+		$model = Car::findOne(['code' => \Yii::$app->request->get('car')]);
+
+		if (!$model || $model->company->code != \Yii::$app->request->get('company'))
+			throw new NotFoundHttpException('Страница не найдена');
+
 		return $this->render('detail-page', ['model' => $model]);
 	}
 
