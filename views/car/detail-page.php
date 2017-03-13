@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use yii\helpers\Url;
 
 $this->title = 'Аренда автомобиля ' . $model->fullName;
 
@@ -9,9 +11,9 @@ $this->title = 'Аренда автомобиля ' . $model->fullName;
 		<div class="row">
 			<div class="col-xs-12">
 				<ol class="breadcrumb">
-					<li><a href="">Главная</a></li>
-					<li><a href="">Бизнес класс</a></li>
-					<li class="active">BMW X-5</li>
+					<li><a href="/">Главная</a></li>
+					<li><a href="<?= Url::to(['car/company', 'company' => $model->company->code]); ?>"><?= $model->company->name; ?></a></li>
+					<li class="active"><?= $model->name; ?></li>
 				</ol>
 			</div>
 		</div>
