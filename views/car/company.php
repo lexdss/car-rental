@@ -1,6 +1,8 @@
 <?php 
 
-	use yii\helpers\Url;	
+	use yii\helpers\Url;
+
+	$this->title = 'Автомобили ' . $company->name;	
 
 ?>
 
@@ -10,7 +12,7 @@
 			<div class="col-xs-12">
 				<ol class="breadcrumb">
 					<li><a href="<?= Url::to(['/site/index']); ?>">Главная</a></li>
-					<li class="active">Бизнес класс</li>
+					<li class="active"><?= $company->name; ?></li>
 				</ol>
 			</div>
 		</div>
@@ -32,16 +34,18 @@
 							<th>Цена</th>
 						</tr>
 					</thead>
-					<tr>
-						<td>
-							<img src="img/popular-1.jpg" alt="" class="img-responsive">
-						</td>
-						<td><a href="">BMW 5er VI</a></td>
-						<td class="year">2010</td>
-						<td>1500 руб/день</td>
-						<td><button class="btn btn-success">Заказать</button></td>
-					</tr>
-					<tr>
+					<?php foreach($model as $car): ?>
+						<tr>
+							<td>
+								<img src="<?= $car->img; ?>" alt="" class="img-responsive">
+							</td>
+							<td><a href="<?= Url::to(['car/index', 'company' => $company->code, 'car' => $car->code]); ?>"><?= $car->fullName; ?></a></td>
+							<td class="year"><?= $car->year; ?> год</td>
+							<td>1500 руб/день</td>
+							<td><button class="btn btn-success">Заказать</button></td>
+						</tr>
+					<?php endforeach; ?>
+					<!-- <tr>
 						<td><img src="img/popular-2.jpg" alt="" class="img-responsive"></td>
 						<td><a href="">Hyundai ix55</a></td>
 						<td class="year">2007</td>
@@ -61,7 +65,7 @@
 						<td class="year">2000</td>
 						<td>1100 руб/день</td>
 						<td><button class="btn btn-success">Заказать</button></td>
-					</tr>
+					</tr> -->
 				</table>
 			</div>
 			
