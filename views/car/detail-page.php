@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Url;
-use app\widgets\CarsBlock;
+use app\widgets\CarsBlock\CarsBlock;
 
 $this->title = 'Аренда автомобиля ' . $model->fullName;
 

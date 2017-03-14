@@ -1,6 +1,6 @@
 <?php
 
-namespace app\widgets;
+namespace app\widgets\CarsBlock;
 
 use yii\base\Widget;
 use app\models\Car;
