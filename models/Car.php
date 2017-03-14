@@ -72,5 +72,20 @@ class Car extends ActiveRecord
 	{
 		return $this->company->name . ' ' . $this->name;
 	}
+
+	public function getPrivodName()
+	{
+		return (\Yii::$app->params['privod'][$this->privod]) ?: '-';
+	}
+
+	public function getTransmissionName()
+	{
+		return (\Yii::$app->params['transmission'][$this->transmission]) ?: '-';
+	}
+
+	public function getTypeName()
+	{
+		return (\Yii::$app->params['type'][$this->type]) ?: '-';
+	}
 	
 }

@@ -31,6 +31,10 @@ $this->title = 'Аренда автомобиля ' . $model->fullName;
 				<div class="col-xs-12 col-md-4">
 					<table class="table table-striped">
 						<tr>
+							<td>Тип авто</td>
+							<td><?= $model->typeName; ?></td>
+						</tr>
+						<tr>
 							<td>Цвет</td>
 							<td><?= $model->color; ?></td>
 						</tr>
@@ -40,11 +44,11 @@ $this->title = 'Аренда автомобиля ' . $model->fullName;
 						</tr>
 						<tr>
 							<td>Коробка</td>
-							<td><?= $model->transmission; ?></td>
+							<td><?= $model->transmissionName; ?></td>
 						</tr>
 						<tr>
 							<td>Привод</td>
-							<td><?= $model->privod; ?></td>
+							<td><?= $model->privodName; ?></td>
 						</tr>
 						<tr>
 							<td>Макс. скорость</td>
