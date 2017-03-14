@@ -1,7 +1,7 @@
 <?php 
 
 	use yii\helpers\Url;
-	use app\widgets\CarsBlock\CarsBlock;
+	use app\widgets\CarsBlock;
 
 ?>
 
