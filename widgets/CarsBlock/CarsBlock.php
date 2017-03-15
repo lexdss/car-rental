@@ -10,6 +10,7 @@ class CarsBlock extends Widget
 	public $option; // company || type
 	public $count;
 	public $value;
+	public $except;
 	public $model;
 
 	public function init()
@@ -17,6 +18,7 @@ class CarsBlock extends Widget
 		parent::init();
 
 		$this->count = $this->count ?: 4;
+		$this->except = $this->except ?: '';
 
 		switch ($this->option) {
 			case 'company':
@@ -24,7 +26,7 @@ class CarsBlock extends Widget
 				break;
 
 			case 'type':
-				$this->model = Car::find()->where(['type' => $this->value])->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
+				$this->model = Car::find()->where(['and', 'type=' . "'$this->value'", ['not in', 'id', [$this->except]]])->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
 				break;
 			
 			default:

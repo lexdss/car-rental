@@ -69,4 +69,4 @@ $this->title = 'Аренда автомобиля ' . $model->fullName;
 		</div>
 	</section>
 
-	<?= CarsBlock::widget(['option' => 'type', 'value' => $model->type]); ?>
+	<?= CarsBlock::widget(['option' => 'type', 'value' => $model->type, 'except' => $model->id]); ?>
