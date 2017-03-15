@@ -1,4 +1,8 @@
+<?php 
 
+use yii\helpers\Url;
+
+?>
 
 <section class="popular">
 	<div class="container">
@@ -33,9 +37,9 @@
 								</li>
 							</ul>
 
-							<button class="btn btn-success">
+							<a href="<?= Url::to(['car/index', 'car' => $car->code, 'company' => $car->company->code]); ?>" class="btn btn-success">
 								Подробнее
-							</button>
+							</a>
 
 						</div>
 					</div>
