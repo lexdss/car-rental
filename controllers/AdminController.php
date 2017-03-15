@@ -26,6 +26,9 @@ class AdminController extends Controller
 	{
 		$model = Car::find()->orderBy(['id' => SORT_DESC])->all();
 
+		if ($id = \Yii::$app->request->get('del'))
+			$this->deleteCar($id);
+
 		return $this->render('car', ['model' => $model]);
 	}
 
@@ -65,6 +68,16 @@ class AdminController extends Controller
 		}
 
 		return $this->render('change-car', ['model' => $model, 'company' => $company]);
+	}
+
+	public function deleteCar($id)
+	{
+		if (!$model = Car::findOne($id))
+			throw new NotFoundHttpException('Такой автомобиль не найден');
+
+		if ($model->delete())
+			\Yii::$app->response->redirect(['admin/car'])->send();
+		return;
 	}
 
 	/*
