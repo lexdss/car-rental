@@ -9,7 +9,6 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Car;
-use yii\base\Exception;
 
 class SiteController extends Controller
 {

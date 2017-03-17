@@ -41,7 +41,7 @@ class AdminController extends Controller
 		$model = new Car;
 
 		if ( $request->isPost && $model->load($request->post()) ) {
-			$this->saveModel($model, 'car');
+			$this->saveModel($model);
 
 			\Yii::$app->session->setFlash('message', 'Авто добавлено');
         	return $this->redirect(['admin/add-car']);
@@ -99,7 +99,7 @@ class AdminController extends Controller
 		$model = new Company;
 
 		if ( $request->isPost && $model->load($request->post()) ) {
-			$this->saveModel($model, 'company');
+			$this->saveModel($model);
 			\Yii::$app->session->setFlash('message', 'Марка добавлена', false);
 
      		return $this->redirect(['admin/add-company']);
@@ -128,7 +128,7 @@ class AdminController extends Controller
 		return $this->render('change-company', ['model' => $model]);
 	}
 
-	private function saveModel($model, $type)
+	private function saveModel($model)
 	{
 		$model->img = UploadedFile::getInstance($model, 'img');
 
@@ -147,9 +147,6 @@ class AdminController extends Controller
 		$model->save();
 	}
 
-	/**
-	* @return path
-	*/
 	private function saveFile($file)
 	{
 		if (!$file instanceof UploadedFile)
@@ -161,5 +158,4 @@ class AdminController extends Controller
 		
 		return \Yii::getAlias('@upload') . $path;
 	}
-
 }
