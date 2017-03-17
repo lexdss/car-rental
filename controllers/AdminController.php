@@ -87,6 +87,9 @@ class AdminController extends Controller
 	{
 		$model = Company::find()->orderBy(['id' => SORT_DESC])->all();
 
+		if ($id = \Yii::$app->request->get('del'))
+		    $this->deleteCompany($id);
+
 		return $this->render('company', ['model' => $model]);
 	}
 
@@ -108,9 +111,19 @@ class AdminController extends Controller
 		return $this->render('add-company', ['model' => $model]);
 	}
 
-	/*
-	* Change company page
-	*/
+    public function deleteCompany($id)
+    {
+        if (!$model = Company::findOne($id))
+            throw new NotFoundHttpException('Такая марка не найдена');
+
+        if ($model->delete())
+            \Yii::$app->response->redirect(['admin/company'])->send();
+        return;
+    }
+
+    /*
+    * Change company page
+    */
 	public function actionChangeCompany()
 	{
 		if (!$model = Company::findOne(\Yii::$app->request->get('id')))
