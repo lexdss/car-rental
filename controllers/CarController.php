@@ -28,6 +28,9 @@ class CarController extends Controller
 
 	public function actionType()
 	{
-		return $this->render('type');
+	    if ( !$model = Car::find()->where(['type' => \Yii::$app->request->get('type')])->all() )
+	        throw new NotFoundHttpException('Страница не найдена');
+
+        return $this->render('type', ['model' => $model]);
 	}
 }
