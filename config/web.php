@@ -52,7 +52,7 @@ $config = [
                 'admin/company' => 'admin/company', // Company list
                 'admin/company/<id:\d+>' => 'admin/change-company',
                 '<company:\S+>/<car:\S+>' => 'car/index',
-                '<type:(economy|middle|business|vip)>' => 'car/type', // Car class
+                '<type:(economy|middle|bussines|vip)>' => 'car/type', // Car class
                 '<company:\S+>' => 'car/company', // Car model
                 'test' => 'site/test', // For tests
             ],
