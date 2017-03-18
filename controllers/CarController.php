@@ -23,7 +23,9 @@ class CarController extends Controller
 		if ( !$model = Car::find()->joinWith('company')->where(['company.code' => \Yii::$app->request->get('company')])->all() )
 			throw new NotFoundHttpException('Страница не найдена');
 
-		return $this->render('company', ['model' => $model, 'company' => $model[0]->company]);
+		$company = $model[0]->company ?: [];
+
+		return $this->render('company', ['model' => $model, 'company' => $company]);
 	}
 
 	public function actionType()
