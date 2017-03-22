@@ -6,5 +6,5 @@ use yii\web\Controller;
 
 class AdminController extends  Controller
 {
-    public $layout = '@app/views/admin/index.php';
+    public $layout = '@app/views/layouts/admin/main.php';
 }
