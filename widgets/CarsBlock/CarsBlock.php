@@ -7,7 +7,7 @@ use app\models\Car;
 
 class CarsBlock extends Widget
 {
-	public $option; // company || type
+	public $option;
 	public $count;
 	public $value;
 	public $except;

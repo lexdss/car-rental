@@ -1,14 +1,78 @@
-<?php $this->title = 'Админ панель'; ?>
+<?php
 
-<section class="add_car_form">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-md-8 col-md-offset-2">
+/* @var $this \yii\web\View */
+/* @var $content string */
 
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium maxime delectus, molestias rerum? Suscipit numquam fugit et fuga eveniet vitae quae, sed quidem incidunt. Incidunt vero minus explicabo! Sed, tenetur! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, aut iste voluptate dolorem error ex nihil accusamus doloribus, tempore quo est nisi mollitia debitis sunt minima reiciendis. At, eum, quod!</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est amet ipsam provident explicabo dignissimos eligendi nesciunt, facere cupiditate quia, earum repellat veniam vel suscipit dolorum odio consequatur officiis, error nihil.</p>
+use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use app\assets\AppAsset;
 
-			</div>
-		</div>
-	</div>
-</section>
+AppAsset::register($this);
+?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+</head>
+<body>
+<?php $this->beginBody() ?>
+
+<div class="wrap">
+    <?php
+    NavBar::begin([
+        'brandLabel' => 'Car rent',
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => [
+            'class' => 'navbar-inverse navbar-fixed-top',
+        ],
+    ]);
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => [
+            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Автомобили', 'url' => ['/admin/car']],
+            ['label' => 'Марки', 'url' => ['/admin/company']],
+            Yii::$app->user->isGuest ? (
+            ['label' => 'Login', 'url' => ['/site/login']]
+            ) : (
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post')
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
+            )
+        ],
+    ]);
+    NavBar::end();
+    ?>
+
+    <div class="container">
+        <?= Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+        <?= $content ?>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+
+        <p class="pull-right"><?= Yii::powered() ?></p>
+    </div>
+</footer>
+
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

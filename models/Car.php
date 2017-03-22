@@ -2,90 +2,151 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
-use app\models\Company;
+use Yii;
+use yii\web\UploadedFile;
+use app\models\UploadFile;
+use yii\behaviors\TimestampBehavior;
 
-class Car extends ActiveRecord
+/**
+ * This is the model class for table "car".
+ *
+ * @property integer $id
+ * @property integer $company_id
+ * @property string $name
+ * @property string $code
+ * @property string $type
+ * @property integer $year
+ * @property integer $speed
+ * @property string $engine
+ * @property string $color
+ * @property string $transmission
+ * @property string $privod
+ * @property string $description
+ * @property integer $price
+ * @property integer $discount_1
+ * @property integer $discount_2
+ * @property string $img
+ * @property integer $up_date
+ *
+ * @property Company $company
+ * @property UploadFile $file
+ * @property Order[] $orders
+ */
+class Car extends \yii\db\ActiveRecord
 {
+    const SCENARIO_UPDATE = 'update';
 
-	const SCENARIO_CHANGE = 'change';
-	
-	public function attributeLabels()
-	{
-		return [
-			'name' => 'Название',
-			'code' => 'Символьный код',
-			'company_id' => 'Модель',
-			'type' => 'Класс авто',
-			'year' => 'Год производства',
-			'speed' => 'Скорость',
-			'engine' => 'Двигатель',
-			'color' => 'Цвет',
-			'transmission' => 'КПП',
-			'privod' => 'Привод',
-			'description' => 'Описание',
-			'img' => 'Фото',
-		];
-	}
+    public $file;
 
-	public function rules()
-	{
-		return [
-			[[
-				'name',
-				'company_id',
-				'type',
-				'year',
-				'speed',
-				'engine',
-				'color',
-				'transmission',
-				'privod',
-				'img',
-				'code'
-			], 'required', 'message' => 'Не заполнено', 'except' => self::SCENARIO_CHANGE],
-			[['name', 'engine', 'color'], 'string', 'length' => [2, 20], 'tooLong' => 'До 20 символов', 'tooShort' => 'От 2 символов'],
-			['speed', 'integer', 'min' => 10, 'max' => 100, 'message' => 'Введите число', 'tooBig' => 'Слишком большая скорость', 'tooSmall' => 'Слишком маленькая скорость'],
-			['description', 'string', 'max' => 2000, 'tooLong' => 'Слишком большое описание'],
-			['img', 'image', 'extensions' => ['jpg', 'gif', 'png'], 'maxSize' => 1024 * 1024 * 5, 'notImage' => 'Это не изображение', 'tooBig' => 'До 5 мб'],
-			[[
-				'name',
-				'company_id',
-				'type',
-				'year',
-				'speed',
-				'engine',
-				'color',
-				'transmission',
-				'privod',
-				'code',
-			], 'required', 'message' => 'Не заполнено', 'on' => self::SCENARIO_CHANGE],
-		];
-	}
+    /**
+     * Update up_date column when save and update model
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['up_date'],
+                    self::EVENT_BEFORE_UPDATE => ['up_date']
+                ]
+            ]
+        ];
+    }
 
-	public function getCompany()
-	{
-		return $this->hasOne(Company::className(), ['id' => 'company_id']);
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'car';
+    }
 
-	public function getFullName()
-	{
-		return $this->company->name . ' ' . $this->name;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['company_id', 'year', 'speed', 'price', 'discount_1', 'discount_2'], 'integer'],
+            [['name', 'code', 'type', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price', 'file'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['name', 'code', 'type', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price'], 'required', 'on' => self::SCENARIO_UPDATE],
+            [['name', 'code'], 'string', 'max' => 50],
+            [['type', 'engine', 'color', 'transmission', 'privod', 'description'], 'string', 'max' => 25],
+            [['file'], 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
+            [['code'], 'unique'],
+            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
+        ];
+    }
 
-	public function getPrivodName()
-	{
-		return (\Yii::$app->params['privod'][$this->privod]) ?: '-';
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'company_id' => 'ID марки',
+            'name' => 'Название',
+            'code' => 'Символьный код',
+            'type' => 'Тип',
+            'year' => 'Год производства',
+            'speed' => 'Скорость',
+            'engine' => 'Двигатель',
+            'color' => 'Цвет',
+            'transmission' => 'Transmission',
+            'privod' => 'Привод',
+            'description' => 'Описание',
+            'price' => 'Цена',
+            'discount_1' => 'Скидка 1 (3-7 дней)',
+            'discount_2' => 'Скидка 2 (от 7 дней)',
+            'file' => 'Картинка',
+            'companyName' => 'Марка',
+            'up_date' => 'Изменение'
+        ];
+    }
 
-	public function getTransmissionName()
-	{
-		return (\Yii::$app->params['transmission'][$this->transmission]) ?: '-';
-	}
+    /**
+     *
+     */
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if ($file = UploadedFile::getInstance($this, 'file')){
+            $this->file = new UploadFile($file);
 
-	public function getTypeName()
-	{
-		return (\Yii::$app->params['type'][$this->type]) ?: '-';
-	}
-	
+            if (!$this->img = $this->file->save())
+                $this->addError('file', 'Картинка не загружена');
+        }
+
+        return parent::save($runValidation, $attributeNames); // TODO: Change the autogenerated stub
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Order::className(), ['car_id' => 'id']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->company->name . ' ' . $this->name;
+    }
+
+    public function getCompanyName()
+    {
+        return $this->company->name;
+    }
 }

@@ -153,8 +153,8 @@ footer .soc-icons a:hover{
 }
 
 /*ADMIN*/
-.change-form img{
-	height: 150px;
+.admin-thumb-img img{
+	width: 150px;
 }
 
 /*DETAIL PAGE*/

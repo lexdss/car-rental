@@ -2,32 +2,103 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
+use Codeception\Lib\Interfaces\ActiveRecord;
+use Yii;
+use yii\web\UploadedFile;
+use app\models\UploadFile;
+use yii\behaviors\TimestampBehavior;
 
-class Company extends ActiveRecord
+/**
+ * This is the model class for table "company".
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $code
+ * @property string $description
+ * @property string $img
+ * @property integer $up_date
+ *
+ * @property Car[] $cars
+ * @property UploadFile $file
+ */
+class Company extends \yii\db\ActiveRecord
 {
-	const SCENARIO_CHANGE = 'change';
+    const SCENARIO_UPDATE = 'update';
 
-	public function attributeLabels()
-	{
+    public $file;
 
-		return [
-			'name' => 'Название',
-			'img' => 'Логотип',
-			'code' => 'Символьный код'
-		];
+    /**
+     * Update up_date column when save and update model
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['up_date'],
+                    self::EVENT_BEFORE_UPDATE => ['up_date']
+                ]
+            ]
+        ];
+    }
 
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'company';
+    }
 
-	public function rules()
-	{
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['description', 'name', 'code', 'file'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['description', 'name', 'code'], 'required', 'on' => self::SCENARIO_UPDATE],
+            [['description'], 'string', 'max' => 2000],
+            [['name', 'code'], 'string', 'max' => 30, 'min' => 2],
+            [['file'], 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
+        ];
+    }
 
-		return [
-			[['name', 'img', 'code'], 'required', 'message' => 'Не заполнено', 'except' => self::SCENARIO_CHANGE],
-			['img', 'image', 'extensions' => ['jpg', 'gif', 'png'], 'maxSize' => 1024 * 1024 * 5, 'notImage' => 'Это не изображение', 'tooBig' => 'До 5 мб'],
-			[['name', 'code'], 'required', 'message' => 'Не заполнено', 'on' => self::SCENARIO_CHANGE],
-		];
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Имя',
+            'code' => 'Символьный код',
+            'description' => 'Описание',
+            'file' => 'Логотип',
+            'up_date' => 'Изменение'
+        ];
+    }
 
-	}
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCars()
+    {
+        return $this->hasMany(Car::className(), ['company_id' => 'id']);
+    }
 
+    /**
+     * @inheritdoc
+     */
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if ($file = UploadedFile::getInstance($this, 'file')) {
+            $this->file = new UploadFile($file);
+
+            if (!$this->img = $this->file->save())
+                $this->addError('file', 'Изображение не загружено');
+        }
+
+        return parent::save($runValidation, $attributeNames);
+    }
 }

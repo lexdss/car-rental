@@ -5,10 +5,12 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Car;
+use app\models\Company;
 
 class SiteController extends Controller
 {
@@ -46,7 +48,6 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-                'view' => '@app/views/site/error.php'
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -62,8 +63,37 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = Car::find()->orderBy(['id' => SORT_DESC])->all();
+        $model = Car::find()->all();
         return $this->render('index', ['model' => $model]);
+    }
+
+    /**
+     * Car company page
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionCompany()
+    {
+        if (!$company = Company::findOne(['code' => Yii::$app->request->get('value')]))
+            throw new NotFoundHttpException('Такая марка не найдена');
+        $model = Car::findAll(['company_id' => $company->id]);
+
+        return $this->render('company', ['model' => $model, 'company' => $company]);
+    }
+
+    /**
+     * Detail car page
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionCar()
+    {
+        if (!$model = Car::findOne(['code' => Yii::$app->request->get('value')]))
+            throw new NotFoundHttpException('Такой автомобиль не найден');
+
+        return $this->render('detail', ['model' => $model]);
     }
 
     /**
@@ -124,10 +154,5 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
-    }
-
-    public function actionTest()
-    {
-        //Tests
     }
 }

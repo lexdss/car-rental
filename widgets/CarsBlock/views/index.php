@@ -1,5 +1,8 @@
-<?php 
+<?php
 
+/**
+ * Show block with cars
+ */
 use yii\helpers\Url;
 
 ?>
@@ -7,7 +10,7 @@ use yii\helpers\Url;
 <section class="popular">
 	<div class="container">
 		<div class="row">
-
+            <?php if (!empty($model)): ?>
 			<?php foreach($model as $car): ?>
 				<div class="col-xs-12 col-sm-6 col-md-3">
 
@@ -18,26 +21,29 @@ use yii\helpers\Url;
 							<h3><?= $car->fullName; ?></h3>
 							<ul class="list-unstyled">
 								<li>
-									Год выпуска: <mark><?= $car->year; ?></mark>
+                                    <?= $car->getAttributeLabel('year') ?>: <mark><?= $car->year; ?></mark>
 								</li>
 								<li>
-									Цвет: <mark><?= $car->color; ?></mark>
+                                    <?= $car->getAttributeLabel('color') ?>: <mark><?= $car->color; ?></mark>
 								</li>
 								<li>
-									Двигатель: <mark><?= $car->engine; ?></mark>
+                                    <?= $car->getAttributeLabel('engine') ?>: <mark><?= $car->engine; ?></mark>
 								</li>
 								<li>
-									Коробка: <mark><?= $car->transmissionName; ?></mark>
+                                    <?= $car->getAttributeLabel('transmission') ?>: <mark><?= $car->transmission; ?></mark>
 								</li>
 								<li>
-									Привод: <mark><?= $car->privodName; ?></mark>
+                                    <?= $car->getAttributeLabel('privod') ?>: <mark><?= $car->privod; ?></mark>
 								</li>
 								<li>
-									Макс. скорость: <mark><?= $car->speed; ?></mark>
+                                    <?= $car->getAttributeLabel('speed') ?>: До <mark><?= $car->speed; ?> км/ч</mark>
 								</li>
+                                <li>
+                                    <?= $car->getAttributeLabel('price') ?>: <mark>От <?= $car->price; ?> руб</mark>
+                                </li>
 							</ul>
 
-							<a href="<?= Url::to(['car/index', 'car' => $car->code, 'company' => $car->company->code]); ?>" class="btn btn-success">
+							<a href="<?= Url::to(['site/car', 'value' => $car->code]); ?>" class="btn btn-success">
 								Подробнее
 							</a>
 
@@ -46,6 +52,7 @@ use yii\helpers\Url;
 
 				</div>
 			<?php endforeach; ?>
+            <?php endif; ?>
 
 		</div><!-- /row --> 
 	</div>

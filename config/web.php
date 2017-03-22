@@ -6,10 +6,11 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru-RU',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'Kahh-N0ygNvjulDDACZ_2LdrqQS64sPV',
+            'cookieValidationKey' => 'QLdqUklR2bo0ryR_sUq7sGsZJj_fw_Mv',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -41,32 +42,19 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => true,
             'rules' => [
-                '' => 'site/index',
-                'admin' => 'admin/index', // Main admin page
-                'admin/add-car' => 'admin/add-car', // Add new car
-                'admin/car' => 'admin/car', // Car list
-                'admin/car/<id:\d+>' => 'admin/change-car',
-                'admin/add-company' => 'admin/add-company', // Add new company
-                'admin/company' => 'admin/company', // Company list
-                'admin/company/<id:\d+>' => 'admin/change-company',
-                '<company:\S+>/<car:\S+>' => 'car/index',
-                '<type:(economy|middle|bussines|vip)>' => 'car/type', // Car class
-                '<company:\S+>' => 'car/company', // Car model
-                'test' => 'site/test', // For tests
+                'admin/<_c:[\w\-]+>' => 'admin/<_c>/index',
+                'admin/<_c:[\w\-]+>/<_a:[\w\-]+>' => 'admin/<_c>/<_a>',
+                '<_a:[\w\-]+>/<value:[\w\-]+>' => 'site/<_a>'
             ],
-            'normalizer' => [
-                'class' => 'yii\web\UrlNormalizer',
-                'action' => 301,
-            ]
-        ],
-    ],
-    'aliases' => [
-        '@uploadroot' => $_SERVER['DOCUMENT_ROOT'] . '/upload',
-        '@upload' => '/upload/'
+        ]
     ],
     'params' => $params,
+];
+
+$config['aliases'] = [
+    '@uploadroot' => $config['basePath'] . '\web\upload',
+    '@uploadweb' => '/upload',
 ];
 
 if (YII_ENV_DEV) {
