@@ -10,6 +10,7 @@ use app\models\Car;
 use app\models\Company;
 use app\models\admin\search\CarSearch;
 use app\controllers\admin\AdminController;
+use app\models\Category;
 
 /**
  * CarController implements the CRUD actions for Car model.
@@ -72,7 +73,8 @@ class CarController extends AdminController
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'company' => Company::find()->all()
+                'company' => Company::find()->all(),
+                'category' => Category::find()->all()
             ]);
         }
     }
@@ -93,7 +95,8 @@ class CarController extends AdminController
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'company' => Company::find()->all()
+                'company' => Company::find()->all(),
+                'category' => Category::find()->all()
             ]);
         }
     }

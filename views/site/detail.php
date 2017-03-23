@@ -10,7 +10,7 @@ use yii\widgets\Breadcrumbs;
 use app\widgets\CarsBlock\CarsBlock;
 
 $this->title = 'Аренда автомобиля ' . $model->fullName;
-$this->params['breadcrumbs'][] = ['label' => $model->company->name, 'url' => Url::to(['site/company', 'value' => $model->company->code])];
+$this->params['breadcrumbs'][] = ['label' => $model->company->name, 'url' => Url::to(['site/company', 'value' => $model->company->slug])];
 $this->params['breadcrumbs'][] = $model->fullName;
 
 ?>
@@ -38,8 +38,8 @@ $this->params['breadcrumbs'][] = $model->fullName;
                 <div class="col-xs-12 col-md-4">
                     <table class="table table-striped">
                         <tr>
-                            <td><?= $model->getAttributeLabel('type') ?></td>
-                            <td><?= $model->type; ?></td>
+                            <td><?= $model->getAttributeLabel('categoryName') ?></td>
+                            <td><?= $model->categoryName; ?></td>
                         </tr>
                         <tr>
                             <td><?= $model->getAttributeLabel('color') ?></td>
@@ -79,4 +79,4 @@ $this->params['breadcrumbs'][] = $model->fullName;
         </div>
     </section>
 
-<?= CarsBlock::widget(['option' => 'type', 'value' => $model->type, 'except' => $model->id]); ?>
+<?= CarsBlock::widget(['option' => 'category', 'value' => $model->category_id, 'except' => $model->id]); ?>

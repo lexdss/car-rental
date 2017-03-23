@@ -76,7 +76,7 @@ class SiteController extends Controller
      */
     public function actionCompany()
     {
-        if (!$company = Company::findOne(['code' => Yii::$app->request->get('value')]))
+        if (!$company = Company::findOne(['slug' => Yii::$app->request->get('value')]))
             throw new NotFoundHttpException('Такая марка не найдена');
         $model = Car::findAll(['company_id' => $company->id]);
 
@@ -91,7 +91,7 @@ class SiteController extends Controller
      */
     public function actionCar()
     {
-        if (!$model = Car::findOne(['code' => Yii::$app->request->get('value')]))
+        if (!$model = Car::findOne(['slug' => Yii::$app->request->get('value')]))
             throw new NotFoundHttpException('Такой автомобиль не найден');
 
         return $this->render('detail', ['model' => $model]);

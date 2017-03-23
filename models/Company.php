@@ -13,7 +13,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property string $name
- * @property string $code
+ * @property string $slug
  * @property string $description
  * @property string $img
  * @property integer $up_date
@@ -57,10 +57,10 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'name', 'code', 'file'], 'required', 'on' => self::SCENARIO_DEFAULT],
-            [['description', 'name', 'code'], 'required', 'on' => self::SCENARIO_UPDATE],
+            [['description', 'name', 'slug', 'file'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['description', 'name', 'slug'], 'required', 'on' => self::SCENARIO_UPDATE],
             [['description'], 'string', 'max' => 2000],
-            [['name', 'code'], 'string', 'max' => 30, 'min' => 2],
+            [['name', 'slug'], 'string', 'max' => 30, 'min' => 2],
             [['file'], 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
         ];
     }
@@ -72,7 +72,7 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             'name' => 'Имя',
-            'code' => 'Символьный код',
+            'slug' => 'Символьный код',
             'description' => 'Описание',
             'file' => 'Логотип',
             'up_date' => 'Изменение'

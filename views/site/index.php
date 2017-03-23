@@ -181,7 +181,7 @@ $this->title = 'Главная страница';
                 <?php if($companies): ?>
                     <?php foreach($companies as $company): ?>
                         <div class="brand-item">
-                            <a href="<?= Url::to(['site/company', 'value' => $company->code]) ?>">
+                            <a href="<?= Url::to(['site/company', 'value' => $company->slug]) ?>">
                                 <div class="brand-desc">
                                     <div class="brand-name">
                                         <?= $company->name ?>

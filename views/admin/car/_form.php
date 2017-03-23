@@ -13,13 +13,13 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map(ArrayHelper::toArray($company), 'id', 'name')) ?>
-
-    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map(ArrayHelper::toArray($company), 'id', 'name')) ?>
+
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(ArrayHelper::toArray($category), 'id', 'name')) ?>
 
     <?= $form->field($model, 'year')->textInput() ?>
 
@@ -33,7 +33,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'privod')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 

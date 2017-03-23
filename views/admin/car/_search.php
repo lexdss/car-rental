@@ -21,9 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'code') ?>
+    <?= $form->field($model, 'slug') ?>
 
-    <?= $form->field($model, 'type') ?>
+    <?= $form->field($model, 'category_id') ?>
 
     <?php // echo $form->field($model, 'year') ?>
 

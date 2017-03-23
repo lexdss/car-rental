@@ -19,7 +19,7 @@ class CarSearch extends Car
     {
         return [
             [['id', 'company_id', 'year', 'speed', 'price', 'discount_1', 'discount_2'], 'integer'],
-            [['name', 'code', 'type', 'engine', 'color', 'transmission', 'privod', 'description', 'img'], 'safe'],
+            [['name', 'slug', 'category_id', 'engine', 'color', 'transmission', 'privod', 'description', 'img'], 'safe'],
         ];
     }
 
@@ -69,8 +69,8 @@ class CarSearch extends Car
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'category_id', $this->category_id])
             ->andFilterWhere(['like', 'engine', $this->engine])
             ->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'transmission', $this->transmission])

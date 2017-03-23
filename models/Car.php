@@ -12,9 +12,9 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property integer $company_id
+ * @property integer $category_id
  * @property string $name
- * @property string $code
- * @property string $type
+ * @property string $slug
  * @property integer $year
  * @property integer $speed
  * @property string $engine
@@ -69,12 +69,13 @@ class Car extends \yii\db\ActiveRecord
     {
         return [
             [['company_id', 'year', 'speed', 'price', 'discount_1', 'discount_2'], 'integer'],
-            [['name', 'code', 'type', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price', 'file'], 'required', 'on' => self::SCENARIO_DEFAULT],
-            [['name', 'code', 'type', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price'], 'required', 'on' => self::SCENARIO_UPDATE],
-            [['name', 'code'], 'string', 'max' => 50],
-            [['type', 'engine', 'color', 'transmission', 'privod', 'description'], 'string', 'max' => 25],
+            [['name', 'slug', 'category_id', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price', 'file'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['name', 'slug', 'category_id', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price'], 'required', 'on' => self::SCENARIO_UPDATE],
+            [['name', 'slug'], 'string', 'max' => 50],
+            [['description'], 'string', 'max' => 2000],
+            [['category_id', 'engine', 'color', 'transmission', 'privod'], 'string', 'max' => 25],
             [['file'], 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
-            [['code'], 'unique'],
+            [['slug'], 'unique'],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
         ];
     }
@@ -88,8 +89,9 @@ class Car extends \yii\db\ActiveRecord
             'id' => 'ID',
             'company_id' => 'ID марки',
             'name' => 'Название',
-            'code' => 'Символьный код',
-            'type' => 'Тип',
+            'slug' => 'Символьный код',
+            'category_id' => 'Тип авто ID',
+            'categoryName' => 'Тип авто',
             'year' => 'Год производства',
             'speed' => 'Скорость',
             'engine' => 'Двигатель',
@@ -132,6 +134,14 @@ class Car extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCategory()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getOrders()
     {
         return $this->hasMany(Order::className(), ['car_id' => 'id']);
@@ -148,5 +158,10 @@ class Car extends \yii\db\ActiveRecord
     public function getCompanyName()
     {
         return $this->company->name;
+    }
+
+    public function getCategoryName()
+    {
+        return $this->category->name;
     }
 }

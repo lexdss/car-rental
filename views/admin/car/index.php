@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Car', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить авто', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['date', 'php:Y-m-d H:i']
             ],
             'name',
-            'code',
-            'type',
+            'slug',
+            'category_id',
             'price',
             'companyName',
             // 'year',

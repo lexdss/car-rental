@@ -43,7 +43,7 @@ use yii\helpers\Url;
                                 </li>
 							</ul>
 
-							<a href="<?= Url::to(['site/car', 'value' => $car->code]); ?>" class="btn btn-success">
+							<a href="<?= Url::to(['site/car', 'value' => $car->slug]); ?>" class="btn btn-success">
 								Подробнее
 							</a>
 

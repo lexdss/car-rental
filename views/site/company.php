@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $company->name;
                                 <td>
                                     <img src="<?= $car->img; ?>" alt="" class="img-responsive">
                                 </td>
-                                <td><a href="<?= Url::to(['site/car', 'value' => $car->code]); ?>"><?= $car->fullName; ?></a></td>
+                                <td><a href="<?= Url::to(['site/car', 'value' => $car->slug]); ?>"><?= $car->fullName; ?></a></td>
                                 <td class="year"><?= $car->year; ?> год</td>
                                 <td>От <?= $car->price; ?> руб/день</td>
                                 <td><button class="btn btn-success">Заказать</button></td>
