@@ -19,7 +19,7 @@ class CompanySearch extends Company
     {
         return [
             [['id'], 'integer'],
-            [['name', 'slug', 'description', 'img'], 'safe'],
+            [['name', 'slug', 'description', 'img', 'up_date'], 'safe'],
         ];
     }
 

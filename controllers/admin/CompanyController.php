@@ -15,6 +15,14 @@ use app\controllers\admin\AdminController;
 class CompanyController extends AdminController
 {
     /**
+     * @return string
+     */
+    public function getViewPath()
+    {
+        return '@app/views/admin/company';
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()

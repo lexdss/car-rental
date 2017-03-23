@@ -7,6 +7,9 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Car */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $company app\models\Company */
+/* @var $category app\models\Category */
+
 ?>
 
 <div class="car-form">

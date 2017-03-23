@@ -70,7 +70,7 @@ class CarSearch extends Car
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'category_id', $this->category_id])
+            ->andFilterWhere(['like', 'categoryName', $this->categoryName])
             ->andFilterWhere(['like', 'engine', $this->engine])
             ->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'transmission', $this->transmission])

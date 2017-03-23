@@ -4,11 +4,13 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Car */
+/* @var $company app\models\Company */
+/* @var $category app\models\Category */
 
-$this->title = 'Изменение авто: ' . $model->name;
+$this->title = 'Изменение авто: ' . $model->fullName;
 $this->params['breadcrumbs'][] = ['label' => 'Cars', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="car-update">
 

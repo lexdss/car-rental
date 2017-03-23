@@ -18,6 +18,14 @@ use app\models\Category;
 class CarController extends AdminController
 {
     /**
+     * @return string
+     */
+    public function getViewPath()
+    {
+        return '@app/views/admin/car';
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
