@@ -64,7 +64,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model = Car::find()->all();
-        return $this->render('index', ['model' => $model]);
+        $companies = Company::find()->all();
+        return $this->render('index', ['model' => $model, 'companies' => $companies]);
     }
 
     /**

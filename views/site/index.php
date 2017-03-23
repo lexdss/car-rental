@@ -1,6 +1,11 @@
 <?php
-
+/**
+ * Main page
+ *
+ * @var $companies \app\models\Company[]
+ */
 use app\widgets\CarsBlock\CarsBlock;
+use yii\helpers\Url;
 
 $this->title = 'Главная страница';
 ?>
@@ -173,126 +178,20 @@ $this->title = 'Главная страница';
         <div class="row">
             <div class="brand-list">
 
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                BMW
-                            </div>
+                <?php if($companies): ?>
+                    <?php foreach($companies as $company): ?>
+                        <div class="brand-item">
+                            <a href="<?= Url::to(['site/company', 'value' => $company->code]) ?>">
+                                <div class="brand-desc">
+                                    <div class="brand-name">
+                                        <?= $company->name ?>
+                                    </div>
+                                </div>
+                                <img src="<?= $company->img ?>" class="img-response">
+                            </a>
                         </div>
-                        <img src="img/brand/bmw.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Volkswagen
-                            </div>
-                        </div>
-                        <img src="img/brand/volkswagen.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Suzuki
-                            </div>
-                        </div>
-                        <img src="img/brand/suzuki.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Skoda
-                            </div>
-                        </div>
-                        <img src="img/brand/skoda.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Renault
-                            </div>
-                        </div>
-                        <img src="img/brand/renault.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Opel
-                            </div>
-                        </div>
-                        <img src="img/brand/opel.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Mazda
-                            </div>
-                        </div>
-                        <img src="img/brand/mazda.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Ford
-                            </div>
-                        </div>
-                        <img src="img/brand/ford.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Chevrolet
-                            </div>
-                        </div>
-                        <img src="img/brand/chevrolet.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Citroen
-                            </div>
-                        </div>
-                        <img src="img/brand/citroen.png" class="img-response">
-                    </a>
-                </div>
-
-                <div class="brand-item">
-                    <a href="">
-                        <div class="brand-desc">
-                            <div class="brand-name">
-                                Alfa Romeo
-                            </div>
-                        </div>
-                        <img src="img/brand/alfa_romeo.png" class="img-response">
-                    </a>
-                </div>
+                    <?php endforeach;?>
+                <?php endif;?>
 
             </div>
 
