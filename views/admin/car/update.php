@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $category app\models\Category */
 
 $this->title = 'Изменение авто: ' . $model->fullName;
-$this->params['breadcrumbs'][] = ['label' => 'Cars', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Автомобили', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Изменить';
 ?>
