@@ -7,9 +7,9 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+use app\assets\AdminAsset;
 
-AppAsset::register($this);
+AdminAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -56,22 +56,13 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-</div>
-
-<div class="container">
-    <div class="row">
+    <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-
         <?= $content ?>
-
     </div>
+
 </div>
 
 <footer class="footer">
