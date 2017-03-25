@@ -49,12 +49,12 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'slug' => 'Slug',
-            'short_description' => 'Short Description',
-            'description' => 'Description',
+            'name' => 'Имя',
+            'slug' => 'Символьный код',
+            'short_description' => 'Короткое описание',
+            'description' => 'Описание',
             'img' => 'Img',
-            'up_date' => 'Up Date',
+            'up_date' => 'Изменение',
         ];
     }
 
