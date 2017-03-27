@@ -92,8 +92,6 @@ class CompanyController extends AdminController
     {
         $model = $this->findModel($id);
 
-        $model->scenario = Company::SCENARIO_UPDATE;
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

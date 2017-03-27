@@ -96,7 +96,6 @@ class CarController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = Car::SCENARIO_UPDATE;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

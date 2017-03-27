@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use app\components\UploadFileBehavior;
 
 /**
  * This is the model class for table "category".
@@ -17,8 +20,10 @@ use Yii;
  *
  * @property Car[] $cars
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends ActiveRecord
 {
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -27,18 +32,32 @@ class Category extends \yii\db\ActiveRecord
         return 'category';
     }
 
+    public function behaviors()
+    {
+        return [
+            'uploadFile' => UploadFileBehavior::className(),
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['up_date'],
+                    self::EVENT_BEFORE_UPDATE => ['up_date'],
+                ],
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name', 'slug', 'up_date'], 'required'],
+            [['name', 'slug'], 'required'],
             ['description', 'string'],
             ['short_description', 'string', 'max' => 500],
-            [['up_date'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
+            ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5]
         ];
     }
 

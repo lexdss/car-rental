@@ -3,8 +3,7 @@
 namespace app\models;
 
 use Yii;
-use yii\web\UploadedFile;
-use app\models\UploadFile;
+use app\components\UploadFileBehavior;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -34,8 +33,6 @@ use yii\behaviors\TimestampBehavior;
  */
 class Car extends \yii\db\ActiveRecord
 {
-    const SCENARIO_UPDATE = 'update';
-
     public $file;
 
     /**
@@ -44,6 +41,7 @@ class Car extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
+            'uploadFile' => UploadFileBehavior::className(),
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
@@ -69,8 +67,7 @@ class Car extends \yii\db\ActiveRecord
     {
         return [
             [['company_id', 'category_id', 'year', 'speed', 'price', 'discount_1', 'discount_2'], 'integer'],
-            [['name', 'slug', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price', 'file'], 'required', 'on' => self::SCENARIO_DEFAULT],
-            [['name', 'slug', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price'], 'required', 'on' => self::SCENARIO_UPDATE],
+            [['name', 'slug', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price'], 'required'],
             [['name', 'slug'], 'string', 'max' => 50],
             [['description'], 'string', 'max' => 2000],
             [['engine', 'color', 'transmission', 'privod'], 'string', 'max' => 25],
@@ -106,24 +103,6 @@ class Car extends \yii\db\ActiveRecord
             'companyName' => 'Марка',
             'up_date' => 'Изменение'
         ];
-    }
-
-    /**
-     * @param boolean $runValidation
-     * @param array $attributeNames
-     *
-     * @return boolean
-     */
-    public function save($runValidation = true, $attributeNames = null)
-    {
-        if ($file = UploadedFile::getInstance($this, 'file')){
-            $this->file = new UploadFile($file);
-
-            if (!$this->img = $this->file->save())
-                $this->addError('file', 'Картинка не загружена');
-        }
-
-        return parent::save($runValidation, $attributeNames);
     }
 
     /**
