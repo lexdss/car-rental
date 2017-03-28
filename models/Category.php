@@ -72,7 +72,8 @@ class Category extends ActiveRecord
             'slug' => 'Символьный код',
             'short_description' => 'Короткое описание',
             'description' => 'Описание',
-            'img' => 'Img',
+            'img' => 'Изображение',
+            'file' => 'Изображение',
             'up_date' => 'Изменение',
         ];
     }

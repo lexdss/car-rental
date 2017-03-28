@@ -99,7 +99,7 @@ class Car extends \yii\db\ActiveRecord
             'price' => 'Цена',
             'discount_1' => 'Скидка 1 (3-7 дней)',
             'discount_2' => 'Скидка 2 (от 7 дней)',
-            'file' => 'Картинка',
+            'file' => 'Изображение',
             'companyName' => 'Марка',
             'up_date' => 'Изменение'
         ];

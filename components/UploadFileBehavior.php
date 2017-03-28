@@ -24,9 +24,6 @@ class UploadFileBehavior extends Behavior
 
             if ($file->saveAs(Yii::getAlias('@uploadroot') . $fileName)) {
                 $event->sender->img = Yii::getAlias('@uploadweb') . $fileName;
-            } else {
-                var_dump('dsfsdf');
-                exit;
             }
         }
     }
