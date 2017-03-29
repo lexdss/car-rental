@@ -41,7 +41,12 @@ class Car extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'uploadFile' => UploadFileBehavior::className(),
+            [
+                'class' => UploadFileBehavior::className(),
+                'attributes' => [
+                    self::EVENT_AFTER_VALIDATE => ['img'],
+                ],
+            ],
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
@@ -71,7 +76,7 @@ class Car extends \yii\db\ActiveRecord
             [['name', 'slug'], 'string', 'max' => 50],
             [['description'], 'string', 'max' => 2000],
             [['engine', 'color', 'transmission', 'privod'], 'string', 'max' => 25],
-            [['file'], 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
+            ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
             [['slug'], 'unique'],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']], // TODO: Посмотреть документацию
         ];

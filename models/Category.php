@@ -35,7 +35,12 @@ class Category extends ActiveRecord
     public function behaviors()
     {
         return [
-            'uploadFile' => UploadFileBehavior::className(),
+            [
+                'class' => UploadFileBehavior::className(),
+                'attributes' => [
+                    self::EVENT_AFTER_VALIDATE => ['img'],
+                ],
+            ],
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [

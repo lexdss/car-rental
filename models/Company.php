@@ -28,7 +28,12 @@ class Company extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'uploadFile' => UploadFileBehavior::className(),
+            [
+                'class' => UploadFileBehavior::className(),
+                'attributes' => [
+                    self::EVENT_AFTER_VALIDATE => ['img'],
+                ],
+            ],
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
@@ -56,7 +61,7 @@ class Company extends \yii\db\ActiveRecord
             [['description', 'name', 'slug'], 'required'],
             [['description'], 'string', 'max' => 2000],
             [['name', 'slug'], 'string', 'max' => 30, 'min' => 2],
-            [['file'], 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
+            ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
         ];
     }
 
