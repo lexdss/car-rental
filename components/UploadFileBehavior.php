@@ -3,28 +3,28 @@
 namespace app\components;
 
 use Yii;
-use yii\base\Behavior;
+use yii\behaviors\AttributeBehavior;
 use yii\web\UploadedFile;
-use yii\db\ActiveRecord;
 use app\models\helpers\FileHelper;
 
-class UploadFileBehavior extends Behavior
+/**
+ * Class UploadFileBehavior
+ * @package app\components
+ */
+class UploadFileBehavior extends AttributeBehavior
 {
-    public function events()
+    public function getValue($event)
     {
-        return [
-            ActiveRecord::EVENT_AFTER_VALIDATE => 'saveFile'
-        ];
-    }
-
-    public function saveFile($event)
-    {
-        if ($file = UploadedFile::getInstance($event->sender, 'file')){
+        if ($file = UploadedFile::getInstance($this->owner, 'file')){
             $fileName = FileHelper::getRandomPath($file);
 
             if ($file->saveAs(Yii::getAlias('@uploadroot') . $fileName)) {
-                $event->sender->img = Yii::getAlias('@uploadweb') . $fileName;
+                return Yii::getAlias('@uploadweb') . $fileName;
             }
+
+            return null;
         }
+
+        return $this->owner->img;
     }
 }
