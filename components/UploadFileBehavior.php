@@ -20,11 +20,15 @@ class UploadFileBehavior extends AttributeBehavior
 
             if ($file->saveAs(Yii::getAlias('@uploadroot') . $fileName)) {
                 return Yii::getAlias('@uploadweb') . $fileName;
+            } else {
+                $this->owner->addError('file', 'Не удалось загрузить файл');
             }
 
-            return null;
+        } elseif(isset($this->owner->img)) {
+            return $this->owner->img;
+        } else {
+            $this->owner->addError('file', 'Загрузите файл');
         }
 
-        return $this->owner->img;
     }
 }
