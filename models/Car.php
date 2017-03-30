@@ -44,7 +44,7 @@ class Car extends \yii\db\ActiveRecord
             [
                 'class' => UploadFileBehavior::className(),
                 'attributes' => [
-                    self::EVENT_AFTER_VALIDATE => ['img'],
+                    self::EVENT_BEFORE_VALIDATE => ['img'],
                 ],
             ],
             [
