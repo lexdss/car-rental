@@ -67,6 +67,7 @@ class CategorySearch extends Category
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
             ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'img', $this->img])
             ->andFilterWhere(['like', 'img', $this->img]);
 
         return $dataProvider;
