@@ -89,11 +89,12 @@ class Car extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'company_id' => 'ID марки',
+            'company_id' => 'Марка',
+            'companyName' => 'Марка',
             'name' => 'Название',
             'slug' => 'Символьный код',
-            'category_id' => 'ID Типа авто',
-            'categoryName' => 'Тип авто',
+            'category_id' => 'Категория',
+            'categoryName' => 'Категория',
             'year' => 'Год выпуска',
             'speed' => 'Скорость',
             'engine' => 'Двигатель',
@@ -105,7 +106,6 @@ class Car extends \yii\db\ActiveRecord
             'discount_1' => 'Скидка 1 (3-7 дней)',
             'discount_2' => 'Скидка 2 (от 7 дней)',
             'file' => 'Изображение',
-            'companyName' => 'Марка',
             'up_date' => 'Изменение'
         ];
     }
