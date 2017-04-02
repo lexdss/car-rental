@@ -101,7 +101,7 @@ $this->title = 'Главная страница';
 
                             <div class="col-xs-12 col-sm-6 col-md-3">
                                 <a href=""><img src="<?= $category->img ?>" class="img-response"></a>
-                                <h4><a href="/economy"><?= $category->name ?></a></h4>
+                                <h4><a href="<?= Url::to(['site/category', 'value' => $category->slug])?>"><?= $category->name ?></a></h4>
                                 <p class="text-justify"><?= $category->short_description ?></p>
                             </div>
 

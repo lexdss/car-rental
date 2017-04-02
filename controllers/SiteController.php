@@ -104,9 +104,12 @@ class SiteController extends Controller
      */
     public function actionCategory()
     {
-        $model = Category::findOne(['slug' => Yii::$app->request('value')]);
+        if (!$category = Category::findOne(['slug' => Yii::$app->request->get('value')]))
+            throw new NotFoundHttpException();
 
-        return $this->render('category', ['model' => $model]);
+        $model = Car::find()->where(['category_id' => $category->id])->all();
+
+        return $this->render('category', ['model' => $model, 'category' => $category]);
     }
 
     /**

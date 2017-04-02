@@ -42,12 +42,15 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => true,
             'rules' => [
+                '' => 'site/index',
                 'admin' => 'admin/admin/index',
                 'admin/<_c:[\w\-]+>' => 'admin/<_c>/index',
                 'admin/<_c:[\w\-]+>/<_a:[\w\-]+>' => 'admin/<_c>/<_a>',
+                '<value:[\w\-]+>' => 'site/category',
                 '<_a:[\w\-]+>/<value:[\w\-]+>' => 'site/<_a>',
-                '<value:[\w\-]+>' => 'site/category'
+
             ],
         ]
     ],
