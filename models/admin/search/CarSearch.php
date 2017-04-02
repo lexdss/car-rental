@@ -41,7 +41,7 @@ class CarSearch extends Car
      */
     public function search($params)
     {
-        $query = Car::find();
+        $query = Car::find()->orderBy(['up_date' => SORT_DESC]);
 
         // add conditions that should always apply here
 

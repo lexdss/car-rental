@@ -41,7 +41,7 @@ class CompanySearch extends Company
      */
     public function search($params)
     {
-        $query = Company::find();
+        $query = Company::find()->orderBy(['up_date' => SORT_DESC]);
 
         // add conditions that should always apply here
 
