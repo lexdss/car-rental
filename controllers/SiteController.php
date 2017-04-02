@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Car;
 use app\models\Company;
+use app\models\Category;
 
 class SiteController extends Controller
 {
@@ -65,7 +66,8 @@ class SiteController extends Controller
     {
         $model = Car::find()->all();
         $companies = Company::find()->all();
-        return $this->render('index', ['model' => $model, 'companies' => $companies]);
+        $categories = Category::find()->all();
+        return $this->render('index', ['model' => $model, 'companies' => $companies, 'categories' => $categories]);
     }
 
     /**
@@ -95,6 +97,16 @@ class SiteController extends Controller
             throw new NotFoundHttpException('Такой автомобиль не найден');
 
         return $this->render('detail', ['model' => $model]);
+    }
+
+    /**
+     * Car's category
+     */
+    public function actionCategory()
+    {
+        $model = Category::findOne(['slug' => Yii::$app->request('value')]);
+
+        return $this->render('category', ['model' => $model]);
     }
 
     /**

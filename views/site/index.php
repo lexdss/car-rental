@@ -3,6 +3,7 @@
  * Main page
  *
  * @var $companies \app\models\Company[]
+ * @var $categories \app\models\Category[]
  */
 use app\widgets\CarsBlock\CarsBlock;
 use yii\helpers\Url;
@@ -90,35 +91,28 @@ $this->title = 'Главная страница';
     </div>
 </section>
 
-<section class="selection">
-    <div class="container">
-        <div class="row">
-            <div class="type">
-                <div class="col-xs-12 col-sm-6 col-md-2 col-md-offset-2">
-                    <a href=""><img src="img/car-1.jpg" class="img-response"></a>
-                    <h4><a href="/economy">Эконом класс</a></h4>
-                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae eos, excepturi dicta, dignissimos reiciendis sunt?</p>
+<?php if ($categories): ?>
+    <section class="selection">
+        <div class="container">
+            <div class="row">
+                <div class="category">
+
+                        <?php foreach ($categories as $category): ?>
+
+                            <div class="col-xs-12 col-sm-6 col-md-3">
+                                <a href=""><img src="<?= $category->img ?>" class="img-response"></a>
+                                <h4><a href="/economy"><?= $category->name ?></a></h4>
+                                <p class="text-justify"><?= $category->short_description ?></p>
+                            </div>
+
+                        <?php endforeach; ?>
+
+                    <div class="clearfix"></div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-2">
-                    <a href=""><img src="img/car-2.jpg" class="img-response"></a>
-                    <h4><a href="/middle">Средний класс</a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, accusamus. Animi, voluptas, sunt?</p>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-2">
-                    <a href=""><img src="img/car-3.jpg" class="img-response"></a>
-                    <h4><a href="/bussines">Бизнес-класс</a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum quisquam deleniti impedit consectetur officia voluptatem enim!</p>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-2">
-                    <a href=""><img src="img/car-4.jpg" class="img-response"></a>
-                    <h4><a href="/vip">VIP-авто</a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, obcaecati molestias vero reiciendis tempora!</p>
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+<?php endif; ?>
 
 <h2 class="text-center">Популярные предложения</h2>
 <?= CarsBlock::widget(); ?>

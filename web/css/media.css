@@ -10,7 +10,7 @@
 	footer .site-info{
 		text-align: center;
 	}
-	.selection .type > div{
+	.selection .category > div{
 		height: 310px;
 	}
 	.datetime-rent>div{
@@ -48,11 +48,11 @@
 	.btn-hamburger{
 		background-color: #E1DED8;
 	}
-	.selection .type > div{
-		height: auto;
+	.selection .category > div{
+		height: 160px;
 	}
-	.selection .type > div img{
-		width: 160px;
+	.selection .category > div img{
+		width: auto;
 	}
 	section.car-list .year{
 		display: none;

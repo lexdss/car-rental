@@ -56,19 +56,19 @@ header .header-img{
 }
 
 /*SELECTION*/
-.selection .type{
+.selection .category{
 	text-align: center;
 }
-.selection .type > div{
+.selection .category > div{
 	padding: 20px 10px 0 10px;
 }
-.selection .type > div img{
-	width: 100%;
+.selection .category > div img{
+	height: 160px;
 }
-.selection .type > div h4{
+.selection .category > div h4{
 	text-align: center;
 }
-.selection .type > div p{
+.selection .category > div p{
 	text-align: center;
 	word-wrap: break-word;
 }
