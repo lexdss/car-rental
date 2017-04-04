@@ -14,7 +14,7 @@ class m170323_162204_create_user_table extends Migration
     {
         $this->createTable('user', [
             'id' => $this->primaryKey(),
-            'type' => "ENUM('user', 'admin', 'guest')",
+            'role' => $this->string(5),
             'name' => $this->string(25)->notNull(),
             'surname' => $this->string(25)->notNull(),
             'patronymic' => $this->string(25),
