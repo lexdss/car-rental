@@ -12,6 +12,7 @@ use app\models\ContactForm;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;
+use app\models\forms\UserRegisterForm;
 
 class SiteController extends Controller
 {
@@ -68,6 +69,22 @@ class SiteController extends Controller
         $companies = Company::find()->all();
         $categories = Category::find()->all();
         return $this->render('index', ['model' => $model, 'companies' => $companies, 'categories' => $categories]);
+    }
+
+    /**
+     * Register user
+     */
+    public function actionRegister()
+    {
+        $model = new UserRegisterForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->register();
+
+            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
+        }
+
+        return $this->render('register', ['model' => $model]);
     }
 
     /**

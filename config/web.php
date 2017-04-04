@@ -46,6 +46,7 @@ $config = [
             'rules' => [
                 '' => 'site/index',
                 'admin' => 'admin/admin/index',
+                'register' => 'site/register',
                 'admin/<_c:[\w\-]+>' => 'admin/<_c>/index',
                 'admin/<_c:[\w\-]+>/<_a:[\w\-]+>' => 'admin/<_c>/<_a>',
                 '<value:[\w\-]+>' => 'site/category',
