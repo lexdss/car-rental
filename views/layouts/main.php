@@ -55,13 +55,7 @@ $this->beginPage();
         </div>
     </header>
 
-    <section>
-        <div class="container">
-            <div class="row">
-                <?= $content; ?>
-            </div>
-        </div>
-    </section>
+        <?= $content; ?>
 
     <footer>
         <div class="container">
