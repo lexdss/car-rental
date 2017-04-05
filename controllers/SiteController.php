@@ -7,12 +7,12 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;
 use app\models\forms\UserRegisterForm;
+use app\models\forms\LoginForm;
 
 class SiteController extends Controller
 {
@@ -31,12 +31,6 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -88,6 +82,21 @@ class SiteController extends Controller
     }
 
     /**
+     * Login user
+     */
+    public function actionLogin()
+    {
+        $model = new LoginForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            Yii::$app->user->login($model->getUser());
+            return $this->goHome();
+        }
+
+        return $this->render('login', ['model' => $model]);
+    }
+
+    /**
      * Car company page
      *
      * @return string
@@ -134,7 +143,7 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionLogin()
+    /*public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -147,7 +156,7 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Logout action.

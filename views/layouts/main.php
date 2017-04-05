@@ -2,6 +2,7 @@
 
 use app\assets\AppAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -36,12 +37,16 @@ $this->beginPage();
 
                     <div class="navbar-collapse collapse" id="top-menu">
                         <ul class="list-inline navbar-right">
-                            <a href="#"><li>Главная</li></a>
+                            <a href="<?=Url::to(['site/index'])?>"><li>Главная</li></a>
                             <a href="#"><li>Машины</li></a>
                             <a href="#"><li>Условия аренды</li></a>
                             <a href="#"><li>О компании</li></a>
-                            <a href="#"><li>Пункты проката</li></a>
-                            <a href="#"><li>Контакты</li></a>
+                            <?php if (Yii::$app->user->isGuest): ?>
+                                <a href="<?=Url::to(['site/register'])?>"><li>Регистрация</li></a>
+                                <a href="<?=Url::to(['site/login'])?>"><li>Вход</li></a>
+                            <?php else: ?>
+                                <a href="<?=Url::to(['site/logout'])?>"><li>Выход</li></a>
+                            <?php endif; ?>
                         </ul>
                     </div>
 

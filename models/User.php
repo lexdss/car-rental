@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\base\NotSupportedException;
 
 /**
  * This is the model class for table "user".
@@ -21,7 +22,7 @@ use yii\behaviors\TimestampBehavior;
  * @property UserOrder[] $userOrders
  * @property Order[] $orders
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * @inheritdoc
@@ -57,5 +58,30 @@ class User extends \yii\db\ActiveRecord
     public function getOrders()
     {
         return $this->hasMany(Order::className(), ['id' => 'order_id'])->viaTable('user_order', ['user_id' => 'id']);
+    }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        throw new NotSupportedException('findIdentityByAccessToken не реализован');
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        throw new NotSupportedException('getAuthKey не реализован');
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        throw new NotSupportedException('validateAuthKey не реализован');
     }
 }

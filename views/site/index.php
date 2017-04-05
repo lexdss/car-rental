@@ -5,6 +5,7 @@
  * @var $companies \app\models\Company[]
  * @var $categories \app\models\Category[]
  */
+
 use app\widgets\CarsBlock\CarsBlock;
 use yii\helpers\Url;
 
