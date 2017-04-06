@@ -3,9 +3,6 @@
 namespace app\controllers\admin;
 
 use yii\web\Controller;
-use yii\filters\AccessControl;
-use Yii;
-use yii\web\NotFoundHttpException;
 
 class AdminController extends  Controller
 {
@@ -17,24 +14,6 @@ class AdminController extends  Controller
     public function getViewPath()
     {
         return '@app/views/admin';
-    }
-
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->user->identity->role == 'admin';
-                        }
-                    ]
-                ]
-            ]
-        ];
     }
 
     /**
