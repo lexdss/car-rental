@@ -24,13 +24,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout', 'register', 'login'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['register', 'login'],
+                        'allow' => true,
+                        'roles' => ['?']
+                    ]
                 ],
             ],
         ];
@@ -137,26 +142,6 @@ class SiteController extends Controller
 
         return $this->render('category', ['model' => $model, 'category' => $category]);
     }
-
-    /**
-     * Login action.
-     *
-     * @return string
-     */
-    /*public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }*/
 
     /**
      * Logout action.
