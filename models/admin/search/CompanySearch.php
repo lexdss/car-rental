@@ -18,8 +18,8 @@ class CompanySearch extends Company
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name', 'slug', 'description', 'img', 'up_date'], 'safe'],
+            ['up_date', 'integer'],
+            [['name', 'slug'], 'safe'],
         ];
     }
 
@@ -64,8 +64,7 @@ class CompanySearch extends Company
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'img', $this->img]);
+            ->andFilterWhere(['like', 'up_date', $this->up_date]);
 
         return $dataProvider;
     }
