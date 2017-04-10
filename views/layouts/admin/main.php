@@ -40,6 +40,7 @@ AdminAsset::register($this);
             ['label' => 'Автомобили', 'url' => ['/admin/car']],
             ['label' => 'Марки', 'url' => ['/admin/company']],
             ['label' => 'Категории', 'url' => ['/admin/category']],
+            ['label' => 'Пользователи', 'url' => ['/admin/user']],
             ['label' => 'Выход (' . Yii::$app->user->identity->email . ')', 'url' => ['/site/logout']]
         ],
     ]);
