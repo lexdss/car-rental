@@ -25,6 +25,13 @@ echo GridView::widget([
         [
             'attribute' => 'add_date',
             'format' => ['date', 'php:Y-m-d H:i']
+        ],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'visibleButtons' => [
+                'update' => false,
+                'delete' => false
+            ]
         ]
     ]
 ]);
