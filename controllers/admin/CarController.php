@@ -46,7 +46,7 @@ class CarController extends AdminController
      */
     public function actionIndex()
     {
-        $searchModel = new CarSearch();
+        $searchModel = new CarSearch(['scenario' => CarSearch::SCENARIO_SEARCH]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

@@ -3,7 +3,6 @@
 namespace app\models\admin\search;
 
 use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Car;
 
@@ -12,14 +11,16 @@ use app\models\Car;
  */
 class CarSearch extends Car
 {
+    const SCENARIO_SEARCH = 'search';
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'company_id', 'year', 'speed', 'price', 'discount_1', 'discount_2'], 'integer'],
-            [['name', 'slug', 'category_id', 'engine', 'color', 'transmission', 'privod', 'description', 'img'], 'safe'],
+            [['price'], 'integer'],
+            [['price', 'name', 'slug', 'categoryName', 'companyName'], 'safe']
         ];
     }
 
@@ -28,8 +29,9 @@ class CarSearch extends Car
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return [
+            self::SCENARIO_SEARCH => ['price', 'name', 'slug', 'categoryName', 'companyName']
+        ];
     }
 
     /**
@@ -53,30 +55,18 @@ class CarSearch extends Car
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'company_id' => $this->company_id,
-            'year' => $this->year,
-            'speed' => $this->speed,
             'price' => $this->price,
-            'discount_1' => $this->discount_1,
-            'discount_2' => $this->discount_2,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'categoryName', $this->categoryName])
-            ->andFilterWhere(['like', 'engine', $this->engine])
-            ->andFilterWhere(['like', 'color', $this->color])
-            ->andFilterWhere(['like', 'transmission', $this->transmission])
-            ->andFilterWhere(['like', 'privod', $this->privod])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'img', $this->img]);
+            ->andFilterWhere(['like', 'companyName', $this->companyName])
+            ->andFilterWhere(['like', 'categoryName', $this->categoryName]);
 
         return $dataProvider;
     }

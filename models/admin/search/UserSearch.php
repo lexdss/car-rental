@@ -7,11 +7,22 @@ use app\models\User;
 
 class UserSearch extends User
 {
+    const SCENARIO_SEARCH = 'search';
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
             [['name', 'surname', 'patronymic', 'email', 'phone'], 'safe']
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_SEARCH => ['name', 'surname', 'patronymic', 'email', 'phone']
         ];
     }
 
@@ -30,14 +41,15 @@ class UserSearch extends User
             'query' => $query
         ]);
 
-        if(!$this->validate())
+        if(!$this->validate()) {
             return $dataProvider;
+        }
 
         $query->andFilterWhere(['like', 'name', $this->name])
-        ->andFilterWhere(['like', 'surname', $this->surname])
-        ->andFilterWhere(['like', 'patronymic', $this->patronymic])
-        ->andFilterWhere(['like', 'email', $this->email])
-        ->andFilterWhere(['like', 'phone', $this->phone]);
+            ->andFilterWhere(['like', 'surname', $this->surname])
+            ->andFilterWhere(['like', 'patronymic', $this->patronymic])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'phone', $this->phone]);
 
         return $dataProvider;
     }

@@ -3,7 +3,6 @@
 namespace app\models\admin\search;
 
 use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Category;
 
@@ -12,14 +11,12 @@ use app\models\Category;
  */
 class CategorySearch extends Category
 {
-    /**
-     * @inheritdoc
-     */
+    const SCENARIO_SEARCH = 'search';
+
     public function rules()
     {
         return [
-            ['up_date', 'integer'],
-            [['name', 'slug', 'short_description'], 'safe'],
+            [['name', 'slug', 'short_description'], 'safe']
         ];
     }
 
@@ -28,8 +25,9 @@ class CategorySearch extends Category
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return [
+            self::SCENARIO_SEARCH => ['name', 'slug', 'short_description']
+        ];
     }
 
     /**
@@ -52,19 +50,11 @@ class CategorySearch extends Category
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'up_date' => $this->up_date,
-        ]);
-
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'up_date', $this->up_date])
+            ->andFilterWhere(['like', 'short_description', $this->short_description])
             ->andFilterWhere(['like', 'slug', $this->slug]);
 
         return $dataProvider;

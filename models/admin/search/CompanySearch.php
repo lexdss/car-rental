@@ -3,7 +3,6 @@
 namespace app\models\admin\search;
 
 use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Company;
 
@@ -12,13 +11,14 @@ use app\models\Company;
  */
 class CompanySearch extends Company
 {
+    const SCENARIO_SEARCH = 'search';
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            ['up_date', 'integer'],
             [['name', 'slug'], 'safe'],
         ];
     }
@@ -28,8 +28,9 @@ class CompanySearch extends Company
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return [
+            self::SCENARIO_SEARCH => ['name', 'slug']
+        ];
     }
 
     /**
@@ -53,18 +54,11 @@ class CompanySearch extends Company
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
-
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'up_date', $this->up_date]);
+            ->andFilterWhere(['like', 'slug', $this->slug]);
 
         return $dataProvider;
     }

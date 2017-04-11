@@ -4,8 +4,10 @@ namespace app\components;
 
 use Yii;
 use yii\behaviors\AttributeBehavior;
+use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use app\models\helpers\FileHelper;
+use yii\db\ActiveRecord;
 
 /**
  * Class UploadFileBehavior
@@ -15,7 +17,12 @@ class UploadFileBehavior extends AttributeBehavior
 {
     public function getValue($event)
     {
-        if ($file = UploadedFile::getInstance($this->owner, 'file')){
+        // Only save|update
+        if ($this->owner->scenario != ActiveRecord::SCENARIO_DEFAULT) {
+            return null;
+        }
+
+        if ($file = UploadedFile::getInstance($this->owner, 'file')) {
             $fileName = FileHelper::getRandomPath($file);
 
             if ($file->saveAs(Yii::getAlias('@uploadroot') . $fileName)) {
