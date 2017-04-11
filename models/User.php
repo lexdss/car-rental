@@ -44,6 +44,24 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Имя',
+            'surname' => 'Фамилия',
+            'patronymic' => 'Отчество',
+            'fullName' => 'ФИО',
+            'email' => 'E-mail',
+            'phone' => 'Телефон',
+            'add_date' => 'Дата регистрации'
+        ];
+    }
+
+    public function getFullName()
+    {
+        return $this->name . ' ' . $this->surname . ' ' . $this->patronymic;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
