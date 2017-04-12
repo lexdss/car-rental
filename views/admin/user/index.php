@@ -32,7 +32,7 @@ echo GridView::widget([
                 'update' => false,
                 'delete' => false
             ]
-        ]
+        ],
     ]
 ]);
 
