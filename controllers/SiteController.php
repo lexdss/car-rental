@@ -11,8 +11,10 @@ use app\models\ContactForm;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;
+use app\models\Order;
 use app\models\forms\UserRegisterForm;
 use app\models\forms\LoginForm;
+use app\models\forms\OrderForm;
 
 class SiteController extends Controller
 {
@@ -155,31 +157,26 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return string
-     */
-    public function actionContact()
+    public function actionOrder()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
+        if (!$car = Car::findOne(Yii::$app->request->get('id'))) {
+            throw new NotFoundHttpException('Страница не найдена');
         }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
+        $registerModel = Yii::$app->user->isGuest ? new UserRegisterForm() : null;
+        $orderModel = new OrderForm();
+
+        if (Yii::$app->request->post() && $orderModel->load(Yii::$app->request->post())) {
+            if($orderModel->validate()) {
+                $orderModel->car_id = $car->id;
+                $orderModel->save();
+            }
+        }
+
+        return $this->render('order', [
+            'orderModel' => $orderModel,
+            'registerModel' => $registerModel,
+            'car' => $car
+        ]);
     }
 }

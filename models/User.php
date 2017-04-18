@@ -19,7 +19,6 @@ use yii\base\NotSupportedException;
  * @property string $password
  * @property integer $add_date
  *
- * @property UserOrder[] $userOrders
  * @property Order[] $orders
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -65,18 +64,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getOrders()
+    {
+        return $this->hasMany(Order::className(), ['user_id' => 'id']);
+    }
+
+    /*
     public function getUserOrders()
     {
         return $this->hasMany(UserOrder::className(), ['user_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getOrders()
     {
         return $this->hasMany(Order::className(), ['id' => 'order_id'])->viaTable('user_order', ['user_id' => 'id']);
-    }
+    }*/
 
     public static function findIdentity($id)
     {

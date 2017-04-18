@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $model->fullName;
                             <td>От <?= $model->price; ?> руб.</td>
                         </tr>
                     </table>
-                    <button class="btn btn-primary btn-lg">Заказать</button>
+                    <a class="btn btn-primary btn-lg" href="<?= Url::to(['site/order', 'id' => $model->id])?>">Заказать</a>
                 </div>
             </div>
         </div>

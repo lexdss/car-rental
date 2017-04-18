@@ -51,9 +51,9 @@ $config = [
                 'logout' => 'site/logout',
                 'admin/<_c:[\w\-]+>' => 'admin/<_c>/index',
                 'admin/<_c:[\w\-]+>/<_a:[\w\-]+>' => 'admin/<_c>/<_a>',
+                'order/<id:\d+>' => 'site/order',
                 '<value:[\w\-]+>' => 'site/category',
                 '<_a:[\w\-]+>/<value:[\w\-]+>' => 'site/<_a>',
-
             ],
         ]
     ],
