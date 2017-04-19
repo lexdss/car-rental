@@ -55,6 +55,9 @@ $config = [
                 '<value:[\w\-]+>' => 'site/category',
                 '<_a:[\w\-]+>/<value:[\w\-]+>' => 'site/<_a>',
             ],
+        ],
+        'formatter' => [
+            'dateFormat' => 'dd.MM.yyyy'
         ]
     ],
     'params' => $params,
