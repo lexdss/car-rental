@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Faker\Provider\cs_CZ\DateTime;
 use Yii;
 use app\components\UploadFileBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -34,6 +35,7 @@ use yii\behaviors\TimestampBehavior;
 class Car extends \yii\db\ActiveRecord
 {
     public $file;
+    private $_days; // How many days
 
     /**
      * Update up_date column when save and update model
@@ -156,5 +158,40 @@ class Car extends \yii\db\ActiveRecord
     public function getCategoryName()
     {
         return $this->category->name;
+    }
+
+    public function getPriceForTime($start, $end)
+    {
+        $start = new \DateTime($start);
+        $end = new \DateTime($end);
+        $this->_days = $start->diff($end)->d;
+
+        $data['discount'] = $this->getDiscount();
+        $data['price'] = $this->getFullPrice();
+
+        return json_encode($data);
+    }
+
+    private function getDiscount()
+    {
+        if ($this->discount_1 && $this->_days >= Yii::$app->params['discount_1']) {
+            if ($this->discount_2 && $this->_days >= Yii::$app->params['discount_2']) {
+                return $this->discount_2;
+            }
+
+            return $this->discount_1;
+        }
+
+        return 0;
+    }
+
+    private function getFullPrice()
+    {
+        $discount = $this->getDiscount();
+        if ($discount == 0) {
+            return $this->price;
+        } else {
+            return $this->price - ($discount / 100 * $this->price);
+        }
     }
 }
