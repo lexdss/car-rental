@@ -105,8 +105,8 @@ class Car extends \yii\db\ActiveRecord
             'privod' => 'Привод',
             'description' => 'Описание',
             'price' => 'Цена',
-            'discount_1' => 'Скидка 1 (3-7 дней)',
-            'discount_2' => 'Скидка 2 (от 7 дней)',
+            'discount_1' => 'Скидка от ' . Yii::$app->params['discount_1'] . ' дней',
+            'discount_2' => 'Скидка от ' . Yii::$app->params['discount_2'] . ' дней',
             'file' => 'Изображение',
             'up_date' => 'Изменение'
         ];
@@ -193,5 +193,13 @@ class Car extends \yii\db\ActiveRecord
         } else {
             return $this->price - ($discount / 100 * $this->price);
         }
+    }
+
+    public function getMinPrice()
+    {
+        // For maximum discount
+        $this->_days = Yii::$app->params['discount_2'] + Yii::$app->params['discount_1'];
+
+        return $this->getFullPrice();
     }
 }
