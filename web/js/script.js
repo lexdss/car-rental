@@ -11,12 +11,14 @@ $(document).ready(function(){
         var datesStr = {};
 
         $('#orderform-start_rent').datepicker({
+            minDate: 0,
             onSelect: function(dateText, inst) {
                 datesStr.start_rent = dateText;
                 sendAjax();
             }
         });
         $('#orderform-end_rent').datepicker({
+            minDate: 0,
             onSelect: function(dateText, inst) {
                 datesStr.end_rent = dateText;
                 sendAjax();
