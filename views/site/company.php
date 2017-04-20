@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $company->name;
                                 </td>
                                 <td><a href="<?= Url::to(['site/car', 'value' => $car->slug]); ?>"><?= $car->fullName; ?></a></td>
                                 <td class="year"><?= $car->year; ?> год</td>
-                                <td>От <?= $car->price; ?> руб/день</td>
+                                <td>От <?= $car->minPrice; ?> руб/день</td>
                                 <td><button class="btn btn-success">Заказать</button></td>
                             </tr>
                         <?php endforeach; ?>

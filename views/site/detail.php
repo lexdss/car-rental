@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $model->fullName;
                         </tr>
                         <tr>
                             <td><?= $model->getAttributeLabel('price') ?></td>
-                            <td>От <?= $model->price; ?> руб.</td>
+                            <td>От <?= $model->minPrice; ?> руб.</td>
                         </tr>
                     </table>
                     <a class="btn btn-primary btn-lg" href="<?= Url::to(['site/order', 'id' => $model->id])?>">Заказать</a>
