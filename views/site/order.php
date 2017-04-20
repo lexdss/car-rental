@@ -18,7 +18,7 @@ $session = Yii::$app->session;
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-4 col-md-offset-4">
-                <?php if(!$session->hasFlash('order')): ?>
+                <?php if(!$session->hasFlash('orderConfirm')): ?>
                     <?php $form = ActiveForm::begin(); ?>
 
                     <p><strong>Автомобиль:</strong> <a href="<?= Url::to(['site/car', 'value' => $car->slug]); ?>"><?= $car->fullName; ?></a></p>
@@ -41,20 +41,29 @@ $session = Yii::$app->session;
 
                     <?php endif; ?>
 
-                    <?= $form->field($orderModel, 'start_rent', ['template' => '{input}{error}'])->widget(DatePicker::classname(), ['clientOptions' => ['altField' => '#end_rent', 'minDate' => 0]]) ?>
+                    <?=
+                        $form->field($orderModel, 'start_rent')->widget(
+                                DatePicker::classname(),
+                                ['clientOptions' => ['dateFormat' => 'yy']]
+                            );
+                    ?>
 
-                    <?= $form->field($orderModel, 'end_rent')->widget(DatePicker::classname(), ['options' => ['id' => 'end_rent'], 'clientOptions' => ['altField' => '#end_rent', 'minDate' => 0]]) ?>
+                    <?=
+                        $form->field($orderModel, 'end_rent')->widget(
+                                DatePicker::classname()
+                            );
+                    ?>
 
                     <div>
-                        <p>Скидка: 5%</p>
-                        <p>Итого: 856 руб</p>
+                        <p>Скидка: <span id="discount">0</span>%</p>
+                        <p>Итого: <span id="price">0</span> руб</p>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Подтвердить</button>
 
                     <?php ActiveForm::end(); ?>
                 <?php else: ?>
-                    <h3 class="text-warning text-center"><?= $session->getFlash('order') ?></h3>
+                    <h3 class="text-warning text-center"><?= $session->getFlash('orderConfirm') ?></h3>
                 <?php endif; ?>
             </div>
         </div>

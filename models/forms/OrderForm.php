@@ -2,8 +2,12 @@
 
 namespace app\models\forms;
 
+use Yii;
+use app\models\Order;
+
 class OrderForm extends \yii\base\Model
 {
+    public $user_id;
     public $car_id;
     public $price;
     public $start_rent;
@@ -31,8 +35,14 @@ class OrderForm extends \yii\base\Model
 
     public function save()
     {
-        // save
+        $order = new Order();
+
+        $order->car_id = $this->car_id;
+        $order->price = $this->price;
+        $order->start_rent = $this->start_rent;
+        $order->end_rent = $this->end_rent;
+        $order->user_id = $this->user_id;
+
+        return $order->save(false);
     }
-
-
 }

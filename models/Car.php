@@ -185,7 +185,7 @@ class Car extends \yii\db\ActiveRecord
         return 0;
     }
 
-    private function getFullPrice()
+    public function getFullPrice()
     {
         $discount = $this->getDiscount();
         if ($discount == 0) {

@@ -166,10 +166,28 @@ class SiteController extends Controller
         $registerModel = Yii::$app->user->isGuest ? new UserRegisterForm() : null;
         $orderModel = new OrderForm();
 
-        if (Yii::$app->request->post() && $orderModel->load(Yii::$app->request->post())) {
-            if($orderModel->validate()) {
+        // For Ajax
+        if (Yii::$app->request->get('start_rent')) {
+            $request = Yii::$app->request; // TODO вынести в отдельный метод
+            return $car->getPriceForTime($request->get('start_rent'), $request->get('end_rent'));
+        }
+
+        // Create order and register if user is guest
+        if (Yii::$app->request->post()) {
+            if ($registerModel) {
+                if ($registerModel->load(Yii::$app->request->post()) && $registerModel->validate()) {
+                    $user = $registerModel->register(); // TODO Исключение
+                }
+            }
+
+            if($orderModel->load(Yii::$app->request->post()) && $orderModel->validate()) {
+                $orderModel->user_id = ($user->primaryKey) ?: Yii::$app->user->identity->primaryKey;
+                $orderModel->price = $car->fullPrice;
                 $orderModel->car_id = $car->id;
-                $orderModel->save();
+                if ($orderModel->save()) {
+                    Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
+                    return $this->render('order');
+                }// TODO Исключение
             }
         }
 

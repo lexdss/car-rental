@@ -56,6 +56,6 @@ class UserRegisterForm extends \yii\base\Model
         $user->role = $this->role;
         $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
 
-        return $user->save(false);
+        return ($user->save(false)) ? $user : false;
     }
 }
