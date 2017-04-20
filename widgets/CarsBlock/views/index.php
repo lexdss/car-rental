@@ -39,7 +39,7 @@ use yii\helpers\Url;
                                     <?= $car->getAttributeLabel('speed') ?>: До <mark><?= $car->speed; ?> км/ч</mark>
 								</li>
                                 <li>
-                                    <?= $car->getAttributeLabel('price') ?>: <mark>От <?= $car->price; ?> руб</mark>
+                                    <?= $car->getAttributeLabel('price') ?>: <mark>От <?= $car->minPrice; ?> руб</mark>
                                 </li>
 							</ul>
 
