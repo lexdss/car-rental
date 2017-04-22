@@ -18,6 +18,9 @@ use app\models\forms\OrderForm;
 
 class SiteController extends Controller
 {
+    private $_car;
+    private $_user;
+
     /**
      * @inheritdoc
      */
@@ -81,7 +84,6 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->register();
-
             Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
         }
 
@@ -159,42 +161,62 @@ class SiteController extends Controller
 
     public function actionOrder()
     {
-        if (!$car = Car::findOne(Yii::$app->request->get('id'))) {
+        if (!$this->_car = Car::findOne(Yii::$app->request->get('id'))) {
             throw new NotFoundHttpException('Страница не найдена');
         }
 
-        $registerModel = Yii::$app->user->isGuest ? new UserRegisterForm() : null;
-        $orderModel = new OrderForm();
-
         // For Ajax
         if (Yii::$app->request->get('start_rent')) {
-            $request = Yii::$app->request; // TODO вынести в отдельный метод
-            return $car->getPriceForTime($request->get('start_rent'), $request->get('end_rent'));
+            return $this->getAjaxOrderInfo();
         }
 
         // Create order and register if user is guest
         if (Yii::$app->request->post()) {
-            if ($registerModel) {
-                if ($registerModel->load(Yii::$app->request->post()) && $registerModel->validate()) {
-                    $user = $registerModel->register(); // TODO Исключение
-                }
+
+            if (Yii::$app->user->isGuest) {
+                $this->_user = $this->userRegiser();
             }
 
-            if($orderModel->load(Yii::$app->request->post()) && $orderModel->validate()) {
-                $orderModel->user_id = ($user->primaryKey) ?: Yii::$app->user->identity->primaryKey;
-                $orderModel->price = $car->fullPrice;
-                $orderModel->car_id = $car->id;
-                if ($orderModel->save()) {
-                    Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
-                    return $this->render('order');
-                }// TODO Исключение
-            }
+            $this->saveOrder();
         }
 
         return $this->render('order', [
-            'orderModel' => $orderModel,
-            'registerModel' => $registerModel,
-            'car' => $car
+            'orderModel' => new OrderForm(),
+            'registerModel' => new UserRegisterForm(),
+            'car' => $this->_car
         ]);
+    }
+
+    private function getAjaxOrderInfo()
+    {
+        $request = Yii::$app->request;
+        return $this->_car->getPriceForTime($request->get('start_rent'), $request->get('end_rent'));
+    }
+
+    private function userRegiser()
+    {
+        $registerModel = new UserRegisterForm();
+
+        if ($registerModel->load(Yii::$app->request->post()) && $registerModel->validate()) {
+            $user = $registerModel->register();
+            return $user;
+        }// TODO Исключение
+    }
+
+    private function saveOrder()
+    {
+        $orderModel = new OrderForm();
+
+        if($orderModel->load(Yii::$app->request->post()) && $orderModel->validate()) {
+            $orderModel->user_id = ($this->_user->primaryKey) ?: Yii::$app->user->identity->primaryKey;
+            $orderModel->price = $this->_car->fullPrice;
+            $orderModel->car_id = $this->_car->id;
+
+            if ($orderModel->save()) {
+                Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
+
+                return $this->render('order');
+            }// TODO Исключение
+        }
     }
 }
