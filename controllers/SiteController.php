@@ -190,7 +190,11 @@ class SiteController extends Controller
     private function getAjaxOrderInfo()
     {
         $request = Yii::$app->request;
-        return $this->_car->getPriceForTime($request->get('start_rent'), $request->get('end_rent'));
+
+        $data['discount'] = $this->_car->getDiscount($request->get('start_rent'), $request->get('end_rent'));
+        $data['amount'] = $this->_car->getAmount($data['discount']);
+
+        return json_encode($data);
     }
 
     private function userRegiser()
@@ -209,7 +213,6 @@ class SiteController extends Controller
 
         if($orderModel->load(Yii::$app->request->post()) && $orderModel->validate()) {
             $orderModel->user_id = ($this->_user->primaryKey) ?: Yii::$app->user->identity->primaryKey;
-            $orderModel->price = $this->_car->fullPrice;
             $orderModel->car_id = $this->_car->id;
 
             if ($orderModel->save()) {

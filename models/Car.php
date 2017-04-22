@@ -160,22 +160,12 @@ class Car extends \yii\db\ActiveRecord
         return $this->category->name;
     }
 
-    public function getPriceForTime($start, $end)
+    public function getDiscount($start, $end)
     {
-        $start = new \DateTime($start);
-        $end = new \DateTime($end);
-        $this->_days = $start->diff($end)->d;
+        $days = $this->getDays($start, $end);
 
-        $data['discount'] = $this->getDiscount();
-        $data['price'] = $this->getFullPrice();
-
-        return json_encode($data);
-    }
-
-    private function getDiscount()
-    {
-        if ($this->discount_1 && $this->_days >= Yii::$app->params['discount_1']) {
-            if ($this->discount_2 && $this->_days >= Yii::$app->params['discount_2']) {
+        if ($this->discount_1 && $days >= Yii::$app->params['discount_1']) {
+            if ($this->discount_2 && $days >= Yii::$app->params['discount_2']) {
                 return $this->discount_2;
             }
 
@@ -185,9 +175,8 @@ class Car extends \yii\db\ActiveRecord
         return 0;
     }
 
-    public function getFullPrice()
+    public function getAmount($discount)
     {
-        $discount = $this->getDiscount();
         if ($discount == 0) {
             return $this->price;
         } else {
@@ -198,8 +187,21 @@ class Car extends \yii\db\ActiveRecord
     public function getMinPrice()
     {
         // For maximum discount
-        $this->_days = Yii::$app->params['discount_2'] + Yii::$app->params['discount_1'];
+        $days = Yii::$app->params['discount_2'] + Yii::$app->params['discount_1'];
 
-        return $this->getFullPrice();
+        return $this->getAmount($days);
+    }
+
+    private function getDays($start, $end)
+    {
+        if (is_int($start) && is_int($end)) {
+            $start = date('d.m.Y', $start);
+            $end = date('d.m.Y', $end);
+        }
+
+        $start = new \DateTime($start);
+        $end = new \DateTime($end);
+
+        return $this->_days = $start->diff($end)->d;
     }
 }

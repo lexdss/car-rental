@@ -56,7 +56,7 @@ $session = Yii::$app->session;
 
                     <div>
                         <p>Скидка: <span id="discount">0</span>%</p>
-                        <p>Итого: <span id="price">0</span> руб</p>
+                        <p>Итого: <span id="amount">0</span> руб</p>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Подтвердить</button>

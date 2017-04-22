@@ -45,7 +45,7 @@ $(document).ready(function(){
             var data = $.parseJSON(data);
 
             $('#discount').text(data.discount);
-            $('#price').text(data.price);
+            $('#amount').text(data.amount);
         }
 
     })()

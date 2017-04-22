@@ -2,6 +2,7 @@
 
 namespace app\models\forms;
 
+use app\models\Car;
 use Yii;
 use app\models\Order;
 
@@ -36,11 +37,12 @@ class OrderForm extends \yii\base\Model
     public function save()
     {
         $order = new Order();
+        $car = Car::findOne($this->car_id);
 
         $order->car_id = $this->car_id;
-        $order->price = $this->price;
         $order->start_rent = $this->start_rent;
         $order->end_rent = $this->end_rent;
+        $order->price = $car->getAmount($car->getDiscount($this->start_rent, $this->end_rent));
         $order->user_id = $this->user_id;
 
         return $order->save(false);
