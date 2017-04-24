@@ -43,12 +43,17 @@ class CarSearch extends Car
      */
     public function search($params)
     {
-        $query = Car::find()->orderBy(['up_date' => SORT_DESC]);
+        $query = Car::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'up_date' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);

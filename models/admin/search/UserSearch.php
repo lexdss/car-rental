@@ -35,10 +35,15 @@ class UserSearch extends User
     {
         $this->load($params);
 
-        $query = User::find()->orderBy(['id' => SORT_DESC]);
+        $query = User::find();
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         if(!$this->validate()) {

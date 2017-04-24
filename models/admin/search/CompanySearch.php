@@ -42,12 +42,17 @@ class CompanySearch extends Company
      */
     public function search($params)
     {
-        $query = Company::find()->orderBy(['up_date' => SORT_DESC]);
+        $query = Company::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'up_date' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);

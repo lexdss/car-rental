@@ -39,12 +39,17 @@ class CategorySearch extends Category
      */
     public function search($params)
     {
-        $query = Category::find()->orderBy(['up_date' => SORT_DESC]);
+        $query = Category::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'up_date' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);
