@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $id
  * @property integer $car_id
  * @property integer $price
+ * @property integer $status
  * @property integer $start_rent
  * @property integer $end_rent
  * @property integer $create_date
@@ -50,7 +51,7 @@ class Order extends \yii\db\ActiveRecord
             [['car_id', 'price', 'start_rent', 'end_rent'], 'required'],
             [['car_id', 'price', 'user_id'], 'integer'],
             [['car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Car::className(), 'targetAttribute' => ['car_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
 
@@ -68,5 +69,26 @@ class Order extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getStatusString()
+    {
+        switch ($this->status)
+        {
+            case 2:
+                $status = 'В обработке';
+                break;
+            case 3:
+                $status = 'Активный';
+                break;
+            case 4:
+                $status = 'Завершен';
+                break;
+            default:
+                $status = 'Новый';
+                break;
+        }
+
+        return $status;
     }
 }

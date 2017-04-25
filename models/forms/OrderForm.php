@@ -13,6 +13,7 @@ class OrderForm extends \yii\base\Model
     public $price;
     public $start_rent;
     public $end_rent;
+    public $status;
 
     public function rules()
     {
@@ -20,7 +21,8 @@ class OrderForm extends \yii\base\Model
             [['start_rent', 'end_rent'], 'required'],
             ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
             ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
-            ['end_rent', 'compare', 'compareAttribute' => 'start_rent', 'operator' => '>=', 'type' => 'number']
+            ['end_rent', 'compare', 'compareAttribute' => 'start_rent', 'operator' => '>=', 'type' => 'number'],
+            ['status', 'default', 'value' => 1]
         ];
     }
 
@@ -44,6 +46,7 @@ class OrderForm extends \yii\base\Model
         $order->end_rent = $this->end_rent;
         $order->price = $car->getAmount($car->getDiscount($this->start_rent, $this->end_rent));
         $order->user_id = $this->user_id;
+        $order->status = $this->status;
 
         return $order->save(false);
     }
