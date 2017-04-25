@@ -2,9 +2,10 @@
 
 namespace app\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\base\NotSupportedException;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -12,6 +13,7 @@ use yii\base\NotSupportedException;
  * @property integer $id
  * @property string $type
  * @property string $name
+ * @property string $role
  * @property string $surname
  * @property string $patronymic
  * @property string $email
@@ -21,7 +23,7 @@ use yii\base\NotSupportedException;
  *
  * @property Order[] $orders
  */
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -31,6 +33,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'user';
     }
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -43,6 +48,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return [
@@ -56,6 +64,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getFullName()
     {
         return $this->name . ' ' . $this->surname . ' ' . $this->patronymic;

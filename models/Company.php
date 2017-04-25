@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use app\components\UploadFileBehavior;
 
 /**
@@ -17,7 +18,7 @@ use app\components\UploadFileBehavior;
  *
  * @property Car[] $cars
  */
-class Company extends \yii\db\ActiveRecord
+class Company extends ActiveRecord
 {
 
     public $file;

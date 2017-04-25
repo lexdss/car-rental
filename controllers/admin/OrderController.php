@@ -32,10 +32,15 @@ class OrderController extends AdminController
 
     public function actionView($id)
     {
-        if (!$model = Order::findOne($id)) {
-            throw new NotFoundHttpException();
-        }
+        return $this->render('view', ['model' => $this->findModel($id)]);
+    }
 
-        return $this->render('view', ['model' => $model]);
+    protected function findModel($id)
+    {
+        if (($model = Order::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
     }
 }

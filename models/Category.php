@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use app\components\UploadFileBehavior;
@@ -32,6 +31,9 @@ class Category extends ActiveRecord
         return 'category';
     }
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [

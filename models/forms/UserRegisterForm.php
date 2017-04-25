@@ -3,9 +3,10 @@
 namespace app\models\forms;
 
 use Yii;
+use yii\base\Model;
 use app\models\User;
 
-class UserRegisterForm extends \yii\base\Model
+class UserRegisterForm extends Model
 {
     public $name;
     public $surname;
@@ -44,18 +45,24 @@ class UserRegisterForm extends \yii\base\Model
         ];
     }
 
-    public function register()
+    public function register($postData)
     {
         $user = new User();
 
-        $user->name = $this->name;
-        $user->surname = $this->surname;
-        $user->patronymic = $this->patronymic;
-        $user->email = $this->email;
-        $user->phone = $this->phone;
-        $user->role = $this->role;
-        $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+        if ($this->load($postData) && $this->validate()) {
+            $user->name = $this->name;
+            $user->surname = $this->surname;
+            $user->patronymic = $this->patronymic;
+            $user->email = $this->email;
+            $user->phone = $this->phone;
+            $user->role = $this->role;
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+        }
 
-        return ($user->save(false)) ? $user : false;
+        if ($user->save(false) && Yii::$app->user->login($user)) {
+            return $user;
+        } else {
+            return false; //TODO Исключние
+        }
     }
 }

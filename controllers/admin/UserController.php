@@ -30,6 +30,10 @@ class UserController extends AdminController
         return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $userSearch]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionView($id)
     {
         return $this->render('view', ['model' => $this->findModel($id)]);

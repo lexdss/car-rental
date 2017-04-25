@@ -6,20 +6,21 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\models\ContactForm;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;
-use app\models\Order;
 use app\models\forms\UserRegisterForm;
 use app\models\forms\LoginForm;
 use app\models\forms\OrderForm;
 
+/**
+ * Class SiteController
+ *
+ * @property \app\models\Car $_car
+ */
 class SiteController extends Controller
 {
     private $_car;
-    private $_user;
 
     /**
      * @inheritdoc
@@ -82,9 +83,9 @@ class SiteController extends Controller
     {
         $model = new UserRegisterForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->register();
-            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
+        if (Yii::$app->request->post()) {
+            $model->register(Yii::$app->request->post());
+            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы'); // TODO редирект
         }
 
         return $this->render('register', ['model' => $model]);
@@ -93,7 +94,7 @@ class SiteController extends Controller
     /**
      * Login user
      */
-    public function actionLogin()
+    public function actionLogin() // TODO посмотреть
     {
         $model = new LoginForm();
 
@@ -103,6 +104,18 @@ class SiteController extends Controller
         }
 
         return $this->render('login', ['model' => $model]);
+    }
+
+    /**
+     * Logout action.
+     *
+     * @return string
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->goHome();
     }
 
     /**
@@ -148,17 +161,11 @@ class SiteController extends Controller
     }
 
     /**
-     * Logout action.
+     * Create (and register user) new order
      *
      * @return string
+     * @throws NotFoundHttpException
      */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
     public function actionOrder()
     {
         if (!$this->_car = Car::findOne(Yii::$app->request->get('id'))) {
@@ -173,8 +180,10 @@ class SiteController extends Controller
         // Create order and register if user is guest
         if (Yii::$app->request->post()) {
 
+            // Register new user
             if (Yii::$app->user->isGuest) {
-                $this->_user = $this->userRegiser();
+                $userRegisterForm = new UserRegisterForm();
+                $userRegisterForm->register(Yii::$app->request->post());
             }
 
             $this->saveOrder();
@@ -187,6 +196,11 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Return json with discount and amount for ajax
+     *
+     * @return string
+     */
     private function getAjaxOrderInfo()
     {
         $request = Yii::$app->request;
@@ -197,29 +211,17 @@ class SiteController extends Controller
         return json_encode($data);
     }
 
-    private function userRegiser()
-    {
-        $registerModel = new UserRegisterForm();
-
-        if ($registerModel->load(Yii::$app->request->post()) && $registerModel->validate()) {
-            $user = $registerModel->register();
-            return $user;
-        }// TODO Исключение
-    }
-
+    /**
+     * Save new order
+     *
+     * @return string
+     */
     private function saveOrder()
     {
         $orderModel = new OrderForm();
+        $orderModel->save(Yii::$app->request->post());
+        Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
 
-        if($orderModel->load(Yii::$app->request->post()) && $orderModel->validate()) {
-            $orderModel->user_id = ($this->_user->primaryKey) ?: Yii::$app->user->identity->primaryKey;
-            $orderModel->car_id = $this->_car->id;
-
-            if ($orderModel->save()) {
-                Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
-
-                return $this->render('order');
-            }// TODO Исключение
-        }
+        return $this->render('order');
     }
 }

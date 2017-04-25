@@ -4,8 +4,9 @@ namespace app\models\forms;
 
 use app\models\User;
 use Yii;
+use yii\base\Model;
 
-class LoginForm extends \yii\base\Model
+class LoginForm extends Model
 {
     public $email;
     public $password;
@@ -31,18 +32,21 @@ class LoginForm extends \yii\base\Model
      * Validate user email and password
      *
      * @param $attribute
-     * @param $params
      */
-    public function validateUser($attribute, $params)
+    public function validateUser($attribute)
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !Yii::$app->getSecurity()->validatePassword($this->{$attribute}, $user->{$attribute}))
+            if (!$user || !Yii::$app->getSecurity()->validatePassword($this->{$attribute}, $user->{$attribute})) {
                 $this->addError($attribute, 'Не верный пользователь или пароль');
+            }
         }
     }
 
+    /**
+     * @return \app\models\User
+     */
     public function getUser()
     {
         return User::findOne(['email' => $this->email]);

@@ -7,7 +7,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Company;
 use app\models\admin\search\CompanySearch;
-use app\controllers\admin\AdminController;
 
 /**
  * CompanyController implements the CRUD actions for Company model.
@@ -126,7 +125,7 @@ class CompanyController extends AdminController
         if (($model = Company::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Страница не найдена.');
         }
     }
 }

@@ -9,7 +9,6 @@ use yii\filters\VerbFilter;
 use app\models\Car;
 use app\models\Company;
 use app\models\admin\search\CarSearch;
-use app\controllers\admin\AdminController;
 use app\models\Category;
 
 /**
@@ -133,7 +132,7 @@ class CarController extends AdminController
         if (($model = Car::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Страница не найдена');
         }
     }
 }

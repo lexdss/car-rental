@@ -5,8 +5,6 @@ namespace app\controllers\admin;
 use Yii;
 use app\models\Category;
 use app\models\admin\search\CategorySearch;
-use app\controllers\admin\AdminController;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -127,7 +125,7 @@ class CategoryController extends AdminController
         if (($model = Category::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Страница не найдена');
         }
     }
 }

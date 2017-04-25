@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "order".
@@ -20,7 +20,7 @@ use yii\behaviors\TimestampBehavior;
  * @property Car $car
  * @property User $user
  */
-class Order extends \yii\db\ActiveRecord
+class Order extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -43,19 +43,6 @@ class Order extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['car_id', 'price', 'start_rent', 'end_rent'], 'required'],
-            [['car_id', 'price', 'user_id'], 'integer'],
-            [['car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Car::className(), 'targetAttribute' => ['car_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
-        ];
-    }
-
-    /**
      * @return \yii\db\ActiveQuery
      */
     public function getCar()
@@ -71,6 +58,9 @@ class Order extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
+    /**
+     * @return string
+     */
     public function getStatusString()
     {
         switch ($this->status)

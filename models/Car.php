@@ -2,10 +2,10 @@
 
 namespace app\models;
 
-use Faker\Provider\cs_CZ\DateTime;
 use Yii;
-use app\components\UploadFileBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use app\components\UploadFileBehavior;
 
 /**
  * This is the model class for table "car".
@@ -30,9 +30,10 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Company $company
  * @property UploadFile $file
+ * @property Category $category
  * @property Order[] $orders
  */
-class Car extends \yii\db\ActiveRecord
+class Car extends ActiveRecord
 {
     public $file;
     private $_days; // How many days

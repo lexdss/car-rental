@@ -2,11 +2,12 @@
 
 namespace app\models\forms;
 
-use app\models\Car;
 use Yii;
+use yii\base\Model;
 use app\models\Order;
+use app\models\Car;
 
-class OrderForm extends \yii\base\Model
+class OrderForm extends Model
 {
     public $user_id;
     public $car_id;
@@ -36,18 +37,24 @@ class OrderForm extends \yii\base\Model
         ];
     }
 
-    public function save()
+    public function save($postData)
     {
         $order = new Order();
-        $car = Car::findOne($this->car_id);
+        $car = Car::findOne(Yii::$app->request->get('id'));
 
-        $order->car_id = $this->car_id;
-        $order->start_rent = $this->start_rent;
-        $order->end_rent = $this->end_rent;
-        $order->price = $car->getAmount($car->getDiscount($this->start_rent, $this->end_rent));
-        $order->user_id = $this->user_id;
-        $order->status = $this->status;
+        if ($this->load($postData) && $this->validate()) {
+            $order->start_rent = $this->start_rent;
+            $order->end_rent = $this->end_rent;
+            $order->status = $this->status;
+            $order->car_id = $car->id;
+            $order->price = $car->getAmount($car->getDiscount($this->start_rent, $this->end_rent));
+            $order->user_id = Yii::$app->user->id;
+        }
 
-        return $order->save(false);
+        if ($order->save(false)) {
+            return $order;
+        } else {
+            return false;
+        } // TODO Исключение
     }
 }
