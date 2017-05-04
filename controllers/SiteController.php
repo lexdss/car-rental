@@ -85,7 +85,7 @@ class SiteController extends Controller
 
         if (Yii::$app->request->post()) {
             $model->register(Yii::$app->request->post());
-            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы'); // TODO редирект
+            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
         }
 
         return $this->render('register', ['model' => $model]);
@@ -94,7 +94,7 @@ class SiteController extends Controller
     /**
      * Login user
      */
-    public function actionLogin() // TODO посмотреть
+    public function actionLogin()
     {
         $model = new LoginForm();
 

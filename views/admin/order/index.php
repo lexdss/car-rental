@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var yii\data\ActiveDataProvider $dataProvider
+ */
+
 use yii\grid\GridView;
 
 $this->title = 'Заказы';
@@ -11,6 +15,7 @@ echo GridView::widget([
         [
             'class' => 'yii\grid\SerialColumn'
         ],
+        'statusString',
         'price',
         [
             'attribute' => 'start_rent',

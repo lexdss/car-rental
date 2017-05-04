@@ -29,7 +29,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Validate user email and password
+     * Validate user email and password for rules
      *
      * @param $attribute
      */

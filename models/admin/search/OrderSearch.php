@@ -12,14 +12,14 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['price'], 'safe']
+            [['price', 'statusString'], 'safe']
         ];
     }
 
     public function scenarios()
     {
         return [
-            self::SCENARIO_SEARCH => ['price']
+            self::SCENARIO_SEARCH => ['price', 'statusString']
         ];
     }
 
@@ -43,6 +43,7 @@ class OrderSearch extends Order
         }
 
         $query->andFilterWhere(['price' => $this->price]);
+        $query->andFilterWhere(['statusString' => $this->price]);
 
         return $dataProvider;
     }
