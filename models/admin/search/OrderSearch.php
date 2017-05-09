@@ -34,6 +34,17 @@ class OrderSearch extends Order
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC
+                ],
+                'attributes' => [
+                    'id',
+                    'price',
+                    'start_rent',
+                    'end_rent',
+                    'create_date',
+                    'statusString' => [
+                        'asc' => ['status' => SORT_ASC],
+                        'desc' => ['status' => SORT_DESC],
+                    ]
                 ]
             ]
         ]);
