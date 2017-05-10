@@ -25,6 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'end_rent',
                 'format' => ['date', 'php:Y-m-d']
             ],
-            'price'
+            'userEmail',
+            [
+                'label' => 'Цена',
+                'value' => $model->price . ' руб.'
+            ]
         ]
     ]); ?>

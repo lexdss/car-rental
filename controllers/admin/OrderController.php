@@ -30,11 +30,23 @@ class OrderController extends AdminController
         return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $orderSearch]);
     }
 
+    /**
+     * Order details
+     *
+     * @param $id
+     * @return string
+     */
     public function actionView($id)
     {
         return $this->render('view', ['model' => $this->findModel($id)]);
     }
 
+    /**
+     * Update order status
+     *
+     * @param $id
+     * @return string|\yii\web\Response
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -46,6 +58,11 @@ class OrderController extends AdminController
         }
     }
 
+    /**
+     * @param $id
+     * @return Order model
+     * @throws NotFoundHttpException
+     */
     protected function findModel($id)
     {
         if (($model = Order::findOne($id)) !== null) {

@@ -38,6 +38,9 @@ class Order extends ActiveRecord
         return 'order';
     }
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -50,10 +53,29 @@ class Order extends ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
             ['status', 'integer']
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID заказа',
+            'car_id' => 'ID Автомобиля',
+            'price' => 'Цена',
+            'start_rent' => 'Начало аренды',
+            'end_rent' => 'Конец аренды',
+            'create_date' => 'Заказ создан',
+            'user_id' => 'ID пользователя',
+            'status' => 'Статус',
+            'statusString' => 'Статус',
+            'userEmail' => 'Пользователь',
         ];
     }
 
@@ -71,6 +93,11 @@ class Order extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getUserEmail()
+    {
+        return $this->user->email;
     }
 
     /**
