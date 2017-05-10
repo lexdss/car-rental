@@ -32,7 +32,6 @@ echo GridView::widget([
         [
             'class' => 'yii\grid\ActionColumn',
             'visibleButtons' => [
-                'update' => false,
                 'delete' => false
             ]
         ]

@@ -22,6 +22,14 @@ use yii\db\ActiveRecord;
  */
 class Order extends ActiveRecord
 {
+    // All statuses
+    private $statusList = [
+        1 => 'Новый',
+        2 => 'В обработке',
+        3 => 'Активный',
+        4 => 'Завершен'
+    ];
+
     /**
      * @inheritdoc
      */
@@ -39,6 +47,13 @@ class Order extends ActiveRecord
                     self::EVENT_BEFORE_INSERT => 'create_date'
                 ]
             ]
+        ];
+    }
+
+    public function rules()
+    {
+        return [
+            ['status', 'integer']
         ];
     }
 
@@ -63,22 +78,14 @@ class Order extends ActiveRecord
      */
     public function getStatusString()
     {
-        switch ($this->status)
-        {
-            case 2:
-                $status = 'В обработке';
-                break;
-            case 3:
-                $status = 'Активный';
-                break;
-            case 4:
-                $status = 'Завершен';
-                break;
-            default:
-                $status = 'Новый';
-                break;
-        }
+        return ($this->statusList[$this->status]) ?: 'Ошибка';
+    }
 
-        return $status;
+    /**
+     * @return array
+     */
+    public function getStatusList()
+    {
+        return $this->statusList;
     }
 }

@@ -53,9 +53,6 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['price' => $this->price]);
-        $query->andFilterWhere(['statusString' => $this->price]);
-
         return $dataProvider;
     }
 }
