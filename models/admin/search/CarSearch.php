@@ -2,7 +2,6 @@
 
 namespace app\models\admin\search;
 
-use Yii;
 use yii\data\ActiveDataProvider;
 use app\models\Car;
 
@@ -11,6 +10,9 @@ use app\models\Car;
  */
 class CarSearch extends Car
 {
+    public $categoryName;
+    public $fullName;
+
     const SCENARIO_SEARCH = 'search';
 
     /**
@@ -19,8 +21,8 @@ class CarSearch extends Car
     public function rules()
     {
         return [
-            [['price'], 'integer'],
-            [['price', 'name', 'slug', 'categoryName', 'companyName'], 'safe']
+            ['price', 'integer'],
+            [['price', 'categoryName', 'fullName'], 'safe']
         ];
     }
 
@@ -30,7 +32,7 @@ class CarSearch extends Car
     public function scenarios()
     {
         return [
-            self::SCENARIO_SEARCH => ['price', 'name', 'slug', 'categoryName', 'companyName']
+            self::SCENARIO_SEARCH => ['price', 'categoryName', 'fullName']
         ];
     }
 
@@ -52,26 +54,38 @@ class CarSearch extends Car
             'sort' => [
                 'defaultOrder' => [
                     'up_date' => SORT_DESC
+                ],
+                'attributes' => [
+                    'up_date',
+                    'price',
+                    'fullName' => [
+                        'asc' => ['company.name' => SORT_ASC, 'name' => SORT_ASC],
+                        'desc' => ['company.name' => SORT_DESC, 'name' => SORT_DESC]
+                    ],
+                    'categoryName' => [
+                        'asc' => ['category.name' => SORT_ASC],
+                        'desc' => ['category.name' => SORT_DESC]
+                    ]
                 ]
             ]
         ]);
 
         $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'price' => $this->price,
+        $query->joinWith([
+            'company',
+            'category' => function ($query) {
+                $query->andFilterWhere(['like', 'category.name', $this->categoryName]);
+            }
         ]);
+        $query->andFilterWhere(['like', 'company.name', $this->fullName])
+            ->orFilterWhere(['like', 'car.name', $this->fullName]); // TODO улучшить поиск по полному имени
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'companyName', $this->companyName])
-            ->andFilterWhere(['like', 'categoryName', $this->categoryName]);
+        $query->andFilterWhere(['=', 'car.price', $this->price]);
 
         return $dataProvider;
     }
