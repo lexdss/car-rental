@@ -5,7 +5,6 @@ namespace app\controllers\admin;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use app\models\Car;
 use app\models\Company;
 use app\models\admin\search\CarSearch;
@@ -22,21 +21,6 @@ class CarController extends AdminController
     public function getViewPath()
     {
         return '@app/views/admin/car';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
     }
 
     /**

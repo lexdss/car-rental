@@ -4,6 +4,7 @@ namespace app\controllers\admin;
 
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use Yii;
 
 class AdminController extends  Controller
@@ -27,11 +28,17 @@ class AdminController extends  Controller
                     [
                         'allow' => true,
                         'roles' => ['@'],
-                        'matchCallback' => function ($rule, $acion) {
+                        'matchCallback' => function ($rule, $action) {
                             return Yii::$app->user->identity->role == 'admin';
                         }
                     ]
                 ]
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
             ]
         ];
     }

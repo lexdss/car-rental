@@ -6,7 +6,6 @@ use Yii;
 use app\models\Category;
 use app\models\admin\search\CategorySearch;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -19,21 +18,6 @@ class CategoryController extends AdminController
     public function getViewPath()
     {
         return '@app/views/admin/category';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
     }
 
     /**

@@ -4,7 +4,6 @@ namespace app\controllers\admin;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use app\models\Company;
 use app\models\admin\search\CompanySearch;
 
@@ -19,21 +18,6 @@ class CompanyController extends AdminController
     public function getViewPath()
     {
         return '@app/views/admin/company';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
     }
 
     /**
