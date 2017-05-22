@@ -2,7 +2,6 @@
 
 namespace app\models\admin\search;
 
-use Yii;
 use yii\data\ActiveDataProvider;
 use app\models\Company;
 
@@ -19,6 +18,7 @@ class CompanySearch extends Company
     public function rules()
     {
         return [
+            [['name', 'slug'], 'trim'],
             [['name', 'slug'], 'safe'],
         ];
     }
@@ -42,9 +42,9 @@ class CompanySearch extends Company
      */
     public function search($params)
     {
-        $query = Company::find();
+        $this->scenario = self::SCENARIO_SEARCH;
 
-        // add conditions that should always apply here
+        $query = Company::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

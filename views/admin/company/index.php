@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'up_date',
                 'format' => ['date', 'php:Y-m-d H:i']
             ],
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

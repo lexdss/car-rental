@@ -60,6 +60,7 @@ class Company extends ActiveRecord
     {
         return [
             [['description', 'name', 'slug'], 'required'],
+            [['description', 'name', 'slug'], 'trim'],
             [['description'], 'string', 'max' => 2000],
             [['name', 'slug'], 'string', 'max' => 30, 'min' => 2],
             ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
@@ -76,6 +77,7 @@ class Company extends ActiveRecord
             'slug' => 'Символьный код',
             'description' => 'Описание',
             'file' => 'Логотип',
+            'img' => 'Логотип',
             'up_date' => 'Изменение'
         ];
     }

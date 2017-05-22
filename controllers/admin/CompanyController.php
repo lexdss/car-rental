@@ -26,7 +26,7 @@ class CompanyController extends AdminController
      */
     public function actionIndex()
     {
-        $searchModel = new CompanySearch(['scenario' => CompanySearch::SCENARIO_SEARCH]);
+        $searchModel = new CompanySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
