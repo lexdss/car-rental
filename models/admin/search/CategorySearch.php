@@ -16,6 +16,7 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
+            [['name', 'slug', 'short_description'], 'trim'],
             [['name', 'slug', 'short_description'], 'safe']
         ];
     }
@@ -39,6 +40,8 @@ class CategorySearch extends Category
      */
     public function search($params)
     {
+        $this->scenario = self::SCENARIO_SEARCH;
+
         $query = Category::find();
 
         // add conditions that should always apply here

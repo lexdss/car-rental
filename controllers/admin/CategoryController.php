@@ -26,7 +26,7 @@ class CategoryController extends AdminController
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch(['scenario' => CategorySearch::SCENARIO_SEARCH]);
+        $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
