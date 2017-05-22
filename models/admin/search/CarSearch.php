@@ -22,6 +22,7 @@ class CarSearch extends Car
     {
         return [
             ['price', 'integer'],
+            [['price', 'categoryName', 'fullName'], 'trim'],
             [['price', 'categoryName', 'fullName'], 'safe']
         ];
     }
@@ -45,6 +46,8 @@ class CarSearch extends Car
      */
     public function search($params)
     {
+        $this->scenario = self::SCENARIO_SEARCH;
+
         $query = Car::find();
 
         // add conditions that should always apply here
@@ -76,15 +79,10 @@ class CarSearch extends Car
             return $dataProvider;
         }
 
-        $query->joinWith([
-            'company',
-            'category' => function ($query) {
-                $query->andFilterWhere(['like', 'category.name', $this->categoryName]);
-            }
-        ]);
-        $query->andFilterWhere(['like', 'company.name', $this->fullName])
-            ->orFilterWhere(['like', 'car.name', $this->fullName]); // TODO улучшить поиск по полному имени
+        $query->joinWith(['company', 'category']);
 
+        $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->fullName]);
+        $query->andFilterWhere(['like', 'category.name', $this->categoryName]);
         $query->andFilterWhere(['=', 'car.price', $this->price]);
 
         return $dataProvider;

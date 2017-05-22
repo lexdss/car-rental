@@ -14,7 +14,7 @@ use app\components\UploadFileBehavior;
  * @property integer $company_id
  * @property integer $category_id
  * @property string $name
- * @property string $slug
+ * @property string $slug // TODO автотранслит
  * @property integer $year
  * @property integer $speed
  * @property string $engine
@@ -81,7 +81,7 @@ class Car extends ActiveRecord
             [['engine', 'color', 'transmission', 'privod'], 'string', 'max' => 25],
             ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
             [['slug'], 'unique'],
-            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']], // TODO: Посмотреть документацию
+            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
         ];
     }
 
@@ -107,9 +107,10 @@ class Car extends ActiveRecord
             'privod' => 'Привод',
             'description' => 'Описание',
             'price' => 'Цена',
-            'discount_1' => 'Скидка от ' . Yii::$app->params['discount_1'] . ' дней',
+            'discount_1' => 'Скидка от ' . Yii::$app->params['discount_1'] . ' дней', // TODO  изменение системы скидок
             'discount_2' => 'Скидка от ' . Yii::$app->params['discount_2'] . ' дней',
             'file' => 'Изображение',
+            'img' => 'Изображение',
             'up_date' => 'Изменение'
         ];
     }
