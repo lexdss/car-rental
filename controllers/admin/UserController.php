@@ -24,7 +24,7 @@ class UserController extends AdminController
      */
     public function actionIndex()
     {
-        $userSearch = new UserSearch(['scenario' => UserSearch::SCENARIO_SEARCH]);
+        $userSearch = new UserSearch();
         $dataProvider = $userSearch->search(Yii::$app->request->queryParams);
 
         return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $userSearch]);

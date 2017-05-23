@@ -80,17 +80,6 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Order::className(), ['user_id' => 'id']);
     }
 
-    /*
-    public function getUserOrders()
-    {
-        return $this->hasMany(UserOrder::className(), ['user_id' => 'id']);
-    }
-
-    public function getOrders()
-    {
-        return $this->hasMany(Order::className(), ['id' => 'order_id'])->viaTable('user_order', ['user_id' => 'id']);
-    }*/
-
     public static function findIdentity($id)
     {
         return static::findOne($id);

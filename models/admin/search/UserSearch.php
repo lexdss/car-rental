@@ -9,20 +9,23 @@ class UserSearch extends User
 {
     const SCENARIO_SEARCH = 'search';
 
+    public $fullName;
+
     /**
      * @return array
      */
     public function rules()
     {
         return [
-            [['name', 'surname', 'patronymic', 'email', 'phone'], 'safe']
+            [['fullName', 'email', 'phone'], 'trim'],
+            [['fullName', 'email', 'phone'], 'safe']
         ];
     }
 
     public function scenarios()
     {
         return [
-            self::SCENARIO_SEARCH => ['name', 'surname', 'patronymic', 'email', 'phone']
+            self::SCENARIO_SEARCH => ['fullName', 'email', 'phone']
         ];
     }
 
@@ -33,6 +36,8 @@ class UserSearch extends User
      */
     public function search($params)
     {
+        $this->scenario = self::SCENARIO_SEARCH;
+
         $this->load($params);
 
         $query = User::find();
@@ -42,6 +47,16 @@ class UserSearch extends User
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC
+                ],
+                'attributes' => [
+                    'id',
+                    'email',
+                    'phone',
+                    'add_date',
+                    'fullName' => [
+                        'asc' => ['name' => SORT_ASC, 'surname' => SORT_ASC, 'patronymic' => SORT_ASC],
+                        'desc' => ['name' => SORT_DESC, 'surname' => SORT_DESC, 'patronymic' => SORT_DESC]
+                    ]
                 ]
             ]
         ]);
@@ -50,9 +65,7 @@ class UserSearch extends User
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'surname', $this->surname])
-            ->andFilterWhere(['like', 'patronymic', $this->patronymic])
+        $query->andFilterWhere(['like', "CONCAT(`name`, ' ', `surname`, ' ', `patronymic`)", $this->fullName])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone]);
 
