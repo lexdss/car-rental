@@ -48,7 +48,7 @@ class CarSearch extends Car
     {
         $this->scenario = self::SCENARIO_SEARCH;
 
-        $query = Car::find();
+        $query = Car::find()->joinWith(['company', 'category']);
 
         // add conditions that should always apply here
 
@@ -78,8 +78,6 @@ class CarSearch extends Car
             // uncomment the following line if you do not want to return any records when validation fails
             return $dataProvider;
         }
-
-        $query->joinWith(['company', 'category']);
 
         $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->fullName]);
         $query->andFilterWhere(['like', 'category.name', $this->categoryName]);
