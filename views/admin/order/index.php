@@ -5,17 +5,23 @@
  */
 
 use yii\grid\GridView;
+use app\models\Order;
 
 $this->title = 'Заказы';
 $this->params['breadcrumbs'][] = $this->title;
 
 echo GridView::widget([
     'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
     'columns' => [
         [
             'class' => 'yii\grid\SerialColumn'
         ],
-        'statusString',
+        [
+            'attribute' => 'statusString',
+            'filter' => (new Order())->getStatusList()
+        ],
+        'userEmail',
         'price',
         [
             'attribute' => 'start_rent',

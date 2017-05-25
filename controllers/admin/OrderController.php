@@ -24,7 +24,7 @@ class OrderController extends AdminController
      */
     public function actionIndex()
     {
-        $orderSearch = new OrderSearch(['scenario' => OrderSearch::SCENARIO_SEARCH]);
+        $orderSearch = new OrderSearch();
         $dataProvider = $orderSearch->search(Yii::$app->request->queryParams);
 
         return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $orderSearch]);

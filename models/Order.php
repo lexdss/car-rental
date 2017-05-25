@@ -22,7 +22,7 @@ use yii\db\ActiveRecord;
  */
 class Order extends ActiveRecord
 {
-    // All statuses
+    // All statuses TODO вынести варианты в конфиг
     private $statusList = [
         1 => 'Новый',
         2 => 'В обработке',
