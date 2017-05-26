@@ -42,10 +42,10 @@ $this->beginPage();
                             <a href="#"><li>Условия аренды</li></a>
                             <a href="#"><li>О компании</li></a>
                             <?php if (Yii::$app->user->isGuest): ?>
-                                <a href="<?=Url::to(['site/register'])?>"><li>Регистрация</li></a>
-                                <a href="<?=Url::to(['site/login'])?>"><li>Вход</li></a>
+                                <a href="<?=Url::to(['user/register'])?>"><li>Регистрация</li></a>
+                                <a href="<?=Url::to(['user/login'])?>"><li>Вход</li></a>
                             <?php else: ?>
-                                <a href="<?=Url::to(['site/logout'])?>"><li>Выход</li></a>
+                                <a href="<?=Url::to(['user/logout'])?>"><li>Выход</li></a>
                             <?php endif; ?>
                         </ul>
                     </div>

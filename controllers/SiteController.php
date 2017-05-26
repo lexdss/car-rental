@@ -3,14 +3,12 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;
 use app\models\forms\UserRegisterForm;
-use app\models\forms\LoginForm;
 use app\models\forms\OrderForm;
 
 /**
@@ -21,31 +19,6 @@ use app\models\forms\OrderForm;
 class SiteController extends Controller
 {
     private $_car;
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'login', 'register'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@']
-                    ],
-                    [
-                        'actions' => ['register', 'login'],
-                        'allow' => true,
-                        'roles' => ['?']
-                    ]
-                ],
-            ],
-        ];
-    }
 
     /**
      * @inheritdoc
@@ -74,48 +47,6 @@ class SiteController extends Controller
         $companies = Company::find()->all();
         $categories = Category::find()->all();
         return $this->render('index', ['model' => $model, 'companies' => $companies, 'categories' => $categories]);
-    }
-
-    /**
-     * Register user
-     */
-    public function actionRegister()
-    {
-        $model = new UserRegisterForm();
-
-        if (Yii::$app->request->post()) {
-            $model->register(Yii::$app->request->post());
-            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
-        }
-
-        return $this->render('register', ['model' => $model]);
-    }
-
-    /**
-     * Login user
-     */
-    public function actionLogin()
-    {
-        $model = new LoginForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            Yii::$app->user->login($model->getUser());
-            return $this->goHome();
-        }
-
-        return $this->render('login', ['model' => $model]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return string
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
     }
 
     /**
