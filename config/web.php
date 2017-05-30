@@ -65,7 +65,7 @@ $config = [
 ];
 
 $config['aliases'] = [
-    '@uploadroot' => $config['basePath'] . '\web\upload',
+    '@uploadroot' => $config['basePath'] . '/web/upload',
     '@uploadweb' => '/upload',
 ];
 
