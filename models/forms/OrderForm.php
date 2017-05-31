@@ -15,6 +15,7 @@ class OrderForm extends Model
     public $start_rent;
     public $end_rent;
     public $status;
+    public $company_id;
 
     public function rules()
     {
@@ -47,6 +48,7 @@ class OrderForm extends Model
             $order->end_rent = $this->end_rent;
             $order->status = $this->status;
             $order->car_id = $car->id;
+            $order->company_id = $car->company_id;
             $order->price = $car->getAmount($car->getDiscount($this->start_rent, $this->end_rent));
             $order->user_id = Yii::$app->user->id;
         }

@@ -22,6 +22,7 @@ echo GridView::widget([
             'filter' => (new Order())->getStatusList()
         ],
         'userEmail',
+        'carFullName',
         'price',
         [
             'attribute' => 'start_rent',

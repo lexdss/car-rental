@@ -2,6 +2,7 @@
 
 namespace app\models\admin\search;
 
+use app\models\Company;
 use app\models\Order;
 use yii\data\ActiveDataProvider;
 
@@ -9,21 +10,22 @@ class OrderSearch extends Order
 {
     public $statusString;
     public $userEmail;
+    public $carFullName;
 
     const SCENARIO_SEARCH = 'search';
 
     public function rules()
     {
         return [
-            [['statusString', 'userEmail'], 'trim'],
-            [['statusString', 'userEmail'], 'safe']
+            [['statusString', 'userEmail', 'carFullName'], 'trim'],
+            [['statusString', 'userEmail', 'carFullName'], 'safe']
         ];
     }
 
     public function scenarios()
     {
         return [
-            self::SCENARIO_SEARCH => ['statusString', 'userEmail']
+            self::SCENARIO_SEARCH => ['statusString', 'userEmail', 'carFullName']
         ];
     }
 
@@ -33,7 +35,7 @@ class OrderSearch extends Order
 
         $this->load($params);
 
-        $query = Order::find()->joinWith('user');
+        $query = Order::find()->joinWith(['user', 'car', 'company']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,6 +56,10 @@ class OrderSearch extends Order
                     'userEmail' => [
                         'asc' => ['user.email' => SORT_ASC],
                         'desc' => ['user.email' => SORT_DESC],
+                    ],
+                    'carFullName' => [
+                        'asc' => ['car.name' => SORT_ASC, 'company.name' => SORT_ASC],
+                        'desc' => ['car.name' => SORT_DESC, 'company.name' => SORT_DESC]
                     ]
                 ]
             ]
@@ -63,9 +69,9 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['status' => $this->statusString]) // TODO разобраться со статусами
-            ->andFilterWhere(['like', 'user.email', $this->userEmail]);
-
+        $query->andFilterWhere(['status' => $this->statusString]);
+        $query->andFilterWhere(['like', 'user.email', $this->userEmail]);
+        $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->carFullName]);
         return $dataProvider;
     }
 }

@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['date', 'php:Y-m-d H:i']
             ],
             'statusString',
+            'carFullName',
             [
                 'attribute' => 'start_rent',
                 'format' => ['date', 'php:Y-m-d']

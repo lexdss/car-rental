@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\Company;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -16,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property integer $end_rent
  * @property integer $create_date
  * @property integer $user_id
+ * @property integer $company_id
  *
  * @property Car $car
  * @property User $user
@@ -76,6 +78,7 @@ class Order extends ActiveRecord
             'status' => 'Статус',
             'statusString' => 'Статус',
             'userEmail' => 'Пользователь',
+            'carFullName' => 'Автомобиль',
         ];
     }
 
@@ -93,6 +96,14 @@ class Order extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
 
     public function getUserEmail()
@@ -114,5 +125,13 @@ class Order extends ActiveRecord
     public function getStatusList()
     {
         return $this->statusList;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCarFullName()
+    {
+        return $this->car->fullName;
     }
 }
