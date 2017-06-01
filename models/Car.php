@@ -29,7 +29,6 @@ use app\components\UploadFileBehavior;
  * @property integer $up_date
  *
  * @property Company $company
- * @property UploadFile $file
  * @property Category $category
  * @property Order[] $orders
  */
