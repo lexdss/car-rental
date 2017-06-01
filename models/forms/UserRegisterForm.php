@@ -36,8 +36,9 @@ class UserRegisterForm extends Model
     public function rules()
     {
         return [
-            [['role'], 'default', 'value' => 'user'],
+            [['role'], 'default', 'value' => 'user'], // Default user role == 'user'
             [['name', 'surname', 'email', 'phone', 'password', 'password_repeat'], 'required'],
+            [['name', 'surname', 'patronymic', 'email', 'phone', 'password', 'password_repeat'], 'required'],
             [['name', 'surname', 'patronymic', 'email', 'phone'], 'string', 'max' => 25],
             [['password', 'password_repeat'], 'string', 'min' => 5, 'max' => 255],
             ['password', 'compare'],

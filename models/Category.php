@@ -61,6 +61,7 @@ class Category extends ActiveRecord
         return [
             [['name', 'slug'], 'required'],
             [['name', 'slug', 'description', 'short_description'], 'required'],
+            [['name', 'slug', 'description', 'short_description'], 'trim'],
             ['description', 'string'],
             ['short_description', 'string', 'max' => 500],
             [['name', 'slug'], 'string', 'max' => 255],

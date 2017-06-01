@@ -21,6 +21,7 @@ class OrderForm extends Model
     {
         return [
             [['start_rent', 'end_rent'], 'required'],
+            [['start_rent', 'end_rent'], 'trim'],
             ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
             ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
             ['end_rent', 'compare', 'compareAttribute' => 'start_rent', 'operator' => '>=', 'type' => 'number'],

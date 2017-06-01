@@ -74,14 +74,60 @@ class Car extends ActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'category_id', 'year', 'speed', 'price', 'discount_1', 'discount_2'], 'integer'],
-            [['name', 'slug', 'year', 'speed', 'engine', 'color', 'transmission', 'privod', 'price'], 'required'],
+            [
+                [
+                    'company_id',
+                    'category_id',
+                    'year',
+                    'speed',
+                    'price',
+                    'discount_1',
+                    'discount_2'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'name',
+                    'slug',
+                    'year',
+                    'speed',
+                    'engine',
+                    'color',
+                    'transmission',
+                    'privod',
+                    'price'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'name',
+                    'slug',
+                    'year',
+                    'speed',
+                    'engine',
+                    'color',
+                    'transmission',
+                    'privod',
+                    'price',
+                    'description',
+                    'discount_1',
+                    'discount_2'
+                ],
+                'trim'
+            ],
             [['name', 'slug'], 'string', 'max' => 50],
             [['description'], 'string', 'max' => 2000],
             [['engine', 'color', 'transmission', 'privod'], 'string', 'max' => 25],
             ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
             [['slug'], 'unique'],
-            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
+            [
+                ['company_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Company::className(),
+                'targetAttribute' => ['company_id' => 'id']],
         ];
     }
 
