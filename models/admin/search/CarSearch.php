@@ -79,9 +79,9 @@ class CarSearch extends Car
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->fullName]);
-        $query->andFilterWhere(['like', 'category.name', $this->categoryName]);
-        $query->andFilterWhere(['=', 'car.price', $this->price]);
+        $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->fullName])
+            ->andFilterWhere(['like', 'category.name', $this->categoryName])
+            ->andFilterWhere(['=', 'car.price', $this->price]);
 
         return $dataProvider;
     }

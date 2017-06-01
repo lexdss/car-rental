@@ -2,7 +2,6 @@
 
 namespace app\models\admin\search;
 
-use app\models\Company;
 use app\models\Order;
 use yii\data\ActiveDataProvider;
 
@@ -69,9 +68,9 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['status' => $this->statusString]);
-        $query->andFilterWhere(['like', 'user.email', $this->userEmail]);
-        $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->carFullName]);
+        $query->andFilterWhere(['status' => $this->statusString])
+            ->andFilterWhere(['like', 'user.email', $this->userEmail])
+            ->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->carFullName]);
         return $dataProvider;
     }
 }
