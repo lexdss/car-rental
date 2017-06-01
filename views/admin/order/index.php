@@ -2,10 +2,11 @@
 
 /**
  * @var yii\data\ActiveDataProvider $dataProvider
+ * @var app\models\admin\search\OrderSearch $searchModel
  */
 
 use yii\grid\GridView;
-use app\models\Order;
+//use Yii;
 
 $this->title = 'Заказы';
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,16 +15,17 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'columns' => [
+        'id',
         [
-            'class' => 'yii\grid\SerialColumn'
-        ],
-        [
-            'attribute' => 'statusString',
-            'filter' => (new Order())->getStatusList()
+            'attribute' => 'statusLine',
+            'filter' => Yii::$app->params['orderStatus']
         ],
         'userEmail',
         'carFullName',
-        'price',
+        [
+            'attribute' => 'price',
+            'label' => 'Цена, руб.'
+        ],
         [
             'attribute' => 'start_rent',
             'format' => ['date', 'php:Y-m-d']

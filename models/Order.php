@@ -4,6 +4,7 @@ namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use Yii;
 
 /**
  * This is the model class for table "order".
@@ -23,13 +24,6 @@ use yii\db\ActiveRecord;
  */
 class Order extends ActiveRecord
 {
-    // All statuses TODO вынести варианты в конфиг
-    private $statusList = [
-        1 => 'Новый',
-        2 => 'В обработке',
-        3 => 'Активный',
-        4 => 'Завершен'
-    ];
 
     /**
      * @inheritdoc
@@ -67,7 +61,7 @@ class Order extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID заказа',
+            'id' => 'ID',
             'car_id' => 'ID Автомобиля',
             'price' => 'Цена',
             'start_rent' => 'Начало аренды',
@@ -75,7 +69,7 @@ class Order extends ActiveRecord
             'create_date' => 'Заказ создан',
             'user_id' => 'ID пользователя',
             'status' => 'Статус',
-            'statusString' => 'Статус',
+            'statusLine' => 'Статус',
             'userEmail' => 'Пользователь',
             'carFullName' => 'Автомобиль',
         ];
@@ -113,17 +107,14 @@ class Order extends ActiveRecord
     /**
      * @return string
      */
-    public function getStatusString()
+    public function getStatusLine()
     {
-        return ($this->statusList[$this->status]) ?: 'Ошибка';
+        return (Yii::$app->params['orderStatus'][$this->status]) ?: 'Ошибка';
     }
 
-    /**
-     * @return array
-     */
     public function getStatusList()
     {
-        return $this->statusList;
+        return Yii::$app->params['orderStatus'];
     }
 
     /**

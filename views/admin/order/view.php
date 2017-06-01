@@ -1,6 +1,10 @@
 <?php
 
-use yii\widgets\DetailView;
+/**
+ * @var \app\models\Order $model
+ */
+
+use yii\helpers\Html;
 
 $this->title = 'Заказ №' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Заказы', 'url' => ['index']];
@@ -8,28 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            [
-                'attribute' => 'create_date',
-                'format' => ['date', 'php:Y-m-d H:i']
-            ],
-            'statusString',
-            'carFullName',
-            [
-                'attribute' => 'start_rent',
-                'format' => ['date', 'php:Y-m-d']
-            ],
-            [
-                'attribute' => 'end_rent',
-                'format' => ['date', 'php:Y-m-d']
-            ],
-            'userEmail',
-            [
-                'label' => 'Цена',
-                'value' => $model->price . ' руб.'
-            ]
-        ]
-    ]); ?>
+<p>
+    <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+</p>
+
+<?= $this->render('_detail', ['model' => $model]); ?>

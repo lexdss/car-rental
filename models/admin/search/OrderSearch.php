@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 
 class OrderSearch extends Order
 {
-    public $statusString;
+    public $statusLine;
     public $userEmail;
     public $carFullName;
 
@@ -16,15 +16,15 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['statusString', 'userEmail', 'carFullName'], 'trim'],
-            [['statusString', 'userEmail', 'carFullName'], 'safe']
+            [['statusLine', 'userEmail', 'carFullName'], 'trim'],
+            [['statusLine', 'userEmail', 'carFullName'], 'safe']
         ];
     }
 
     public function scenarios()
     {
         return [
-            self::SCENARIO_SEARCH => ['statusString', 'userEmail', 'carFullName']
+            self::SCENARIO_SEARCH => ['statusLine', 'userEmail', 'carFullName']
         ];
     }
 
@@ -48,7 +48,7 @@ class OrderSearch extends Order
                     'start_rent',
                     'end_rent',
                     'create_date',
-                    'statusString' => [
+                    'statusLine' => [
                         'asc' => ['status' => SORT_ASC],
                         'desc' => ['status' => SORT_DESC],
                     ],
@@ -68,7 +68,7 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['status' => $this->statusString])
+        $query->andFilterWhere(['status' => $this->statusLine])
             ->andFilterWhere(['like', 'user.email', $this->userEmail])
             ->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->carFullName]);
         return $dataProvider;
