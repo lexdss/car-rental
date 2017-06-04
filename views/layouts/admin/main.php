@@ -42,7 +42,7 @@ AdminAsset::register($this);
             ['label' => 'Категории', 'url' => ['/admin/category']],
             ['label' => 'Пользователи', 'url' => ['/admin/user']],
             ['label' => 'Заказы', 'url' => ['/admin/order']],
-            ['label' => 'Выход (' . Yii::$app->user->identity->email . ')', 'url' => ['/site/logout']]
+            ['label' => 'Выход (' . Yii::$app->user->identity->email . ')', 'url' => ['/user/logout']]
         ],
     ]);
     NavBar::end();
