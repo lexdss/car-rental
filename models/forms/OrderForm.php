@@ -25,7 +25,7 @@ class OrderForm extends Model
             ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
             ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
             ['end_rent', 'compare', 'compareAttribute' => 'start_rent', 'operator' => '>=', 'type' => 'number'],
-            ['status', 'default', 'value' => 1]
+            ['status', 'default', 'value' => 0]
         ];
     }
 

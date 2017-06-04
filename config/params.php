@@ -8,7 +8,7 @@ return [
     'discount_2' => 7,
 
     'orderStatus' => [
-        'Новый',
+        'Новый', // For new order
         'В обработке',
         'Активный',
         'Завершен'
