@@ -38,7 +38,7 @@ class UserRegisterForm extends Model
         return [
             [['role'], 'default', 'value' => 'user'], // Default user role == 'user'
             [['name', 'surname', 'email', 'phone', 'password', 'password_repeat'], 'required'],
-            [['name', 'surname', 'patronymic', 'email', 'phone', 'password', 'password_repeat'], 'required'],
+            [['name', 'surname', 'patronymic', 'email', 'phone', 'password', 'password_repeat'], 'trim'],
             [['name', 'surname', 'patronymic', 'email', 'phone'], 'string', 'max' => 25],
             [['password', 'password_repeat'], 'string', 'min' => 5, 'max' => 255],
             ['password', 'compare'],
@@ -46,11 +46,10 @@ class UserRegisterForm extends Model
         ];
     }
 
-    public function register($postData)
+    public function register()
     {
         $user = new User();
 
-        if ($this->load($postData) && $this->validate()) {
             $user->name = $this->name;
             $user->surname = $this->surname;
             $user->patronymic = $this->patronymic;
@@ -58,7 +57,6 @@ class UserRegisterForm extends Model
             $user->phone = $this->phone;
             $user->role = $this->role;
             $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
-        }
 
         if ($user->save(false) && Yii::$app->user->login($user)) {
             return $user;

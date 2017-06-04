@@ -48,8 +48,8 @@ class UserController extends Controller
     {
         $model = new UserRegisterForm();
 
-        if (Yii::$app->request->post()) {
-            $model->register(Yii::$app->request->post());
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->register();
             Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
         }
 

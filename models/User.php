@@ -48,9 +48,9 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+
     /**
-     * @return array
-     */
+
     public function attributeLabels()
     {
         return [
@@ -63,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
             'add_date' => 'Дата регистрации'
         ];
     }
-
+*/
     /**
      * @return string
      */
