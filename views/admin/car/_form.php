@@ -1,20 +1,25 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
+use unclead\multipleinput\MultipleInput;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Car */
-/* @var $form yii\widgets\ActiveForm */
-/* @var $company app\models\Company */
-/* @var $category app\models\Category */
+/**
+ *
+ * @var $this yii\web\View
+ * @var $model app\models\Car
+ * @var $form yii\widgets\ActiveForm
+ * @var $company app\models\Company
+ * @var $category app\models\Category
+ * @var $modelDiscount app\models\Discount
+ */
 
 ?>
 
 <div class="car-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'options' => ['id' => 'add-car']]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -40,9 +45,18 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'discount_1')->textInput() ?>
-
-    <?= $form->field($model, 'discount_2')->textInput() ?>
+    <?= $form->field($model, 'discount')->widget(MultipleInput::className(),[
+            'columns' => [
+                [
+                    'name' => 'days',
+                    'title' => 'От дней',
+                ],
+                [
+                    'name' => 'discount',
+                    'title' => 'Скидка, %',
+                ]
+            ]
+    ]); ?>
 
     <?php if ($model->img): ?>
         <div class="img-responsive admin-thumb-img"><img src="<?= $model->img ?>" alt=""></div>

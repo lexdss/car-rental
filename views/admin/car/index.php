@@ -30,16 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'up_date',
                 'format' => ['date', 'php:Y-m-d H:i']
             ],
-            // 'year',
-            // 'speed',
-            // 'engine',
-            // 'color',
-            // 'transmission',
-            // 'privod',
-            // 'description',
-            // 'discount_1',
-            // 'discount_2',
-            // 'img',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

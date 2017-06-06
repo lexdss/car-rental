@@ -25,28 +25,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_id') ?>
 
-    <?php // echo $form->field($model, 'year') ?>
-
-    <?php // echo $form->field($model, 'speed') ?>
-
-    <?php // echo $form->field($model, 'engine') ?>
-
-    <?php // echo $form->field($model, 'color') ?>
-
-    <?php // echo $form->field($model, 'transmission') ?>
-
-    <?php // echo $form->field($model, 'privod') ?>
-
-    <?php // echo $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'price') ?>
-
-    <?php // echo $form->field($model, 'discount_1') ?>
-
-    <?php // echo $form->field($model, 'discount_2') ?>
-
-    <?php // echo $form->field($model, 'img') ?>
-
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

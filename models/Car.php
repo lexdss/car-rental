@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use app\components\UploadFileBehavior;
@@ -23,8 +22,6 @@ use app\components\UploadFileBehavior;
  * @property string $privod
  * @property string $description
  * @property integer $price
- * @property integer $discount_1
- * @property integer $discount_2
  * @property string $img
  * @property integer $up_date
  *
@@ -34,8 +31,8 @@ use app\components\UploadFileBehavior;
  */
 class Car extends ActiveRecord
 {
+    private $_discount;
     public $file;
-    private $_days; // How many days
 
     /**
      * Update up_date column when save and update model
@@ -80,8 +77,6 @@ class Car extends ActiveRecord
                     'year',
                     'speed',
                     'price',
-                    'discount_1',
-                    'discount_2'
                 ],
                 'integer'
             ],
@@ -111,8 +106,6 @@ class Car extends ActiveRecord
                     'privod',
                     'price',
                     'description',
-                    'discount_1',
-                    'discount_2'
                 ],
                 'trim'
             ],
@@ -127,6 +120,7 @@ class Car extends ActiveRecord
                 'skipOnError' => true,
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']],
+            ['discount', 'app\components\validators\DiscountValidator']
         ];
     }
 
@@ -152,8 +146,7 @@ class Car extends ActiveRecord
             'privod' => 'Привод',
             'description' => 'Описание',
             'price' => 'Цена',
-            'discount_1' => 'Скидка от ' . Yii::$app->params['discount_1'] . ' дней', // TODO  изменение системы скидок
-            'discount_2' => 'Скидка от ' . Yii::$app->params['discount_2'] . ' дней',
+            'discount' => 'Скидка',
             'file' => 'Изображение',
             'img' => 'Изображение',
             'up_date' => 'Изменение'
@@ -184,6 +177,16 @@ class Car extends ActiveRecord
         return $this->hasMany(Order::className(), ['car_id' => 'id']);
     }
 
+    public function getDiscount()
+    {
+        return $this->hasMany(Discount::className(), ['car_id' => 'id'])->all();
+    }
+
+    public function setDiscount($value)
+    {
+        $this->_discount = $value;
+    }
+
     /**
      * @return string
      */
@@ -208,48 +211,26 @@ class Car extends ActiveRecord
         return $this->category->name;
     }
 
-    public function getDiscount($start, $end)
+    public function afterSave($insert, $changedAttributes)
     {
-        $days = $this->getDays($start, $end);
-
-        if ($this->discount_1 && $days >= Yii::$app->params['discount_1']) {
-            if ($this->discount_2 && $days >= Yii::$app->params['discount_2']) {
-                return $this->discount_2;
-            }
-
-            return $this->discount_1;
-        }
-
-        return 0;
+        $this->saveDiscount();
+        parent::afterSave($insert, $changedAttributes);
     }
 
-    public function getAmount($discount)
+    protected function saveDiscount()
     {
-        if ($discount == 0) {
-            return $this->price;
-        } else {
-            return $this->price - ($discount / 100 * $this->price);
-        }
-    }
-
-    public function getMinPrice()
-    {
-        // For maximum discount
-        $days = Yii::$app->params['discount_2'] + Yii::$app->params['discount_1'];
-
-        return $this->getAmount($days);
-    }
-
-    private function getDays($start, $end)
-    {
-        if (is_int($start) && is_int($end)) {
-            $start = date('d.m.Y', $start);
-            $end = date('d.m.Y', $end);
+        if (!$this->isNewRecord) {
+            Discount::deleteAll(['car_id' => $this->id]);
         }
 
-        $start = new \DateTime($start);
-        $end = new \DateTime($end);
+        foreach ($this->_discount as $index => $item) {
+            $discount = new Discount();
 
-        return $this->_days = $start->diff($end)->d;
+            $discount->car_id = $this->id;
+            $discount->days = $item['days'];
+            $discount->discount = $item['discount'];
+
+            $discount->save(false); // TODO Исключение
+        }
     }
 }

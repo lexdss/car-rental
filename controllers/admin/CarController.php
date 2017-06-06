@@ -86,7 +86,7 @@ class CarController extends AdminController
             return $this->render('update', [
                 'model' => $model,
                 'company' => Company::find()->all(),
-                'category' => Category::find()->all()
+                'category' => Category::find()->all(),
             ]);
         }
     }
