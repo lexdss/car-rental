@@ -12,10 +12,13 @@ use yii\db\ActiveRecord;
  */
 class Discount extends ActiveRecord
 {
+    public $car_discount;
+
     const MIN_DISCOUNT = 1;
     const MAX_DISCOUNT = 99;
 
     const MIN_DAYS = 1;
+    const MAX_DAYS = 365;
 
     /**
      * @return string
@@ -23,5 +26,26 @@ class Discount extends ActiveRecord
     public static function tableName()
     {
         return 'discount';
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'days' => 'Дни',
+            'discount' => 'Скидка',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            ['discount', 'integer', 'min' => self::MIN_DISCOUNT, 'max' => self::MAX_DISCOUNT],
+            ['days', 'integer', 'min' => self::MIN_DAYS, 'max' => self::MAX_DAYS],
+            ['discount', 'required', 'when' => function ($model) {return !empty($model->days);}],
+            ['days', 'required', 'when' => function ($model) {return !empty($model->discount);}]
+        ];
     }
 }

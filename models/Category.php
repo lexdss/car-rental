@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use app\components\UploadFileBehavior;
+use app\components\behaviors\UploadFileBehavior;
 
 /**
  * This is the model class for table "category".

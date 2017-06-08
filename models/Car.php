@@ -4,7 +4,8 @@ namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use app\components\UploadFileBehavior;
+use app\components\behaviors\UploadFileBehavior;
+use app\components\behaviors\SaveDiscountBehavior;
 
 /**
  * This is the model class for table "car".
@@ -31,8 +32,8 @@ use app\components\UploadFileBehavior;
  */
 class Car extends ActiveRecord
 {
-    private $_discount;
     public $file;
+    public $car_discount;
 
     /**
      * Update up_date column when save and update model
@@ -52,6 +53,10 @@ class Car extends ActiveRecord
                     self::EVENT_BEFORE_INSERT => ['up_date'],
                     self::EVENT_BEFORE_UPDATE => ['up_date']
                 ]
+            ],
+            [
+                'class' => SaveDiscountBehavior::className(),
+                'attribute' => 'car_discount'
             ]
         ];
     }
@@ -120,7 +125,7 @@ class Car extends ActiveRecord
                 'skipOnError' => true,
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']],
-            ['discount', 'app\components\validators\DiscountValidator']
+            ['discount', 'app\components\validators\DiscountValidator'] // Delegation
         ];
     }
 
@@ -177,14 +182,24 @@ class Car extends ActiveRecord
         return $this->hasMany(Order::className(), ['car_id' => 'id']);
     }
 
+    /**
+     * @return array|ActiveRecord[]
+     */
     public function getDiscount()
     {
-        return $this->hasMany(Discount::className(), ['car_id' => 'id'])->all();
+        if (!$this->isNewRecord) {
+            return $this->hasMany(Discount::className(), ['car_id' => 'id'])->all();
+        }
+
+        return $this->car_discount;
     }
 
+    /**
+     * @param array $value
+     */
     public function setDiscount($value)
     {
-        $this->_discount = $value;
+        $this->car_discount = $value;
     }
 
     /**
@@ -209,28 +224,5 @@ class Car extends ActiveRecord
     public function getCategoryName()
     {
         return $this->category->name;
-    }
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        $this->saveDiscount();
-        parent::afterSave($insert, $changedAttributes);
-    }
-
-    protected function saveDiscount()
-    {
-        if (!$this->isNewRecord) {
-            Discount::deleteAll(['car_id' => $this->id]);
-        }
-
-        foreach ($this->_discount as $index => $item) {
-            $discount = new Discount();
-
-            $discount->car_id = $this->id;
-            $discount->days = $item['days'];
-            $discount->discount = $item['discount'];
-
-            $discount->save(false); // TODO Исключение
-        }
     }
 }

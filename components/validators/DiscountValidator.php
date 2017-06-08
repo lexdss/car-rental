@@ -3,37 +3,31 @@
 namespace app\components\validators;
 
 use yii\validators\Validator;
-use yii\validators\NumberValidator;
 use app\models\Discount;
 
+/**
+ * Load errors in Car discount attribute. Validattion in Discount model
+ */
 class DiscountValidator extends Validator
 {
-    protected function validateValue($value)
+    /**
+     * @param \app\models\Car $model
+     * @param string $attribute
+     */
+    public function validateAttribute($model, $attribute)
     {
-        $numberValidator = new NumberValidator();
-        $numberValidator->integerOnly = true;
+        foreach ($model->car_discount as $index => $item) {
+            $discount = new Discount();
 
-        $days = [];
-        $discount = [];
-        $error = 'Проверьте правильность заполнения скидок (только целые числа больше нуля)';
+            $discount->days = $item['days'];
+            $discount->discount = $item['discount'];
 
-        foreach ($value as $index => $item) {
-            $days[$index] = $item['days'];
-            $discount[$index] = $item['discount'];
-        }
-
-        $numberValidator->min = Discount::MIN_DAYS;
-        foreach ($days as $index => $item) {
-            if(!$numberValidator->validate($item)) {
-                return $error;
-            }
-        }
-
-        $numberValidator->min = Discount::MIN_DISCOUNT;
-        $numberValidator->max = Discount::MAX_DISCOUNT;
-        foreach ($discount as $index => $item) {
-            if(!$numberValidator->validate($item)) {
-                return $error;
+            if (!$discount->validate()) {
+                $errors = [];
+                foreach ($discount->errors as $i => $v) {
+                    $errors[ $attribute . '[' . $index . '][' . $i . ']' ] = $v;
+                }
+                $model->addErrors($errors);
             }
         }
     }

@@ -50,10 +50,12 @@ use unclead\multipleinput\MultipleInput;
                 [
                     'name' => 'days',
                     'title' => 'От дней',
+                    'enableError' => true
                 ],
                 [
                     'name' => 'discount',
                     'title' => 'Скидка, %',
+                    'enableError' => true
                 ]
             ]
     ]); ?>
