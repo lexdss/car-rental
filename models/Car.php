@@ -225,4 +225,30 @@ class Car extends ActiveRecord
     {
         return $this->category->name;
     }
+
+    public function getMinPrice()
+    {
+        $max_discount = $this->getMaxDiscount();
+
+        if ($max_discount == 0) {
+            return $this->price;
+        }
+
+        return $this->price - ($this->price * $max_discount / 100);
+    }
+
+    public function getMaxDiscount()
+    {
+        $max = 0;
+
+        if (is_array($this->discount)) {
+            foreach ($this->discount as $item) {
+                if ($item instanceof Discount && $max < $item->discount) {
+                    $max = $item->discount;
+                }
+            }
+        }
+
+        return $max;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Order;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -97,14 +98,28 @@ class SiteController extends Controller
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionOrder()
+    public function actionOrder($id)
     {
-        if (!$this->_car = Car::findOne(Yii::$app->request->get('id'))) {
+        if (!$car = Car::findOne($id))
             throw new NotFoundHttpException('Страница не найдена');
+
+        $order = new Order();
+        $order->car = $car;
+
+        if (Yii::$app->request->isAjax) {
+            $order->start_rent = strtotime(Yii::$app->request->get('start_rent'));
+            $order->end_rent = strtotime(Yii::$app->request->get('end_rent'));
+
+            return $order->getAjaxOrderInfo();
         }
 
+        if (Yii::$app->request->isPost) {
+            $order->validate();
+        }
+
+
         // For Ajax
-        if (Yii::$app->request->get('start_rent')) {
+        /*if (Yii::$app->request->get('start_rent')) {
             return $this->getAjaxOrderInfo();
         }
 
@@ -118,12 +133,12 @@ class SiteController extends Controller
             }
 
             $this->saveOrder();
-        }
+        }*/
 
         return $this->render('order', [
-            'orderModel' => new OrderForm(),
+            'orderModel' => $order,
             'registerModel' => new UserRegisterForm(),
-            'car' => $this->_car
+            'car' => $car
         ]);
     }
 

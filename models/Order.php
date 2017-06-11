@@ -5,6 +5,7 @@ namespace app\models;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "order".
@@ -24,6 +25,8 @@ use Yii;
  */
 class Order extends ActiveRecord
 {
+
+    public $car;
 
     /**
      * @inheritdoc
@@ -54,7 +57,9 @@ class Order extends ActiveRecord
     public function rules()
     {
         return [
-            ['status', 'integer']
+            //['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
+            //['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
+            ['status', 'default', 'value' => 0]
         ];
     }
 
@@ -73,6 +78,42 @@ class Order extends ActiveRecord
             'userEmail' => 'Пользователь',
             'carFullName' => 'Автомобиль',
         ];
+    }
+
+    public function getAjaxOrderInfo()
+    {
+        //$start_rent = new \DateTime($this->start_rent);
+        //$end_rent = new \DateTime($this->end_rent);
+
+        //$data['discount'] = $this->getOrderDiscount();
+        $data['discount'] = $this->getOrderDiscount();
+        $data['amount'] = $this->getOrderAmount();
+        return json_encode($data);
+    }
+
+    public function getOrderDiscount()
+    {
+        $discount = Discount::find()->where(['car_id' => $this->car->id])
+            ->andWhere(['<=', 'days', $this->getOrderDays()])->orderBy(['days' => SORT_DESC])->one();
+
+        if (!isset($discount->discount)) {
+            return 0;
+        }
+
+        return $discount->discount;
+    }
+
+    public function getOrderDays()
+    {
+        $start_rent = new \DateTime(date('Y-m-d', $this->start_rent));
+        $end_rent = new \DateTime(date('Y-m-d', $this->end_rent));
+
+        return $start_rent->diff($end_rent)->days + 1;
+    }
+
+    public function getOrderAmount()
+    {
+        return $this->car->price - ($this->car->price * $this->getOrderDiscount() / 100);
     }
 
     /**
@@ -112,6 +153,9 @@ class Order extends ActiveRecord
         return (Yii::$app->params['orderStatus'][$this->status]) ?: 'Ошибка';
     }
 
+    /**
+     * @return array
+     */
     public function getStatusList()
     {
         return Yii::$app->params['orderStatus'];

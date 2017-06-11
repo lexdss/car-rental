@@ -43,8 +43,7 @@ $session = Yii::$app->session;
 
                     <?=
                         $form->field($orderModel, 'start_rent')->widget(
-                                DatePicker::classname(),
-                                ['clientOptions' => ['dateFormat' => 'yy']]
+                                DatePicker::classname()
                             );
                     ?>
 
