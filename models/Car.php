@@ -188,7 +188,7 @@ class Car extends ActiveRecord
     public function getDiscount()
     {
         if (!$this->isNewRecord) {
-            return $this->hasMany(Discount::className(), ['car_id' => 'id'])->all();
+            return $this->hasMany(Discount::className(), ['car_id' => 'id'])->orderBy(['discount' => SORT_DESC])->all();
         }
 
         return $this->car_discount;
@@ -226,6 +226,11 @@ class Car extends ActiveRecord
         return $this->category->name;
     }
 
+    /**
+     * Min price for this car
+     *
+     * @return int
+     */
     public function getMinPrice()
     {
         $max_discount = $this->getMaxDiscount();
@@ -237,18 +242,23 @@ class Car extends ActiveRecord
         return $this->price - ($this->price * $max_discount / 100);
     }
 
+    /**
+     * Max discount for this car
+     *
+     * @return int
+     */
     public function getMaxDiscount()
     {
-        $max = 0;
+        $all_discounts = $this->discount;
 
-        if (is_array($this->discount)) {
-            foreach ($this->discount as $item) {
-                if ($item instanceof Discount && $max < $item->discount) {
-                    $max = $item->discount;
-                }
+        if (is_array($all_discounts)) {
+            $max_discount = array_shift($all_discounts);
+
+            if (isset($max_discount->discount)) {
+                return $max_discount->discount;
             }
         }
 
-        return $max;
+        return 0;
     }
 }

@@ -5,14 +5,14 @@ namespace app\models;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
-use yii\db\Query;
+use app\models\helpers\OrderHelper;
 
 /**
  * This is the model class for table "order".
  *
  * @property integer $id
  * @property integer $car_id
- * @property integer $price
+ * @property integer $price // TODO переименовать
  * @property integer $status
  * @property integer $start_rent
  * @property integer $end_rent
@@ -25,8 +25,6 @@ use yii\db\Query;
  */
 class Order extends ActiveRecord
 {
-
-    public $car;
 
     /**
      * @inheritdoc
@@ -57,9 +55,22 @@ class Order extends ActiveRecord
     public function rules()
     {
         return [
-            //['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
-            //['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
-            ['status', 'default', 'value' => 0]
+            ['status', 'default', 'value' => 0],
+            [['start_rent', 'end_rent'], 'required'],
+            ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
+            ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
+            ['car_id', 'default', 'value' => function($model, $attribute) {
+                return $model->car->id;
+            }],
+            ['user_id', 'default', 'value' => function($model, $attribute) {
+                return Yii::$app->user->identity->getId();
+            }],
+            ['company_id', 'default', 'value' => function($model, $attribute) {
+                return $model->car->company->id;
+            }],
+            ['price', 'default', 'value' => function($model, $attribute) {
+                return $model->getAmount();
+            }]
         ];
     }
 
@@ -80,40 +91,32 @@ class Order extends ActiveRecord
         ];
     }
 
-    public function getAjaxOrderInfo()
+    /**
+     * Discount for this order
+     *
+     * @return int
+     */
+    public function getDiscount()
     {
-        //$start_rent = new \DateTime($this->start_rent);
-        //$end_rent = new \DateTime($this->end_rent);
-
-        //$data['discount'] = $this->getOrderDiscount();
-        $data['discount'] = $this->getOrderDiscount();
-        $data['amount'] = $this->getOrderAmount();
-        return json_encode($data);
+        return OrderHelper::getDiscount($this->getDays(), $this->car_id);
     }
 
-    public function getOrderDiscount()
+    /**
+     * How many days
+     *
+     * @return mixed
+     */
+    public function getDays()
     {
-        $discount = Discount::find()->where(['car_id' => $this->car->id])
-            ->andWhere(['<=', 'days', $this->getOrderDays()])->orderBy(['days' => SORT_DESC])->one();
-
-        if (!isset($discount->discount)) {
-            return 0;
-        }
-
-        return $discount->discount;
+        return OrderHelper::getDays($this->start_rent, $this->end_rent);
     }
 
-    public function getOrderDays()
+    /**
+     * @return int
+     */
+    public function getAmount()
     {
-        $start_rent = new \DateTime(date('Y-m-d', $this->start_rent));
-        $end_rent = new \DateTime(date('Y-m-d', $this->end_rent));
-
-        return $start_rent->diff($end_rent)->days + 1;
-    }
-
-    public function getOrderAmount()
-    {
-        return $this->car->price - ($this->car->price * $this->getOrderDiscount() / 100);
+        return OrderHelper::getAmount($this->car->price, $this->getDiscount());
     }
 
     /**
@@ -122,6 +125,14 @@ class Order extends ActiveRecord
     public function getCar()
     {
         return $this->hasOne(Car::className(), ['id' => 'car_id']);
+    }
+
+    /**
+     * @param \app\models\Car $value
+     */
+    public function setCar($value)
+    {
+        $this->car = $value;
     }
 
     /**
@@ -140,6 +151,9 @@ class Order extends ActiveRecord
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
 
+    /**
+     * @return string
+     */
     public function getUserEmail()
     {
         return $this->user->email;

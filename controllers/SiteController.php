@@ -10,7 +10,7 @@ use app\models\Car;
 use app\models\Company;
 use app\models\Category;
 use app\models\forms\UserRegisterForm;
-use app\models\forms\OrderForm;
+use app\models\helpers\OrderHelper;
 
 /**
  * Class SiteController
@@ -104,70 +104,37 @@ class SiteController extends Controller
             throw new NotFoundHttpException('Страница не найдена');
 
         $order = new Order();
-        $order->car = $car;
+
+        $userRegisterForm = new UserRegisterForm();
 
         if (Yii::$app->request->isAjax) {
-            $order->start_rent = strtotime(Yii::$app->request->get('start_rent'));
-            $order->end_rent = strtotime(Yii::$app->request->get('end_rent'));
+            $days = OrderHelper::getDays(strtotime(Yii::$app->request->get('start_rent')), strtotime(Yii::$app->request->get('end_rent')));
 
-            return $order->getAjaxOrderInfo();
+            $data['discount'] = OrderHelper::getDiscount($days, $car->id);
+            $data['amount'] = OrderHelper::getAmount($car->price, $data['discount']);
+
+            return json_encode($data);
         }
 
+        // Register User and save Order
         if (Yii::$app->request->isPost) {
-            $order->validate();
-        }
-
-
-        // For Ajax
-        /*if (Yii::$app->request->get('start_rent')) {
-            return $this->getAjaxOrderInfo();
-        }
-
-        // Create order and register if user is guest
-        if (Yii::$app->request->post()) {
-
-            // Register new user
-            if (Yii::$app->user->isGuest) {
-                $userRegisterForm = new UserRegisterForm();
-                $userRegisterForm->register(Yii::$app->request->post());
+            if (Yii::$app->user->isGuest && $userRegisterForm->load(Yii::$app->request->post())) {
+                $userRegisterForm->register();
             }
 
-            $this->saveOrder();
-        }*/
+            $order->car = $car;
+
+            if ($order->load(Yii::$app->request->post()) && $order->save()) {
+                Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
+
+                return $this->render('order');
+            }
+        }
 
         return $this->render('order', [
             'orderModel' => $order,
-            'registerModel' => new UserRegisterForm(),
+            'registerModel' => $userRegisterForm,
             'car' => $car
         ]);
-    }
-
-    /**
-     * Return json with discount and amount for ajax
-     *
-     * @return string
-     */
-    private function getAjaxOrderInfo()
-    {
-        $request = Yii::$app->request;
-
-        $data['discount'] = $this->_car->getDiscount($request->get('start_rent'), $request->get('end_rent'));
-        $data['amount'] = $this->_car->getAmount($data['discount']);
-
-        return json_encode($data);
-    }
-
-    /**
-     * Save new order
-     *
-     * @return string
-     */
-    private function saveOrder()
-    {
-        $orderModel = new OrderForm();
-        $orderModel->save(Yii::$app->request->post());
-        Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
-
-        return $this->render('order');
     }
 }
