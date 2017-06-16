@@ -16,14 +16,6 @@ use app\models\Category;
 class CarController extends AdminController
 {
     /**
-     * @return string
-     */
-    public function getViewPath()
-    {
-        return '@app/views/admin/car';
-    }
-
-    /**
      * Lists all Car models.
      * @return mixed
      */

@@ -10,14 +10,6 @@ use app\models\Order;
 class OrderController extends AdminController
 {
     /**
-     * @return string
-     */
-    public function getViewPath()
-    {
-        return '@app/views/admin/order';
-    }
-
-    /**
      * Order's list
      *
      * @return string

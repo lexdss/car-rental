@@ -10,14 +10,6 @@ use app\models\User;
 class UserController extends AdminController
 {
     /**
-     * @return string
-     */
-    public function getViewPath()
-    {
-        return '@app/views/admin/user';
-    }
-
-    /**
      * User list
      *
      * @return string

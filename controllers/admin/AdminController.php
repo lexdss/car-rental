@@ -16,7 +16,10 @@ class AdminController extends  Controller
      */
     public function getViewPath()
     {
-        return '@app/views/admin';
+        if ($this->id == 'admin/admin')
+            return '@app/views/admin';
+
+        return '@app/views/' . $this->id;
     }
 
     public function behaviors()

@@ -13,14 +13,6 @@ use yii\web\NotFoundHttpException;
 class CategoryController extends AdminController
 {
     /**
-     * @return string
-     */
-    public function getViewPath()
-    {
-        return '@app/views/admin/category';
-    }
-
-    /**
      * Lists all Category models.
      * @return mixed
      */

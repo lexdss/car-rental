@@ -13,14 +13,6 @@ use app\models\admin\search\CompanySearch;
 class CompanyController extends AdminController
 {
     /**
-     * @return string
-     */
-    public function getViewPath()
-    {
-        return '@app/views/admin/company';
-    }
-
-    /**
      * Lists all Company models.
      * @return mixed
      */
