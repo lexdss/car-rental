@@ -59,16 +59,16 @@ class Order extends ActiveRecord
             [['start_rent', 'end_rent'], 'required'],
             ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
             ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
-            ['car_id', 'default', 'value' => function($model, $attribute) {
+            ['car_id', 'default', 'value' => function($model) {
                 return $model->car->id;
             }],
-            ['user_id', 'default', 'value' => function($model, $attribute) {
+            ['user_id', 'default', 'value' => function() {
                 return Yii::$app->user->identity->getId();
             }],
-            ['company_id', 'default', 'value' => function($model, $attribute) {
+            ['company_id', 'default', 'value' => function($model) {
                 return $model->car->company->id;
             }],
-            ['price', 'default', 'value' => function($model, $attribute) {
+            ['price', 'default', 'value' => function($model) {
                 return $model->getAmount();
             }]
         ];

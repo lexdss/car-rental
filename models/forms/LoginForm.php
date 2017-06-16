@@ -2,15 +2,18 @@
 
 namespace app\models\forms;
 
-use app\models\User;
 use Yii;
 use yii\base\Model;
+use app\models\User;
 
 class LoginForm extends Model
 {
     public $email;
     public $password;
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -21,6 +24,9 @@ class LoginForm extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return [
@@ -40,7 +46,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !Yii::$app->getSecurity()->validatePassword($this->{$attribute}, $user->{$attribute})) {
-                $this->addError($attribute, 'Не верный пользователь или пароль');
+                $this->addError($attribute, 'Неверный e-mail или пароль');
             }
         }
     }

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\base\ErrorException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -11,6 +12,9 @@ use app\models\forms\LoginForm;
 
 class UserController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -42,7 +46,9 @@ class UserController extends Controller
     }
 
     /**
-     * Register user
+     * Register User
+     *
+     * @return string
      */
     public function actionRegister()
     {
@@ -57,14 +63,19 @@ class UserController extends Controller
     }
 
     /**
-     * Login user
+     * Login User
+     *
+     * @return string
+     * @throws ErrorException
      */
     public function actionLogin()
     {
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            Yii::$app->user->login($model->getUser());
+            if (!Yii::$app->user->login($model->getUser()))
+                throw  new ErrorException('Ошибка при попытке входа');
+
             return $this->goHome();
         }
 
@@ -75,12 +86,13 @@ class UserController extends Controller
      * Logout action.
      *
      * @return string
+     * @throws ErrorException
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        if (!Yii::$app->user->logout())
+            throw new ErrorException('Ошибка при попытке выхода');
 
         return $this->goHome();
     }
-
 }

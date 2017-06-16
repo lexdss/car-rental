@@ -22,6 +22,9 @@ class UserSearch extends User
         ];
     }
 
+    /**
+     * @return array
+     */
     public function scenarios()
     {
         return [

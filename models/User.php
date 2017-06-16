@@ -64,26 +64,47 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Order::className(), ['user_id' => 'id']);
     }
 
+    /**
+     * @param int|string $id
+     * @return static
+     */
     public static function findIdentity($id)
     {
         return static::findOne($id);
     }
 
+    /**
+     * @param mixed $token
+     * @param mixed $type
+     * @return void
+     * @throws NotSupportedException
+     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('findIdentityByAccessToken не реализован');
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @throws NotSupportedException
+     */
     public function getAuthKey()
     {
         throw new NotSupportedException('getAuthKey не реализован');
     }
 
+    /**
+     * @param string $authKey
+     * @return void
+     * @throws NotSupportedException
+     */
     public function validateAuthKey($authKey)
     {
         throw new NotSupportedException('validateAuthKey не реализован');

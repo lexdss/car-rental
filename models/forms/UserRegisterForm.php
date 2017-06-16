@@ -4,6 +4,7 @@ namespace app\models\forms;
 
 use Yii;
 use yii\base\Model;
+use yii\base\ErrorException;
 use app\models\User;
 
 class UserRegisterForm extends Model
@@ -18,7 +19,7 @@ class UserRegisterForm extends Model
     public $role;
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function attributeLabels()
     {
@@ -33,6 +34,9 @@ class UserRegisterForm extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -42,6 +46,9 @@ class UserRegisterForm extends Model
             [['name', 'surname', 'patronymic', 'email', 'phone'], 'string', 'max' => 25],
             [['password', 'password_repeat'], 'string', 'min' => 5, 'max' => 255],
             ['password', 'compare'],
+            ['password', 'filter', 'filter' => function($value) {
+                return Yii::$app->getSecurity()->generatePasswordHash($value);
+            }],
             [['email'], 'unique', 'targetClass' => 'app\models\User'],
         ];
     }
@@ -50,18 +57,18 @@ class UserRegisterForm extends Model
     {
         $user = new User();
 
-            $user->name = $this->name;
-            $user->surname = $this->surname;
-            $user->patronymic = $this->patronymic;
-            $user->email = $this->email;
-            $user->phone = $this->phone;
-            $user->role = $this->role;
-            $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+        $user->name = $this->name;
+        $user->surname = $this->surname;
+        $user->patronymic = $this->patronymic;
+        $user->email = $this->email;
+        $user->phone = $this->phone;
+        $user->role = $this->role;
+        $user->password = $this->password;
 
         if ($user->save(false) && Yii::$app->user->login($user)) {
             return $user;
         } else {
-            return false; //TODO Исключние
+            throw new ErrorException('Ошибка в БД');
         }
     }
 }
