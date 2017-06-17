@@ -4,7 +4,7 @@ namespace app\models\helpers;
 
 use app\models\Discount;
 
-class OrderHelper
+class DiscountHelper
 {
     /**
      * How many days
@@ -38,6 +38,18 @@ class OrderHelper
         }
 
         return $discount->discount;
+    }
+
+    /**
+     * @param integer $carId
+     *
+     * @return integer
+     */
+    public static function getMaxDiscount($carId)
+    {
+        $max_discount = Discount::find()->where(['car_id' => $carId])->orderBy(['discount' => SORT_DESC])->one();
+
+        return (isset($max_discount->discount)) ? $max_discount->discount : 0;
     }
 
     /**

@@ -6,6 +6,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use app\components\behaviors\UploadFileBehavior;
 use app\components\behaviors\SaveDiscountBehavior;
+use app\models\helpers\DiscountHelper;
 
 /**
  * This is the model class for table "car".
@@ -33,10 +34,9 @@ use app\components\behaviors\SaveDiscountBehavior;
 class Car extends ActiveRecord
 {
     public $file;
-    public $car_discount;
 
     /**
-     * Update up_date column when save and update model
+     * @return array
      */
     public function behaviors()
     {
@@ -56,13 +56,13 @@ class Car extends ActiveRecord
             ],
             [
                 'class' => SaveDiscountBehavior::className(),
-                'attribute' => 'car_discount'
+                'attribute' => 'discount'
             ]
         ];
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
     public static function tableName()
     {
@@ -70,7 +70,7 @@ class Car extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
     public function rules()
     {
@@ -130,7 +130,7 @@ class Car extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
     public function attributeLabels()
     {
@@ -183,15 +183,11 @@ class Car extends ActiveRecord
     }
 
     /**
-     * @return array|ActiveRecord[]
+     * @return \yii\db\ActiveQuery
      */
     public function getDiscount()
     {
-        if (!$this->isNewRecord) {
-            return $this->hasMany(Discount::className(), ['car_id' => 'id'])->orderBy(['discount' => SORT_DESC])->all();
-        }
-
-        return $this->car_discount;
+        return $this->hasMany(Discount::className(), ['car_id' => 'id'])->orderBy(['discount' => SORT_ASC]);
     }
 
     /**
@@ -199,7 +195,7 @@ class Car extends ActiveRecord
      */
     public function setDiscount($value)
     {
-        $this->car_discount = $value;
+        $this->discount = $value;
     }
 
     /**
@@ -233,32 +229,11 @@ class Car extends ActiveRecord
      */
     public function getMinPrice()
     {
-        $max_discount = $this->getMaxDiscount();
+        $max_discount = DiscountHelper::getMaxDiscount($this->id);
 
-        if ($max_discount == 0) {
+        if ($max_discount == 0)
             return $this->price;
-        }
 
         return $this->price - ($this->price * $max_discount / 100);
-    }
-
-    /**
-     * Max discount for this car
-     *
-     * @return int
-     */
-    public function getMaxDiscount()
-    {
-        $all_discounts = $this->discount;
-
-        if (is_array($all_discounts)) {
-            $max_discount = array_shift($all_discounts);
-
-            if (isset($max_discount->discount)) {
-                return $max_discount->discount;
-            }
-        }
-
-        return 0;
     }
 }

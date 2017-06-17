@@ -6,7 +6,7 @@ use yii\validators\Validator;
 use app\models\Discount;
 
 /**
- * Load errors in Car discount attribute. Validattion in Discount model
+ * Load errors in Car discount attribute. Validation in Discount model
  */
 class DiscountValidator extends Validator
 {
@@ -16,7 +16,14 @@ class DiscountValidator extends Validator
      */
     public function validateAttribute($model, $attribute)
     {
-        foreach ($model->car_discount as $index => $item) {
+        foreach ($model->{$attribute} as $index => $item) {
+
+            // If no discounts
+            if (count($model->{$attribute}) == 1 && empty($item['days']) && empty($item['discount'])) {
+                $model->{$attribute} = null;
+                return;
+            }
+
             $discount = new Discount();
 
             $discount->days = $item['days'];

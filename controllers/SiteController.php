@@ -10,7 +10,7 @@ use app\models\Car;
 use app\models\Company;
 use app\models\Category;
 use app\models\forms\UserRegisterForm;
-use app\models\helpers\OrderHelper;
+use app\models\helpers\DiscountHelper;
 
 /**
  * Class SiteController
@@ -108,10 +108,10 @@ class SiteController extends Controller
         $userRegisterForm = new UserRegisterForm();
 
         if (Yii::$app->request->isAjax) {
-            $days = OrderHelper::getDays(strtotime(Yii::$app->request->get('start_rent')), strtotime(Yii::$app->request->get('end_rent')));
+            $days = DiscountHelper::getDays(strtotime(Yii::$app->request->get('start_rent')), strtotime(Yii::$app->request->get('end_rent')));
 
-            $data['discount'] = OrderHelper::getDiscount($days, $car->id);
-            $data['amount'] = OrderHelper::getAmount($car->price, $data['discount']);
+            $data['discount'] = DiscountHelper::getDiscount($days, $car->id);
+            $data['amount'] = DiscountHelper::getAmount($car->price, $data['discount']);
 
             return json_encode($data);
         }

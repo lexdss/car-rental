@@ -16,7 +16,7 @@ class CarSearch extends Car
     const SCENARIO_SEARCH = 'search';
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules()
     {
@@ -28,7 +28,7 @@ class CarSearch extends Car
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function scenarios()
     {
@@ -41,7 +41,6 @@ class CarSearch extends Car
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -49,8 +48,6 @@ class CarSearch extends Car
         $this->scenario = self::SCENARIO_SEARCH;
 
         $query = Car::find()->joinWith(['company', 'category']);
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -74,10 +71,9 @@ class CarSearch extends Car
         ]);
 
         $this->load($params);
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
+
+        if (!$this->validate())
             return $dataProvider;
-        }
 
         $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->fullName])
             ->andFilterWhere(['like', 'category.name', $this->categoryName])

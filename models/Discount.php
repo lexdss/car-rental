@@ -44,8 +44,7 @@ class Discount extends ActiveRecord
         return [
             ['discount', 'integer', 'min' => self::MIN_DISCOUNT, 'max' => self::MAX_DISCOUNT],
             ['days', 'integer', 'min' => self::MIN_DAYS, 'max' => self::MAX_DAYS],
-            ['discount', 'required', 'when' => function ($model) {return !empty($model->days);}],
-            ['days', 'required', 'when' => function ($model) {return !empty($model->discount);}]
+            [['discount', 'days'], 'required']
         ];
     }
 }
