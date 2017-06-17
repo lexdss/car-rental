@@ -36,7 +36,7 @@ class Car extends ActiveRecord
     public $file;
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -62,7 +62,7 @@ class Car extends ActiveRecord
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -70,7 +70,7 @@ class Car extends ActiveRecord
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function rules()
     {
@@ -130,7 +130,7 @@ class Car extends ActiveRecord
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -224,7 +224,6 @@ class Car extends ActiveRecord
 
     /**
      * Min price for this car
-     *
      * @return int
      */
     public function getMinPrice()

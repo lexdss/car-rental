@@ -35,7 +35,7 @@ class Order extends ActiveRecord
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -50,7 +50,7 @@ class Order extends ActiveRecord
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function rules()
     {
@@ -74,6 +74,9 @@ class Order extends ActiveRecord
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -93,7 +96,6 @@ class Order extends ActiveRecord
 
     /**
      * Discount for this order
-     *
      * @return int
      */
     public function getDiscount()
@@ -103,7 +105,6 @@ class Order extends ActiveRecord
 
     /**
      * How many days
-     *
      * @return mixed
      */
     public function getDays()

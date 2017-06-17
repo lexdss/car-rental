@@ -12,7 +12,7 @@ class AdminController extends  Controller
     public $layout = '@app/views/layouts/admin/main.php';
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getViewPath()
     {
@@ -22,6 +22,9 @@ class AdminController extends  Controller
         return '@app/views/' . $this->id;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [

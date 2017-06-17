@@ -25,6 +25,7 @@ class Company extends ActiveRecord
 
     /**
      * Update up_date column when save and update model
+     * @inheritdoc
      */
     public function behaviors()
     {

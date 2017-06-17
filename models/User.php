@@ -34,7 +34,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function behaviors()
     {

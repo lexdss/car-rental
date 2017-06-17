@@ -2,7 +2,6 @@
 
 namespace app\models\admin\search;
 
-use Yii;
 use yii\data\ActiveDataProvider;
 use app\models\Category;
 
@@ -13,6 +12,9 @@ class CategorySearch extends Category
 {
     const SCENARIO_SEARCH = 'search';
 
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -33,9 +35,7 @@ class CategorySearch extends Category
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -43,8 +43,6 @@ class CategorySearch extends Category
         $this->scenario = self::SCENARIO_SEARCH;
 
         $query = Category::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,9 +55,8 @@ class CategorySearch extends Category
 
         $this->load($params);
 
-        if (!$this->validate()) {
+        if (!$this->validate())
             return $dataProvider;
-        }
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'short_description', $this->short_description])

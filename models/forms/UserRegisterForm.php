@@ -19,7 +19,7 @@ class UserRegisterForm extends Model
     public $role;
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -35,7 +35,7 @@ class UserRegisterForm extends Model
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function rules()
     {
@@ -53,6 +53,11 @@ class UserRegisterForm extends Model
         ];
     }
 
+    /**
+     * Register User
+     * @return User
+     * @throws ErrorException
+     */
     public function register()
     {
         $user = new User();

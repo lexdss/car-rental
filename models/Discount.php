@@ -42,6 +42,7 @@ class Discount extends ActiveRecord
     public function rules()
     {
         return [
+            [['discount', 'days'], 'trim'],
             ['discount', 'integer', 'min' => self::MIN_DISCOUNT, 'max' => self::MAX_DISCOUNT],
             ['days', 'integer', 'min' => self::MIN_DAYS, 'max' => self::MAX_DAYS],
             [['discount', 'days'], 'required']

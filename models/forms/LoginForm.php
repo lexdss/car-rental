@@ -12,7 +12,7 @@ class LoginForm extends Model
     public $password;
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function rules()
     {
@@ -25,7 +25,7 @@ class LoginForm extends Model
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -37,7 +37,6 @@ class LoginForm extends Model
 
     /**
      * Validate user email and password for rules
-     *
      * @param $attribute
      */
     public function validateUser($attribute)

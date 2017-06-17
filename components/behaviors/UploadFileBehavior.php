@@ -4,7 +4,6 @@ namespace app\components\behaviors;
 
 use Yii;
 use yii\behaviors\AttributeBehavior;
-use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use app\models\helpers\FileHelper;
 use yii\db\ActiveRecord;
@@ -18,9 +17,8 @@ class UploadFileBehavior extends AttributeBehavior
     public function getValue($event)
     {
         // Only save|update
-        if ($this->owner->scenario != ActiveRecord::SCENARIO_DEFAULT) {
+        if ($this->owner->scenario != ActiveRecord::SCENARIO_DEFAULT)
             return null;
-        }
 
         if ($file = UploadedFile::getInstance($this->owner, 'file')) {
             $fileName = FileHelper::getRandomPath($file);
@@ -31,11 +29,12 @@ class UploadFileBehavior extends AttributeBehavior
                 $this->owner->addError('file', 'Не удалось загрузить файл');
             }
 
-        } elseif(isset($this->owner->img)) {
+        } elseif (isset($this->owner->img)) {
             return $this->owner->img;
         } else {
             $this->owner->addError('file', 'Загрузите файл');
         }
 
+        return null;
     }
 }

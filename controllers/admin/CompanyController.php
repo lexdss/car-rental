@@ -14,7 +14,7 @@ class CompanyController extends AdminController
 {
     /**
      * Lists all Company models.
-     * @return mixed
+     * @inheritdoc
      */
     public function actionIndex()
     {

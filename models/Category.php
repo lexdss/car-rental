@@ -32,7 +32,7 @@ class Category extends ActiveRecord
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function behaviors()
     {

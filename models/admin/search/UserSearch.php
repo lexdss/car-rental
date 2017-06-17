@@ -12,7 +12,7 @@ class UserSearch extends User
     public $fullName;
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function rules()
     {
@@ -23,7 +23,7 @@ class UserSearch extends User
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function scenarios()
     {
@@ -34,14 +34,11 @@ class UserSearch extends User
 
     /**
      * @param $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
     {
         $this->scenario = self::SCENARIO_SEARCH;
-
-        $this->load($params);
 
         $query = User::find();
 
@@ -63,6 +60,8 @@ class UserSearch extends User
                 ]
             ]
         ]);
+
+        $this->load($params);
 
         if(!$this->validate()) {
             return $dataProvider;

@@ -11,20 +11,21 @@ class OrderController extends AdminController
 {
     /**
      * Order's list
-     *
-     * @return string
+     * @inheritdoc
      */
     public function actionIndex()
     {
         $orderSearch = new OrderSearch();
         $dataProvider = $orderSearch->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $orderSearch]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $orderSearch
+        ]);
     }
 
     /**
      * Order details
-     *
      * @param $id
      * @return string
      */
@@ -35,7 +36,6 @@ class OrderController extends AdminController
 
     /**
      * Update order status
-     *
      * @param $id
      * @return string|\yii\web\Response
      */

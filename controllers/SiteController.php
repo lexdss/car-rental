@@ -14,13 +14,9 @@ use app\models\helpers\DiscountHelper;
 
 /**
  * Class SiteController
- *
- * @property \app\models\Car $_car
  */
 class SiteController extends Controller
 {
-    private $_car;
-
     /**
      * @inheritdoc
      */
@@ -38,28 +34,29 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
+     * Displays homepage
      * @return string
      */
     public function actionIndex()
     {
-        $model = Car::find()->all();
-        $companies = Company::find()->all();
-        $categories = Category::find()->all();
-        return $this->render('index', ['model' => $model, 'companies' => $companies, 'categories' => $categories]);
+        return $this->render('index', [
+            'model' => Car::find()->all(),
+            'companies' => Company::find()->all(),
+            'categories' => Category::find()->all()
+        ]);
     }
 
     /**
      * Car company page
-     *
+     * @param string $value
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionCompany()
+    public function actionCompany($value)
     {
-        if (!$company = Company::findOne(['slug' => Yii::$app->request->get('value')]))
+        if (!$company = Company::findOne(['slug' => $value]))
             throw new NotFoundHttpException('Такая марка не найдена');
+
         $model = Car::findAll(['company_id' => $company->id]);
 
         return $this->render('company', ['model' => $model, 'company' => $company]);
@@ -67,13 +64,13 @@ class SiteController extends Controller
 
     /**
      * Detail car page
-     *
+     * @param string $value
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionCar()
+    public function actionCar($value)
     {
-        if (!$model = Car::findOne(['slug' => Yii::$app->request->get('value')]))
+        if (!$model = Car::findOne(['slug' => $value]))
             throw new NotFoundHttpException('Такой автомобиль не найден');
 
         return $this->render('detail', ['model' => $model]);
@@ -81,10 +78,13 @@ class SiteController extends Controller
 
     /**
      * Car's category
+     * @param string $value
+     * @return string
+     * @throws NotFoundHttpException
      */
-    public function actionCategory()
+    public function actionCategory($value)
     {
-        if (!$category = Category::findOne(['slug' => Yii::$app->request->get('value')]))
+        if (!$category = Category::findOne(['slug' => $value]))
             throw new NotFoundHttpException();
 
         $model = Car::find()->where(['category_id' => $category->id])->all();
@@ -94,7 +94,7 @@ class SiteController extends Controller
 
     /**
      * Create (and register user) new order
-     *
+     * @param int $id
      * @return string
      * @throws NotFoundHttpException
      */
@@ -118,9 +118,8 @@ class SiteController extends Controller
 
         // Register User and save Order
         if (Yii::$app->request->isPost) {
-            if (Yii::$app->user->isGuest && $userRegisterForm->load(Yii::$app->request->post())) {
+            if (Yii::$app->user->isGuest && $userRegisterForm->load(Yii::$app->request->post()))
                 $userRegisterForm->register();
-            }
 
             $order->car = $car;
 

@@ -16,7 +16,7 @@ class CarSearch extends Car
     const SCENARIO_SEARCH = 'search';
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function rules()
     {
@@ -28,7 +28,7 @@ class CarSearch extends Car
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function scenarios()
     {
@@ -39,7 +39,6 @@ class CarSearch extends Car
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
      * @return ActiveDataProvider
      */

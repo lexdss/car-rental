@@ -9,9 +9,7 @@ use app\models\Discount;
 
 /**
  * Save Discount models
- *
  * @package app\components\behaviors
- *
  * @property \app\models\Car $owner
  */
 class SaveDiscountBehavior extends Behavior
@@ -19,7 +17,7 @@ class SaveDiscountBehavior extends Behavior
     public $attribute;
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function events()
     {

@@ -13,7 +13,7 @@ use app\models\forms\LoginForm;
 class UserController extends Controller
 {
     /**
-     * @return array
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -47,7 +47,6 @@ class UserController extends Controller
 
     /**
      * Register User
-     *
      * @return string
      */
     public function actionRegister()
@@ -64,7 +63,6 @@ class UserController extends Controller
 
     /**
      * Login User
-     *
      * @return string
      * @throws ErrorException
      */
@@ -84,7 +82,6 @@ class UserController extends Controller
 
     /**
      * Logout action.
-     *
      * @return string
      * @throws ErrorException
      */

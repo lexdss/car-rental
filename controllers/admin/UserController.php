@@ -11,15 +11,17 @@ class UserController extends AdminController
 {
     /**
      * User list
-     *
-     * @return string
+     * @inheritdoc
      */
     public function actionIndex()
     {
         $userSearch = new UserSearch();
         $dataProvider = $userSearch->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $userSearch]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $userSearch
+        ]);
     }
 
     /**

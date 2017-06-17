@@ -14,7 +14,7 @@ class CategoryController extends AdminController
 {
     /**
      * Lists all Category models.
-     * @return mixed
+     * @inheritdoc
      */
     public function actionIndex()
     {

@@ -17,7 +17,7 @@ class CarController extends AdminController
 {
     /**
      * Lists all Car models.
-     * @return mixed
+     * @inheritdoc
      */
     public function actionIndex()
     {

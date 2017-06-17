@@ -13,6 +13,9 @@ class OrderSearch extends Order
 
     const SCENARIO_SEARCH = 'search';
 
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -21,6 +24,9 @@ class OrderSearch extends Order
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function scenarios()
     {
         return [
@@ -28,11 +34,13 @@ class OrderSearch extends Order
         ];
     }
 
+    /**
+     * @param $params
+     * @return ActiveDataProvider
+     */
     public function search($params)
     {
         $this->scenario = self::SCENARIO_SEARCH;
-
-        $this->load($params);
 
         $query = Order::find()->joinWith(['user', 'car', 'company']);
 
@@ -64,13 +72,15 @@ class OrderSearch extends Order
             ]
         ]);
 
-        if (!$this->validate()) {
+        $this->load($params);
+
+        if (!$this->validate())
             return $dataProvider;
-        }
 
         $query->andFilterWhere(['status' => $this->statusLine])
             ->andFilterWhere(['like', 'user.email', $this->userEmail])
             ->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->carFullName]);
+
         return $dataProvider;
     }
 }

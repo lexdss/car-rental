@@ -8,10 +8,8 @@ class DiscountHelper
 {
     /**
      * How many days
-     *
      * @param integer $start
      * @param integer $end
-     *
      * @return integer
      */
     public static function getDays($start, $end)
@@ -25,7 +23,6 @@ class DiscountHelper
     /**
      * @param integer $days
      * @param integer $carId
-     *
      * @return integer
      */
     public static function getDiscount($days, $carId)
@@ -33,16 +30,14 @@ class DiscountHelper
         $discount = Discount::find()->where(['car_id' => $carId])
             ->andWhere(['<=', 'days', $days])->orderBy(['days' => SORT_DESC])->one();
 
-        if (!isset($discount->discount)) {
+        if (!isset($discount->discount))
             return 0;
-        }
 
         return $discount->discount;
     }
 
     /**
      * @param integer $carId
-     *
      * @return integer
      */
     public static function getMaxDiscount($carId)
@@ -55,7 +50,6 @@ class DiscountHelper
     /**
      * @param integer $price
      * @param integer $discount
-     *
      * @return integer
      */
     public static function getAmount($price, $discount)
