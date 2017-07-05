@@ -1,79 +1,101 @@
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 html{
 	position: relative;
 	min-height: 100%;
 }
 body{
-	font-family: 'Noto Sans', sans-serif;
 	margin-bottom: 200px;
 }
-.mb20{
-	margin-bottom: 20px;
+div.hr {
+	border-bottom: 1px solid #03af48;
+	margin: 10px auto;
+	opacity: .7;
 }
-section{
-	margin-top: 60px;
+section {
+	margin-top: 30px;
+	padding-bottom: 30px;
 }
-
-/*HEADER*/
-header .top-navbar{
-	height: 50px;
-	margin: 30px 0 5px 0;
-
+.container > h2 {
+	margin-bottom: 30px;
 }
-header .top-navbar .logo{
-	text-transform: uppercase;
+/*Header*/
+.top-navbar .brand span {
+	color: #ccc;
+}
+.top-navbar .brand:hover {
+	color: #fff;
+}
+.top-navbar .phone {
 	font-weight: bold;
-	font-size: 20px;
 }
-header .top-navbar .logo span{
-	color: #E5B673; 
+.top-navbar .callback {
+	background-color: #cea202;
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin: 14.5px 25px;
+	margin-right: 75px;
 }
-#top-menu ul li{
-	line-height: 50px;
-	display: inline;
-	padding-left: 30px; 
+.top-navbar a:hover {
+	text-decoration: none;
 }
-header .header-img{
-	height: 500px;
-	background: url('../img/header.jpg');
-	border-radius: 3px;
-	-webkit-background-size: cover;
-	background-size: cover;
-}
-
-/*ORDER*/
-.order .order-info{
-	background-color: #F2F2F2;
-	padding: 15px 20px;
-}
-.order .order-info > form{
-	margin-top: 30px;
-}
-.order .order-btn{
-	margin-top: 30px;
-}
-.site-info h1{
-	margin-top: 0;
-}
-
-/*SELECTION*/
-.selection .category{
+ul.top-menu li {
 	text-align: center;
 }
-.selection .category > div{
-	padding: 20px 10px 0 10px;
+ul.top-menu li:hover {
+	background-color: #161f28;
 }
-.selection .category > div img{
-	height: 160px;
+.top-menu ul {
+	width: 520px;
+	margin: auto;
 }
-.selection .category > div h4{
+.top-menu ul > li {
+	display: inline-block;
+	margin-right: 30px;
+}
+.top-menu ul > li a {
+	color: #000;
+}
+.top-menu .hr {
+	width: 300px;
+}
+/*Main-info*/
+section.main-info .info-part {
+	position: relative;
+}
+section.main-info .info-part > div {
+	color: #fff;
+	padding: 10px 15px;
+}
+section.main-info .about {
+	background-color: #7c9c9e;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+section.main-info .news {
+	background-color: #333C4F;
+	float: right;
+}
+section.main-info .news h3 a {
+	color: #fff;
+}
+section.main-info .news h3 a:hover {
+	text-decoration: none;
+}
+/*Car-categories*/
+section.categories {
+	margin-top: 50px;
+}
+section.categories .item-category{
 	text-align: center;
+	min-height: 300px;
 }
-.selection .category > div p{
-	text-align: center;
-	word-wrap: break-word;
+section.categories .item-category img {
+	width: 200px;
 }
-
-/*BRAND*/
+/*Brand*/
 .brand-list{
 	text-align: center;
 	margin-bottom: 60px;
@@ -101,27 +123,24 @@ header .header-img{
 	font-family: 'Exo', sans-serif;
 }
 .brand .brand-item img{
-	height: 80px;
+	width: 80px;
 }
-
-/*ADVENTAGES*/
+/*Car list*/
+section.car-list .car-panel button.info{
+	margin-bottom: 20px;
+}
+/*Advenages*/
 .advantages .advantages-item{
 	margin-bottom: 30px;
 	padding: 5px 15px;
 	text-align: center;
+	min-height: 200px;
 }
-/*CAR LIST*/
-section.car-list td{
-	vertical-align: middle !important;
+.advantages .advantages-item span {
+	font-size: 35px;
+	color: #CEA202;
 }
-section.car-list td:last-child{
-	border-top: transparent !important;
-}
-section.car-list td > img{
-	width: 150px;
-}
-
-/*FOOTER*/
+/*Footer*/
 footer{
 	background-color: #EEEEEE;
 	position: absolute;
@@ -151,11 +170,21 @@ footer .soc-icons a{
 footer .soc-icons a:hover{
 	color: #000;
 }
-
-/*DETAIL PAGE*/
-.detail-car-img{
-	margin-bottom: 15px;
+/*Detail*/
+section.detail-car h1 {
+	margin-bottom: 20px;
 }
-.detail-car-info button{
-	margin-bottom: 10px;
+section.detail-car h3 {
+	margin-top: 0px;
 }
+section.detail-car .detail-car-content {
+	border: 1px solid #2C3E50;
+}
+section.detail-car .car-info {
+	background-color: #fbefff;
+	padding: 15px;
+}
+section.detail-car .description {
+	margin-top: 15px;
+}
+/*Order*/

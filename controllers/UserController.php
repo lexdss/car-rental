@@ -76,8 +76,6 @@ class UserController extends Controller
 
             return $this->goHome();
         }
-
-        return $this->render('login', ['model' => $model]);
     }
 
     /**

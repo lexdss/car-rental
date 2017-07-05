@@ -5,37 +5,29 @@
  */
 
 use yii\widgets\ActiveForm;
+use yii\widgets\Breadcrumbs;
 
 $this->title = 'Регистрация';
+$this->params['breadcrumbs'][] = ['label' => 'Регистрация'];
 
 $session = Yii::$app->session;
 ?>
-<section>
+
+<section class="register">
     <div class="container">
+        <h2 class="text-center">Регистрация</h2>
         <div class="row">
-            <div class="col-xs-12 col-md-4 col-md-offset-4">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3 register-form">
                 <?php if(!$session->hasFlash('register')): ?>
                     <?php $form = ActiveForm::begin(); ?>
 
-                        <?= $form->field($model, 'name')->textInput() ?>
-
-                        <?= $form->field($model, 'surname')->textInput() ?>
-
-                        <?= $form->field($model, 'patronymic')->textInput() ?>
-
-                        <?= $form->field($model, 'email')->textInput() ?>
-
-                        <?= $form->field($model, 'phone')->textInput() ?>
-
-                        <?= $form->field($model, 'password')->passwordInput() ?>
-
-                        <?= $form->field($model, 'password_repeat')->passwordInput() ?>
+                        <?= $this->render('@app/views/site/_register_form', ['form' => $form, 'registerForm' => $model]); ?>
 
                         <button type="submit" class="btn btn-primary">Регистрация</button>
 
                     <?php ActiveForm::end(); ?>
                 <?php else: ?>
-                    <h3 class="text-warning text-center"><?= $session->getFlash('register') ?></h3>
+                    <div class="alert alert-info" role="alert"><?= $session->getFlash('register'); ?></div>
                 <?php endif; ?>
             </div>
         </div>

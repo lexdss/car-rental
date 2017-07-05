@@ -3,62 +3,92 @@
 use app\assets\AppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
+
+$loginForm = new app\models\forms\LoginForm();
 
 $this->beginPage();
 
 ?>
 
+
     <!DOCTYPE html>
     <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title><?= Html::encode($this->title); ?></title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Exo|Noto+Sans" rel="stylesheet">
-        <?php $this->head(); ?>
-    </head>
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title><?= Html::encode($this->title); ?></title>
+
+            <?php $this->head(); ?>
+        </head>
     <body>
     <?php $this->beginBody(); ?>
 
     <header>
-        <nav class="navbar top-navbar">
-            <div class="container">
-                <div class="row">
+        <nav class="navbar navbar-default top-navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand brand" href="<?= Url::to(['site/index']); ?>"><span>Easy</span>Rent</a>
 
-                    <div class="navbar-header">
-                        <a href="" class="navbar-brand logo"><span>Rent</span>Car</a>
-                        <button class="navbar-toggle collapsed btn-hamburger" data-toggle="collapse" data-target="#top-menu">
-                            <span class="glyphicon glyphicon-menu-hamburger"></span>
-                        </button>
-                    </div>
+                    <p class="phone navbar-text visible-md visible-lg">+7 (890) 367-76-86</p>
+                    <a href="#" class="callback navbar-text visible-lg">Перезвонить <span class="glyphicon glyphicon-phone"></span></a>
+                    <?php if (Yii::$app->user->isGuest): ?>
+                        <a href="<?= Url::to(['user/register']); ?>" class="register navbar-text visible-md visible-lg">Регистрация</a>
+                    <?php endif; ?>
+                </div>
 
-                    <div class="navbar-collapse collapse" id="top-menu">
-                        <ul class="list-inline navbar-right">
-                            <a href="<?=Url::to(['site/index'])?>"><li>Главная</li></a>
-                            <a href="#"><li>Машины</li></a>
-                            <a href="#"><li>Условия аренды</li></a>
-                            <a href="#"><li>О компании</li></a>
-                            <?php if (Yii::$app->user->isGuest): ?>
-                                <a href="<?=Url::to(['user/register'])?>"><li>Регистрация</li></a>
-                                <a href="<?=Url::to(['user/login'])?>"><li>Вход</li></a>
-                            <?php else: ?>
-                                <a href="<?=Url::to(['user/logout'])?>"><li>Выход</li></a>
-                            <?php endif; ?>
-                        </ul>
-                    </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <?php if (Yii::$app->user->isGuest): ?>
+                        <?php $form = ActiveForm::begin(['action' => '/login', 'options' => ['class' => 'navbar-form navbar-right']]); ?>
 
+                            <?= $form->field($loginForm, 'email', ['template' => '{input}'])->textInput(['placeholder' => 'E-mail']); ?>
+                            <?= $form->field($loginForm, 'password', ['template' => '{input}'])->passwordInput(['placeholder' => 'Пароль']); ?>
+
+                            <a href="<?= Url::to(['user/register']); ?>" class="navbar-text visible-xs">Регистрация</a>
+                            <button type="submit" class="btn btn-default">Войти</button>
+
+                        <?php ActiveForm::end(); ?>
+                    <?php else: ?>
+                        <a href="<?= Url::to(['user/logout']); ?>" class="navbar-text navbar-right">Выход</a>
+                    <?php endif; ?>
+
+                    <ul class="nav navbar-nav navbar-right top-menu visible-xs">
+                        <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Бренды</a></li>
+                        <li><a href="#">Правила</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
-        <div class="container">
-            <div class="row">
-                <div class="header-img"></div>
+        <nav class="top-menu">
+            <div class="container">
+                <ul>
+                    <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
+                    <li><a href="#">Новости</a></li>
+                    <li><a href="#">Бренды</a></li>
+                    <li><a href="#">Правила</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+                <div class="hr"></div>
             </div>
-        </div>
+        </nav>
     </header>
+
+    <div class="container">
+        <?= Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []]); ?>
+    </div>
 
         <?= $content; ?>
 
@@ -69,7 +99,7 @@ $this->beginPage();
                 <div class="col-sm-12 col-md-6">
 
                     <ul class="list-unstyled bottom-menu">
-                        <li><a href="#">Главная</a></li>
+                        <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
                         <li><a href="#">Машины</a></li>
                         <li><a href="#">Условия аренды</a></li>
                         <li><a href="#">О компании</a></li>
@@ -77,7 +107,6 @@ $this->beginPage();
                         <li><a href="#">Контакты</a></li>
                     </ul>
                     <div class="soc-icons">
-                        <a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
                         <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>
                         <a href=""><i class="fa fa-vk" aria-hidden="true"></i></a>
                         <a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -98,7 +127,7 @@ $this->beginPage();
                     <div class="phone">
                         0 (800) 749 839 03
                     </div>
-                    <p><i class="fa fa-copyright" aria-hidden="true"></i> 2016 Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+                    <span class="glyphicon glyphicon-copyright-mark"></span> 2016 Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
 
 
                 </div>

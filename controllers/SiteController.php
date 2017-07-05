@@ -57,9 +57,7 @@ class SiteController extends Controller
         if (!$company = Company::findOne(['slug' => $value]))
             throw new NotFoundHttpException('Такая марка не найдена');
 
-        $model = Car::findAll(['company_id' => $company->id]);
-
-        return $this->render('company', ['model' => $model, 'company' => $company]);
+        return $this->render('company', ['company' => $company]);
     }
 
     /**
@@ -87,9 +85,7 @@ class SiteController extends Controller
         if (!$category = Category::findOne(['slug' => $value]))
             throw new NotFoundHttpException();
 
-        $model = Car::find()->where(['category_id' => $category->id])->all();
-
-        return $this->render('category', ['model' => $model, 'category' => $category]);
+        return $this->render('category', ['category' => $category]);
     }
 
     /**
@@ -110,6 +106,7 @@ class SiteController extends Controller
         if (Yii::$app->request->isAjax) {
             $days = DiscountHelper::getDays(strtotime(Yii::$app->request->get('start_rent')), strtotime(Yii::$app->request->get('end_rent')));
 
+            $data['days'] = $days;
             $data['discount'] = DiscountHelper::getDiscount($days, $car->id);
             $data['amount'] = DiscountHelper::getAmount($car->price, $data['discount']);
 
@@ -124,7 +121,7 @@ class SiteController extends Controller
             $order->car = $car;
 
             if ($order->load(Yii::$app->request->post()) && $order->save()) {
-                Yii::$app->session->setFlash('orderConfirm', 'Ваш заказ принят');
+                Yii::$app->session->setFlash('order', 'Ваш заказ принят');
 
                 return $this->render('order');
             }

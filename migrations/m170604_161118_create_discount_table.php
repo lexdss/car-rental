@@ -19,7 +19,7 @@ class m170604_161118_create_discount_table extends Migration
             'discount' => $this->integer()->notNull()
         ]);
         $this->createIndex('idx-car_id', 'discount', 'car_id');
-        $this->addForeignKey('fk-car_id', 'discount', 'car_id', 'car', 'id');
+        $this->addForeignKey('fk-car_id', 'discount', 'car_id', 'car', 'id', 'CASCADE');
     }
 
     /**

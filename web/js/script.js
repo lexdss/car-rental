@@ -52,6 +52,7 @@ $(document).ready(function(){
         function drawOrderInfo(data) {
             var returnData = $.parseJSON(data);
 
+            $('#days').text(returnData.days);
             $('#discount').text(returnData.discount);
             $('#amount').text(returnData.amount);
         }

@@ -117,7 +117,7 @@ class Car extends ActiveRecord
             [['name', 'slug'], 'string', 'max' => 50],
             [['description'], 'string', 'max' => 2000],
             [['engine', 'color', 'transmission', 'privod'], 'string', 'max' => 25],
-            ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
+            ['file', 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
             [['slug'], 'unique'],
             [
                 ['company_id'],
@@ -203,7 +203,9 @@ class Car extends ActiveRecord
      */
     public function getFullName()
     {
-        return $this->company->name . ' ' . $this->name;
+        if (isset($this->company)) {
+            return $this->company->name . ' ' . $this->name;
+        }
     }
 
     /**
@@ -211,7 +213,9 @@ class Car extends ActiveRecord
      */
     public function getCompanyName()
     {
-        return $this->company->name;
+        if (isset($this->company)) {
+            return $this->company->name;
+        }
     }
 
     /**
@@ -219,7 +223,9 @@ class Car extends ActiveRecord
      */
     public function getCategoryName()
     {
-        return $this->category->name;
+        if (isset($this->category)) {
+            return $this->category->name;
+        }
     }
 
     /**
@@ -234,5 +240,13 @@ class Car extends ActiveRecord
             return $this->price;
 
         return $this->price - ($this->price * $max_discount / 100);
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return trim(mb_substr($this->description, 0, 300));
     }
 }

@@ -28,6 +28,10 @@ class CarsBlock extends Widget
 			case 'category':
 				$this->model = Car::find()->where(['and', 'category_id=' . "'$this->value'", ['not in', 'id', [$this->except]]])->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
 				break;
+
+            case 'car':
+                $this->model = Car::find()->where(['id' => $this->value])->all();
+                break;
 			
 			default:
 				$this->model = Car::find()->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
@@ -37,6 +41,6 @@ class CarsBlock extends Widget
 
 	public function run()
 	{
-		return $this->render('index', ['model' => $this->model]);
+		return $this->render('index', ['model' => $this->model, 'option' => $this->option]);
 	}
 }
