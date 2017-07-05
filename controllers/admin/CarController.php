@@ -2,13 +2,13 @@
 
 namespace app\controllers\admin;
 
-
 use Yii;
 use yii\web\NotFoundHttpException;
 use app\models\Car;
 use app\models\Company;
 use app\models\admin\search\CarSearch;
 use app\models\Category;
+use app\models\Discount;
 
 /**
  * CarController implements the CRUD actions for Car model.
@@ -91,6 +91,7 @@ class CarController extends AdminController
      */
     public function actionDelete($id)
     {
+        Discount::deleteAll(['car_id' => $id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
