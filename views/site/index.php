@@ -104,7 +104,7 @@ $this->title = 'Главная страница';
                         <figure class="item-category">
                             <img src="<?= $category->img; ?>" class="img-responsive center-block">
                             <h3><a href="<?= Url::to(['site/category', 'value' => $category->slug]); ?>"><?= Html::encode($category->name); ?></a></h3>
-                            <figcaption><?= Html::encode($category->short_description); ?></figcaption>
+                            <figcaption><?= $category->short_description; ?></figcaption>
                         </figure>
                     </div>
                 <?php endforeach; ?>

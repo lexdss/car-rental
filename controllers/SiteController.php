@@ -11,6 +11,7 @@ use app\models\Company;
 use app\models\Category;
 use app\models\forms\UserRegisterForm;
 use app\models\helpers\DiscountHelper;
+use vova07\imperavi\actions\GetAction;
 
 /**
  * Class SiteController
@@ -30,6 +31,17 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadAction',
+                'url' => Yii::getAlias('@uploadweb'),
+                'path' => Yii::getAlias('@uploadroot')
+            ],
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetAction',
+                'url' => Yii::getAlias('@uploadweb'),
+                'path' => Yii::getAlias('@uploadroot'),
+                'type' => GetAction::TYPE_IMAGES
+            ]
         ];
     }
 

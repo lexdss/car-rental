@@ -13,23 +13,19 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-    ]); ?>
+    ]) ?>
 
-    <?= $form->field($model, 'id') ?>
+        <?= $form->field($model, 'id') ?>
+        <?= $form->field($model, 'companyName') ?>
+        <?= $form->field($model, 'name') ?>
+        <?= $form->field($model, 'slug') ?>
+        <?= $form->field($model, 'category_id') ?>
 
-    <?= $form->field($model, 'companyName') ?>
+        <div class="form-group">
+            <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+            <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        </div>
 
-    <?= $form->field($model, 'name') ?>
-
-    <?= $form->field($model, 'slug') ?>
-
-    <?= $form->field($model, 'category_id') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end() ?>
 
 </div>

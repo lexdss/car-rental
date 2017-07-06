@@ -54,6 +54,8 @@ $config = [
                 'admin/<_c:[\w\-]+>/<_a:[\w\-]+>' => 'admin/<_c>/<_a>',
                 'order/<id:\d+>' => 'site/order',
                 '<value:[\w\-]+>' => 'site/category',
+                'site/images-get' => 'site/images-get',
+                'site/image-upload' => 'site/image-upload',
                 '<_a:[\w\-]+>/<value:[\w\-]+>' => 'site/<_a>',
             ],
         ],

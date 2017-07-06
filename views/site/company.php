@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $company->name];
 <section class="car-list">
     <div class="container">
         <h2 class="text-center"><?= Html::encode($this->title); ?></h2>
-        <p><?= Html::encode($company->description); ?></p>
+        <p><?= $company->description ?></p>
         <?= CarsBlock::widget(['option' => 'company', 'value' => $company->id, 'count' => 10]); ?>
     </div>
 </section>

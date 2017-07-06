@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use vova07\imperavi\Widget;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Company */
@@ -16,7 +18,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->widget(Widget::className(), [
+        'settings' => [
+            'lang' => 'ru',
+            'minHeight' => 200,
+            'imageUpload' => Url::to(['/site/image-upload']),
+            'imageManagerJson' => Url::to(['/site/images-get']),
+            'plugins' => [
+                'clips',
+                'fullscreen',
+                'imagemanager',
+                'fontsize'
+            ]
+        ]
+    ]) ?>
 
     <?php if ($model->img): ?>
         <div class="img-responsive admin-thumb-img"><img src="<?= $model->img ?>" alt=""></div>

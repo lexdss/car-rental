@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = ['label' => Html::encode($model->fullName)];
         <div class="description">
             <h3>Описание</h3>
             <div class="hr"></div>
-            <?= Html::encode($model->description); ?>
+            <?= $model->description ?>
         </div>
     </div>
 </section>
