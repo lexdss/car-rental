@@ -25,10 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             'slug',
-            [
-                'attribute' => 'up_date',
-                'format' => ['date', 'php:Y-m-d H:i']
-            ],
+            'up_date:date',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

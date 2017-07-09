@@ -34,10 +34,7 @@ echo GridView::widget([
             'attribute' => 'end_rent',
             'format' => ['date', 'php:Y-m-d']
         ],
-        [
-            'attribute' => 'create_date',
-            'format' => ['date', 'php:Y-m-d H:i']
-        ],
+        'create_date:date',
         [
             'class' => 'yii\grid\ActionColumn',
             'visibleButtons' => [

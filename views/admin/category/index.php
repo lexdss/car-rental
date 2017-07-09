@@ -29,10 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'slug',
             // 'description:ntext',
             'short_description:ntext',
-            [
-                'attribute' => 'up_date',
-                'format' => ['date', 'php:Y-m-d H:i']
-            ],
+            'up_date:date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

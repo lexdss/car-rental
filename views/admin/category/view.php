@@ -29,10 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             // 'id',
-            [
-                'attribute' => 'up_date',
-                'format' => ['date', 'php:Y-m-d H:i']
-            ],
+            'up_date:date',
             'name',
             'slug',
             'short_description',

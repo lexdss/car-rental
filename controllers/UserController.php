@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use Symfony\Component\Yaml\Yaml;
 use Yii;
 use yii\base\ErrorException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\models\forms\UserRegisterForm;
 use app\models\forms\LoginForm;
@@ -42,6 +44,12 @@ class UserController extends Controller
                     ],
                 ],
             ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'login' => ['post']
+                ]
+            ]
         ];
     }
 
@@ -55,6 +63,14 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->register();
+            $user = Yii::$app->user->identity;
+
+            Yii::$app->mailer->compose('register', ['user' => $user])
+                ->setFrom(Yii::$app->params['adminEmail'])
+                ->setTo($user->email)
+                ->setSubject('Регистрация прошла успешно. Добро пожаловать')
+                ->send();
+
             Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
         }
 
@@ -71,11 +87,18 @@ class UserController extends Controller
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if (!Yii::$app->user->login($model->getUser()))
+            if (!Yii::$app->user->login($model->getUser())) {
                 throw  new ErrorException('Ошибка при попытке входа');
-
-            return $this->goHome();
+            }
         }
+        Yii::$app->mailer->compose()
+            ->setFrom('jinnco@yandex.ru')
+            ->setTo('lexdss@gmail.com')
+            ->setSubject('Subj')
+            ->setHtmlBody('<b>Aaaaaaaa</b> <i>Oooooo</i>')
+            ->send();
+
+        return $this->goHome();
     }
 
     /**

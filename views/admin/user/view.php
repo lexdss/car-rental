@@ -25,10 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'fullName',
                 'email',
                 'phone',
-                [
-                    'attribute' => 'add_date',
-                    'format' => ['date', 'php:Y-m-d H:i']
-                ]
+                'add_date:date'
             ]
         ]);
 

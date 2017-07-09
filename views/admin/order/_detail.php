@@ -11,10 +11,7 @@ echo DetailView::widget([
     'model' => $model,
     'attributes' => [
         'id',
-        [
-            'attribute' => 'create_date',
-            'format' => ['date', 'php:Y-m-d H:i']
-        ],
+        'create_date:date',
         'statusLine',
         [
             'attribute' => 'carFullName',

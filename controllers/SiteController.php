@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;
+use app\models\Page;
 use app\models\forms\UserRegisterForm;
 use app\models\helpers\DiscountHelper;
 use vova07\imperavi\actions\GetAction;
@@ -144,5 +145,33 @@ class SiteController extends Controller
             'registerModel' => $userRegisterForm,
             'car' => $car
         ]);
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionPage($value)
+    {
+        if (!$model = Page::findOne(['slug' => $value, 'type' => 'Страница'])) {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
+
+        return $model->content;
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionNews($value)
+    {
+        if (!$model = Page::findOne(['slug' => $value, 'type' => 'Новость'])) {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
+
+        return $model->content;
     }
 }

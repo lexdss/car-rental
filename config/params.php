@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'kavanagy@yandex.ru',
 
     // Сколько минимум дней для скидки
     'discount_1' => 3,

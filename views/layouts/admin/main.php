@@ -9,6 +9,10 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AdminAsset;
 
+if (Yii::$app->user->isGuest) {
+
+}
+
 AdminAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -38,6 +42,7 @@ AdminAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Админ', 'url' => ['/admin']],
+            ['label' => 'Страницы', 'url' => ['/admin/page']],
             ['label' => 'Автомобили', 'url' => ['/admin/car']],
             ['label' => 'Марки', 'url' => ['/admin/company']],
             ['label' => 'Категории', 'url' => ['/admin/category']],

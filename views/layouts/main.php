@@ -60,6 +60,11 @@ $this->beginPage();
                         <?php ActiveForm::end(); ?>
                     <?php else: ?>
                         <a href="<?= Url::to(['user/logout']); ?>" class="navbar-text navbar-right">Выход</a>
+                        <?php if (Yii::$app->user->identity->role === 'admin'): ?>
+                            <a href="<?= Url::to(['admin/admin/index']) ?>" class="navbar-text navbar-right">Администрирование</a>
+                        <?php else: ?>
+                            <a href="" class="navbar-text navbar-right">Профиль</a>
+                        <?php endif; ?>
                     <?php endif; ?>
 
                     <ul class="nav navbar-nav navbar-right top-menu visible-xs">

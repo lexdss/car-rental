@@ -18,7 +18,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['user/login']
+            'loginUrl' => ['site/index']
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -60,7 +60,7 @@ $config = [
             ],
         ],
         'formatter' => [
-            'dateFormat' => 'dd.MM.yyyy'
+            'dateFormat' => 'Y-m-d H:i'
         ]
     ],
     'params' => $params,

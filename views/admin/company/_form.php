@@ -31,7 +31,7 @@ use vova07\imperavi\Widget;
                 'fontsize'
             ]
         ]
-    ]) ?>
+    ]); ?>
 
     <?php if ($model->img): ?>
         <div class="img-responsive admin-thumb-img"><img src="<?= $model->img ?>" alt=""></div>
