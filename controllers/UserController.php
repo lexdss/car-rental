@@ -63,6 +63,7 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->register();
+
             $user = Yii::$app->user->identity;
 
             Yii::$app->mailer->compose('register', ['user' => $user])
