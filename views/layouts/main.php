@@ -70,7 +70,7 @@ $this->beginPage();
                     <ul class="nav navbar-nav navbar-right top-menu visible-xs">
                         <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
                         <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
-                        <li><a href="#">Бренды</a></li>
+                        <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'about']); ?>">О компани</a></li>
                         <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'rules']); ?>">Правила</a></li>
                         <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'contacts']); ?>">Контакты</a></li>
                     </ul>
@@ -82,7 +82,7 @@ $this->beginPage();
                 <ul>
                     <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
                     <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
-                    <li><a href="#">Бренды</a></li>
+                    <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'about']); ?>">О компани</a></li>
                     <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'rules']); ?>">Правила</a></li>
                     <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'contacts']); ?>">Контакты</a></li>
                 </ul>

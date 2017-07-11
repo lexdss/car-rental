@@ -109,15 +109,16 @@ class SiteController extends Controller
      */
     public function actionOrder($id)
     {
-        if (!$car = Car::findOne($id))
+        if (!$car = Car::findOne($id)) {
             throw new NotFoundHttpException('Страница не найдена');
+        }
 
         $order = new Order();
 
         $userRegisterForm = new UserRegisterForm();
 
         if (Yii::$app->request->isAjax) {
-            $days = DiscountHelper::getDays(strtotime(Yii::$app->request->get('start_rent')), strtotime(Yii::$app->request->get('end_rent')));
+            $days = DiscountHelper::getDays(Yii::$app->request->get('start_rent'), Yii::$app->request->get('end_rent'));
 
             $data['days'] = $days;
             $data['discount'] = DiscountHelper::getDiscount($days, $car->id);
@@ -128,13 +129,20 @@ class SiteController extends Controller
 
         // Register User and save Order
         if (Yii::$app->request->isPost) {
-            if (Yii::$app->user->isGuest && $userRegisterForm->load(Yii::$app->request->post()))
+            if (Yii::$app->user->isGuest && $userRegisterForm->load(Yii::$app->request->post())) {
                 $userRegisterForm->register();
+            }
 
             $order->car = $car;
 
             if ($order->load(Yii::$app->request->post()) && $order->save()) {
-                Yii::$app->session->setFlash('order', 'Ваш заказ принят');
+                Yii::$app->mailer->compose('user-order', ['order' => $order, 'user' => Yii::$app->user->identity])
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setTo(Yii::$app->user->identity->email)
+                    ->setSubject('Заказ на аренду авто принята')
+                    ->send();
+
+                Yii::$app->session->setFlash('order', 'Ваш заказ принят, на указанный e-mail отправлены детали. Скоро с вами свяжится наш менеджер');
 
                 return $this->render('order');
             }

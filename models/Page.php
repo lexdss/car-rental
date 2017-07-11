@@ -79,11 +79,17 @@ class Page extends ActiveRecord
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getShortDescription()
     {
         return strip_tags(trim(mb_substr($this->content, 0, 400))); // TODO Другой способ вывода анонсов
     }
 
+    /**
+     * @return string
+     */
     public function getUpDate()
     {
         return Yii::$app->formatter->asDate($this->up_date);

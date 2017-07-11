@@ -19,6 +19,15 @@ use app\models\helpers\DiscountHelper;
  * @property integer $create_date
  * @property integer $user_id
  * @property integer $company_id
+ * @property integer $discount
+ * @property integer $days
+ * @property integer $amount
+ * @property string $userEmail
+ * @property string $statusLine
+ * @property array|string $statusList
+ * @property string $carFullName
+ * @property string $startRent
+ * @property string $endRent
  *
  * @property Car $car
  * @property User $user
@@ -57,8 +66,8 @@ class Order extends ActiveRecord
         return [
             ['status', 'default', 'value' => 0],
             [['start_rent', 'end_rent'], 'required'],
-            ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
-            ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
+            ['start_rent', 'date', 'format' => 'php:d.m.Y', 'timestampAttribute' => 'start_rent'],
+            ['end_rent', 'date', 'format' => 'php:d.m.Y', 'timestampAttribute' => 'end_rent'],
             ['car_id', 'default', 'value' => function($model) {
                 return $model->car->id;
             }],
@@ -105,15 +114,16 @@ class Order extends ActiveRecord
 
     /**
      * How many days
-     * @return mixed
+     * @return integer
      */
     public function getDays()
     {
-        return DiscountHelper::getDays($this->start_rent, $this->end_rent);
+        //var_dump($this->start_rent); die();
+        return DiscountHelper::getDays($this->startRent, $this->endRent);
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getAmount()
     {
@@ -182,5 +192,21 @@ class Order extends ActiveRecord
     public function getCarFullName()
     {
         return $this->car->fullName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStartRent()
+    {
+        return Yii::$app->formatter->asDate($this->start_rent, 'php:d.m.Y');
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndRent()
+    {
+        return Yii::$app->formatter->asDate($this->end_rent, 'php:d.m.Y');
     }
 }
