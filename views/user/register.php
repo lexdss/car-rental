@@ -21,7 +21,7 @@ $session = Yii::$app->session;
                 <?php if(!$session->hasFlash('register')): ?>
                     <?php $form = ActiveForm::begin(); ?>
 
-                        <?= $this->render('@app/views/site/_register_form', ['form' => $form, 'registerForm' => $model]); ?>
+                        <?= $this->render('_register_form', ['form' => $form, 'registerForm' => $model]); ?>
 
                         <button type="submit" class="btn btn-primary">Регистрация</button>
 
