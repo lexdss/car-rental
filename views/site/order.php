@@ -68,7 +68,7 @@ $session = Yii::$app->session;
 
                         <?php if(Yii::$app->user->isGuest && $registerModel): ?>
                             <h3 class="text-center">Регистрация пользователя</h3>
-                            <?= $this->render('@app/views/site/_register_form', ['form' => $form, 'registerForm' => $registerModel]); ?>
+                            <?= $this->render('@app/views/user/_register_form', ['form' => $form, 'registerForm' => $registerModel]); ?>
                         <?php endif; ?>
 
                     <h3 class="text-center">Сроки аренды</h3>

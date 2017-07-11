@@ -4,6 +4,7 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use Yii;
 
 /**
  * This is the model class for table "page".
@@ -17,8 +18,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Page extends ActiveRecord
 {
-    const SCENARIO_PAGE = 'Страница';
-    const SCENARIO_NEWS = 'Новость';
+    const SCENARIO_PAGE = 'page';
+    const SCENARIO_NEWS = 'news';
 
     const TYPES = [
         self::SCENARIO_PAGE => 'Страница',
@@ -74,5 +75,15 @@ class Page extends ActiveRecord
             'content' => 'Текст',
             'up_date' => 'Изменение',
         ];
+    }
+
+    public function getShortDescription()
+    {
+        return strip_tags(trim(mb_substr($this->content, 0, 400))); // TODO Другой способ вывода анонсов
+    }
+
+    public function getUpDate()
+    {
+        return Yii::$app->formatter->asDate($this->up_date);
     }
 }

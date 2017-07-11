@@ -2,16 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\Order;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\base\ErrorException;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;
 use app\models\Page;
 use app\models\forms\UserRegisterForm;
 use app\models\helpers\DiscountHelper;
+use app\models\Order;
 use vova07\imperavi\actions\GetAction;
 
 /**
@@ -148,30 +149,41 @@ class SiteController extends Controller
     }
 
     /**
+     * Single page
      * @param string $value
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionPage($value)
+    public function actionPage($type, $value)
     {
-        if (!$model = Page::findOne(['slug' => $value, 'type' => 'Страница'])) {
+        if (!$model = Page::findOne(['slug' => $value, 'type' => $type])) {
             throw new NotFoundHttpException('Страница не найдена');
         }
 
-        return $model->content;
+        if ($type == Page::SCENARIO_NEWS) {
+            $moreNews = Page::find()->where(['type' => $type])
+                ->andWhere(['not in', 'slug', [$value]])
+                ->limit(2)
+                ->orderBy(['id' => SORT_DESC])
+                ->all();
+
+            return $this->render('single-news', ['model' => $model, 'moreNews' => $moreNews]);
+        } elseif ($type == Page::SCENARIO_PAGE) {
+            return $this->render('single-page', ['model' => $model]);
+        }
+
+        throw new NotFoundHttpException('Страница не найдена');
     }
 
     /**
-     * @param string $value
+     * All news
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionNews($value)
+    public function actionNews()
     {
-        if (!$model = Page::findOne(['slug' => $value, 'type' => 'Новость'])) {
-            throw new NotFoundHttpException('Страница не найдена');
-        }
+        $models = Page::find()->where(['type' => Page::SCENARIO_NEWS])->all();
 
-        return $model->content;
+        return $this->render('news', ['models' => $models]);
     }
 }

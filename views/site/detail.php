@@ -12,7 +12,7 @@ use app\widgets\CarsBlock\CarsBlock;
 
 $this->title = 'Аренда автомобиля ' . $model->fullName;
 $this->params['breadcrumbs'][] = ['label' => Html::encode($model->companyName), 'url' => ['site/company', 'value' => Html::encode($model->company->slug)]];
-$this->params['breadcrumbs'][] = ['label' => Html::encode($model->fullName)];
+$this->params['breadcrumbs'][] = Html::encode($model->fullName);
 
 ?>
 

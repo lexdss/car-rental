@@ -247,6 +247,6 @@ class Car extends ActiveRecord
      */
     public function getShortDescription()
     {
-        return trim(mb_substr($this->description, 0, 300));
+        return strip_tags(trim(mb_substr($this->description, 0, 300)));
     }
 }

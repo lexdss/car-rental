@@ -69,7 +69,7 @@ $this->beginPage();
 
                     <ul class="nav navbar-nav navbar-right top-menu visible-xs">
                         <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
-                        <li><a href="#">Новости</a></li>
+                        <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
                         <li><a href="#">Бренды</a></li>
                         <li><a href="#">Правила</a></li>
                         <li><a href="#">Контакты</a></li>
@@ -81,7 +81,7 @@ $this->beginPage();
             <div class="container">
                 <ul>
                     <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
-                    <li><a href="#">Новости</a></li>
+                    <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
                     <li><a href="#">Бренды</a></li>
                     <li><a href="#">Правила</a></li>
                     <li><a href="#">Контакты</a></li>

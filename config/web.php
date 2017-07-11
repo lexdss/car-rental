@@ -53,6 +53,8 @@ $config = [
                 'admin/<_c:[\w\-]+>' => 'admin/<_c>/index',
                 'admin/<_c:[\w\-]+>/<_a:[\w\-]+>' => 'admin/<_c>/<_a>',
                 'order/<id:\d+>' => 'site/order',
+                'news' => 'site/news',
+                '<type:news|page>/<value:[\w\-]+>' => 'site/page',
                 '<value:[\w\-]+>' => 'site/category',
                 'site/images-get' => 'site/images-get',
                 'site/image-upload' => 'site/image-upload',
@@ -60,7 +62,7 @@ $config = [
             ],
         ],
         'formatter' => [
-            'dateFormat' => 'Y-m-d H:i'
+            'dateFormat' => 'php:Y.m.d H:i'
         ]
     ],
     'params' => $params,

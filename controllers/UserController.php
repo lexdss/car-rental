@@ -69,10 +69,10 @@ class UserController extends Controller
             Yii::$app->mailer->compose('register', ['user' => $user])
                 ->setFrom(Yii::$app->params['adminEmail'])
                 ->setTo($user->email)
-                ->setSubject('Регистрация прошла успешно. Добро пожаловать')
+                ->setSubject('Добро пожаловать на EasyRent')
                 ->send();
 
-            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы');
+            Yii::$app->session->setFlash('register', 'Вы успешно зарегистрированы, проверьте вашу почту');
         }
 
         return $this->render('register', ['model' => $model]);
@@ -92,12 +92,6 @@ class UserController extends Controller
                 throw  new ErrorException('Ошибка при попытке входа');
             }
         }
-        Yii::$app->mailer->compose()
-            ->setFrom('jinnco@yandex.ru')
-            ->setTo('lexdss@gmail.com')
-            ->setSubject('Subj')
-            ->setHtmlBody('<b>Aaaaaaaa</b> <i>Oooooo</i>')
-            ->send();
 
         return $this->goHome();
     }
