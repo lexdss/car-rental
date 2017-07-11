@@ -26,6 +26,11 @@ use app\models\helpers\DiscountHelper;
  * @property integer $price
  * @property string $img
  * @property integer $up_date
+ * @property string $fullName
+ * @property string $companyName
+ * @property string $categoryName
+ * @property integer $minPrice
+ * @property string $shortDescription
  *
  * @property Company $company
  * @property Category $category

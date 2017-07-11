@@ -72,7 +72,7 @@ $this->beginPage();
                         <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
                         <li><a href="#">Бренды</a></li>
                         <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'rules']); ?>">Правила</a></li>
-                        <li><a href="#">Контакты</a></li>
+                        <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'contacts']); ?>">Контакты</a></li>
                     </ul>
                 </div>
             </div>
@@ -84,7 +84,7 @@ $this->beginPage();
                     <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
                     <li><a href="#">Бренды</a></li>
                     <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'rules']); ?>">Правила</a></li>
-                    <li><a href="#">Контакты</a></li>
+                    <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'contacts']); ?>">Контакты</a></li>
                 </ul>
                 <div class="hr"></div>
             </div>
@@ -132,7 +132,7 @@ $this->beginPage();
                     <div class="phone">
                         0 (800) 749 839 03
                     </div>
-                    <span class="glyphicon glyphicon-copyright-mark"></span> 2016 Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+                    <p><span class="glyphicon glyphicon-copyright-mark"></span> 2016 Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
 
 
                 </div>

@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\base\ErrorException;
 use app\models\Car;
 use app\models\Company;
 use app\models\Category;

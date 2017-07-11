@@ -1,7 +1,6 @@
 <?php
 /**
  * Main page
- *
  * @var $companies \app\models\Company[]
  * @var $categories \app\models\Category[]
  */
@@ -11,7 +10,6 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 
 $this->title = 'Главная страница';
-
 ?>
 
 <section class="slider">
@@ -100,13 +98,15 @@ $this->title = 'Главная страница';
             <h2 class="text-center">Наши предложения</h2>
             <div class="row categories-container">
                 <?php foreach ($categories as $category): ?>
+
                     <div class="col-xs-12 col-sm-6 col-md-3">
                         <figure class="item-category">
-                            <img src="<?= $category->img; ?>" class="img-responsive center-block">
-                            <h3><a href="<?= Url::to(['site/category', 'value' => $category->slug]); ?>"><?= Html::encode($category->name); ?></a></h3>
-                            <figcaption><?= $category->short_description; ?></figcaption>
+                            <img src="<?= $category->img ?>" class="img-responsive center-block">
+                            <h3><a href="<?= Url::to(['site/category', 'value' => $category->slug]) ?>"><?= Html::encode($category->name) ?></a></h3>
+                            <figcaption><?= $category->short_description ?></figcaption>
                         </figure>
                     </div>
+
                 <?php endforeach; ?>
             </div>
         </div>
@@ -119,16 +119,18 @@ $this->title = 'Главная страница';
             <div class="row">
                 <div class="brand-list">
                     <?php foreach($companies as $company): ?>
+
                         <div class="brand-item">
-                            <a href="<?= Url::to(['site/company', 'value' => $company->slug]); ?>">
+                            <a href="<?= Url::to(['site/company', 'value' => $company->slug]) ?>">
                                 <div class="brand-desc">
                                     <div class="brand-name">
-                                        <?= Html::encode($company->name); ?>
+                                        <?= Html::encode($company->name) ?>
                                     </div>
                                 </div>
-                                <img src="<?= Html::encode($company->img); ?>" class="img-response">
+                                <img src="<?= Html::encode($company->img) ?>" class="img-response">
                             </a>
                         </div>
+
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -142,7 +144,7 @@ $this->title = 'Главная страница';
 <section class="car-list">
     <div class="container">
         <h2 class="text-center">Популярные предложения</h2>
-        <?= CarsBlock::widget(); ?>
+        <?= CarsBlock::widget() ?>
     </div>
 </section>
 

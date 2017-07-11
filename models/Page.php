@@ -15,6 +15,8 @@ use Yii;
  * @property string $type
  * @property string $content
  * @property integer $up_date
+ * @property string $upDate
+ * @property string $shortDescription
  */
 class Page extends ActiveRecord
 {
