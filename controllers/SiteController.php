@@ -150,6 +150,7 @@ class SiteController extends Controller
 
     /**
      * Single page
+     * @param string $type
      * @param string $value
      * @return string
      * @throws NotFoundHttpException

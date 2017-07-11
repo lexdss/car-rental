@@ -71,7 +71,7 @@ $this->beginPage();
                         <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
                         <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
                         <li><a href="#">Бренды</a></li>
-                        <li><a href="#">Правила</a></li>
+                        <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'rules']); ?>">Правила</a></li>
                         <li><a href="#">Контакты</a></li>
                     </ul>
                 </div>
@@ -83,7 +83,7 @@ $this->beginPage();
                     <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
                     <li><a href="<?= Url::to(['site/news']); ?>">Новости</a></li>
                     <li><a href="#">Бренды</a></li>
-                    <li><a href="#">Правила</a></li>
+                    <li><a href="<?= Url::to(['site/page', 'type' => 'page', 'value' => 'rules']); ?>">Правила</a></li>
                     <li><a href="#">Контакты</a></li>
                 </ul>
                 <div class="hr"></div>

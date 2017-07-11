@@ -57,7 +57,7 @@ class Page extends ActiveRecord
             [['slug', 'name', 'type', 'content'], 'trim'],
             [['slug'], 'string', 'max' => 25],
             ['name', 'string', 'max' => 255],
-            ['content', 'string', 'max' => 15000],
+            ['content', 'string', 'max' => 65000],
             [['slug'], 'unique'],
         ];
     }
