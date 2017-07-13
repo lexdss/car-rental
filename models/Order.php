@@ -5,7 +5,6 @@ namespace app\models;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
-use app\models\helpers\DiscountHelper;
 
 /**
  * This is the model class for table "order".
@@ -109,7 +108,12 @@ class Order extends ActiveRecord
      */
     public function getDiscount()
     {
-        return DiscountHelper::getDiscount($this->getDays(), $this->car_id);
+        $discount = Discount::find()->where(['car_id' => $this->car->id])
+            ->andWhere(['<=', 'days', $this->getDays()])
+            ->orderBy(['days' => SORT_DESC])
+            ->one();
+
+        return (isset($discount->discount)) ? $discount->discount : 0;
     }
 
     /**
@@ -118,8 +122,10 @@ class Order extends ActiveRecord
      */
     public function getDays()
     {
-        //var_dump($this->start_rent); die();
-        return DiscountHelper::getDays($this->startRent, $this->endRent);
+        $start = new \DateTime($this->startRent);
+        $end = new \DateTime($this->endRent);
+
+        return $start->diff($end)->days + 1;
     }
 
     /**
@@ -127,7 +133,7 @@ class Order extends ActiveRecord
      */
     public function getAmount()
     {
-        return DiscountHelper::getAmount($this->car->price, $this->getDiscount());
+        return $this->car->price - ($this->car->price * $this->getDiscount() / 100);
     }
 
     /**

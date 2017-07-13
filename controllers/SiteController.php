@@ -10,7 +10,6 @@ use app\models\Company;
 use app\models\Category;
 use app\models\Page;
 use app\models\forms\UserRegisterForm;
-use app\models\helpers\DiscountHelper;
 use app\models\Order;
 use vova07\imperavi\actions\GetAction;
 
@@ -113,18 +112,11 @@ class SiteController extends Controller
             throw new NotFoundHttpException('Страница не найдена');
         }
 
-        $order = new Order();
-
+        $order = new Order(['car' => $car]);
         $userRegisterForm = new UserRegisterForm();
 
         if (Yii::$app->request->isAjax) {
-            $days = DiscountHelper::getDays(Yii::$app->request->get('start_rent'), Yii::$app->request->get('end_rent'));
-
-            $data['days'] = $days;
-            $data['discount'] = DiscountHelper::getDiscount($days, $car->id);
-            $data['amount'] = DiscountHelper::getAmount($car->price, $data['discount']);
-
-            return json_encode($data);
+            return $this->getAjaxOrderInfo($order);
         }
 
         // Register User and save Order
@@ -132,8 +124,6 @@ class SiteController extends Controller
             if (Yii::$app->user->isGuest && $userRegisterForm->load(Yii::$app->request->post())) {
                 $userRegisterForm->register();
             }
-
-            $order->car = $car;
 
             if ($order->load(Yii::$app->request->post()) && $order->save()) {
                 Yii::$app->mailer->compose('user-order', ['order' => $order, 'user' => Yii::$app->user->identity])
@@ -153,6 +143,22 @@ class SiteController extends Controller
             'registerModel' => $userRegisterForm,
             'car' => $car
         ]);
+    }
+
+    /**
+     * @param Order $order
+     * @return string
+     */
+    private function getAjaxOrderInfo(Order $order)
+    {
+        $order->start_rent = Yii::$app->request->get('start_rent');
+        $order->end_rent = Yii::$app->request->get('end_rent');
+
+        $data['days'] = $order->getDays();
+        $data['discount'] = $order->getDiscount();
+        $data['amount'] = $order->getAmount();
+
+        return json_encode($data);
     }
 
     /**

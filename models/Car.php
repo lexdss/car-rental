@@ -6,7 +6,6 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use app\components\behaviors\UploadFileBehavior;
 use app\components\behaviors\SaveDiscountBehavior;
-use app\models\helpers\DiscountHelper;
 
 /**
  * This is the model class for table "car".
@@ -31,6 +30,7 @@ use app\models\helpers\DiscountHelper;
  * @property string $categoryName
  * @property integer $minPrice
  * @property string $shortDescription
+ * @property array $discount
  *
  * @property Company $company
  * @property Category $category
@@ -208,9 +208,7 @@ class Car extends ActiveRecord
      */
     public function getFullName()
     {
-        if (isset($this->company)) {
-            return $this->company->name . ' ' . $this->name;
-        }
+        return $this->companyName . ' ' . $this->name;
     }
 
     /**
@@ -218,9 +216,7 @@ class Car extends ActiveRecord
      */
     public function getCompanyName()
     {
-        if (isset($this->company)) {
-            return $this->company->name;
-        }
+        return $this->company->name;
     }
 
     /**
@@ -228,23 +224,7 @@ class Car extends ActiveRecord
      */
     public function getCategoryName()
     {
-        if (isset($this->category)) {
-            return $this->category->name;
-        }
-    }
-
-    /**
-     * Min price for this car
-     * @return int
-     */
-    public function getMinPrice()
-    {
-        $max_discount = DiscountHelper::getMaxDiscount($this->id);
-
-        if ($max_discount == 0)
-            return $this->price;
-
-        return $this->price - ($this->price * $max_discount / 100);
+        return $this->category->name;
     }
 
     /**
