@@ -22,8 +22,7 @@ use Yii;
  * @property integer $days
  * @property integer $amount
  * @property string $userEmail
- * @property string $statusLine
- * @property array|string $statusList
+ * @property string $statusName
  * @property string $carFullName
  * @property string $startRent
  * @property string $endRent
@@ -33,6 +32,17 @@ use Yii;
  */
 class Order extends ActiveRecord
 {
+    const STATUS_NEW = 0;
+    const STATUS_PROCESSING = 1;
+    const STATUS_ACTIVE = 2;
+    const STATUS_CLOSE = 3;
+
+    const STATUSES = [
+        self::STATUS_NEW => 'Новый',
+        self::STATUS_PROCESSING => 'В обработке',
+        self::STATUS_ACTIVE => 'Активный',
+        self::STATUS_CLOSE => 'Завершен'
+    ];
 
     /**
      * @inheritdoc
@@ -63,10 +73,10 @@ class Order extends ActiveRecord
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => 0],
+            ['status', 'default', 'value' => self::STATUS_NEW],
             [['start_rent', 'end_rent'], 'required'],
-            ['start_rent', 'date', 'format' => 'php:d.m.Y', 'timestampAttribute' => 'start_rent'],
-            ['end_rent', 'date', 'format' => 'php:d.m.Y', 'timestampAttribute' => 'end_rent'],
+            ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
+            ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
             ['car_id', 'default', 'value' => function($model) {
                 return $model->car->id;
             }],
@@ -96,7 +106,6 @@ class Order extends ActiveRecord
             'create_date' => 'Заказ создан',
             'user_id' => 'ID пользователя',
             'status' => 'Статус',
-            'statusLine' => 'Статус',
             'userEmail' => 'Пользователь',
             'carFullName' => 'Автомобиль',
         ];
@@ -177,22 +186,6 @@ class Order extends ActiveRecord
     }
 
     /**
-     * @return string
-     */
-    public function getStatusLine()
-    {
-        return (Yii::$app->params['orderStatus'][$this->status]) ?: 'Ошибка';
-    }
-
-    /**
-     * @return array
-     */
-    public function getStatusList()
-    {
-        return Yii::$app->params['orderStatus'];
-    }
-
-    /**
      * @return mixed
      */
     public function getCarFullName()
@@ -200,12 +193,17 @@ class Order extends ActiveRecord
         return $this->car->fullName;
     }
 
+    public function getStatusName()
+    {
+        return (self::STATUSES[$this->status]) ?: 'Ошибка';
+    }
+
     /**
      * @return string
      */
     public function getStartRent()
     {
-        return Yii::$app->formatter->asDate($this->start_rent, 'php:d.m.Y');
+        return Yii::$app->formatter->asDate($this->start_rent);
     }
 
     /**
@@ -213,6 +211,6 @@ class Order extends ActiveRecord
      */
     public function getEndRent()
     {
-        return Yii::$app->formatter->asDate($this->end_rent, 'php:d.m.Y');
+        return Yii::$app->formatter->asDate($this->end_rent);
     }
 }

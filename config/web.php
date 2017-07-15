@@ -62,7 +62,7 @@ $config = [
             ],
         ],
         'formatter' => [
-            'dateFormat' => 'php:d.m.Y H:i'
+            'dateFormat' => 'php:d.m.Y'
         ]
     ],
     'params' => $params,

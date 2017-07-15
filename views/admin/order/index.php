@@ -6,7 +6,7 @@
  */
 
 use yii\grid\GridView;
-//use Yii;
+use app\models\Order;
 
 $this->title = 'Заказы';
 $this->params['breadcrumbs'][] = $this->title;
@@ -17,8 +17,11 @@ echo GridView::widget([
     'columns' => [
         'id',
         [
-            'attribute' => 'statusLine',
-            'filter' => Yii::$app->params['orderStatus']
+            'attribute' => 'status',
+            'filter' => Order::STATUSES,
+            'value' => function ($model) {
+                return $model->statusName;
+            }
         ],
         'userEmail',
         'carFullName',
@@ -26,14 +29,8 @@ echo GridView::widget([
             'attribute' => 'price',
             'label' => 'Цена, руб.'
         ],
-        [
-            'attribute' => 'start_rent',
-            'format' => ['date', 'php:Y-m-d']
-        ],
-        [
-            'attribute' => 'end_rent',
-            'format' => ['date', 'php:Y-m-d']
-        ],
+        'start_rent:date',
+        'end_rent:date',
         'create_date:date',
         [
             'class' => 'yii\grid\ActionColumn',

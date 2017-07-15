@@ -12,7 +12,7 @@ echo DetailView::widget([
     'attributes' => [
         'id',
         'create_date:date',
-        'statusLine',
+        'statusName',
         [
             'attribute' => 'carFullName',
             'format' => 'raw',
