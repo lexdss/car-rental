@@ -129,7 +129,12 @@ class SiteController extends Controller
                 Yii::$app->mailer->compose('user-order', ['order' => $order, 'user' => Yii::$app->user->identity])
                     ->setFrom(Yii::$app->params['adminEmail'])
                     ->setTo(Yii::$app->user->identity->email)
-                    ->setSubject('Заказ на аренду авто принята')
+                    ->setSubject('Заявка на аренду авто принята')
+                    ->send();
+                Yii::$app->mailer->compose()
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setSubject('Новая заявка на сайте')
+                    ->setTextBody('На сайте оставили новую заявку')
                     ->send();
 
                 Yii::$app->session->setFlash('order', 'Ваш заказ принят, на указанный e-mail отправлены детали. Скоро с вами свяжится наш менеджер');
