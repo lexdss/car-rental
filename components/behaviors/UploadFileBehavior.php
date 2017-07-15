@@ -5,7 +5,7 @@ namespace app\components\behaviors;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\web\UploadedFile;
-use app\models\helpers\FileHelper;
+use app\components\helpers\FileHelper;
 use yii\db\ActiveRecord;
 
 /**

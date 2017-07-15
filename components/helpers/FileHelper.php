@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\helpers;
+namespace app\components\helpers;
 
 use yii\web\UploadedFile;
 use Yii;
