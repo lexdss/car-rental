@@ -5,6 +5,7 @@ namespace app\models;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
+use app\components\behaviors\SendEmailBehavior;
 
 /**
  * This is the model class for table "order".
@@ -63,6 +64,9 @@ class Order extends ActiveRecord
                 'attributes' => [
                     self::EVENT_BEFORE_INSERT => 'create_date'
                 ]
+            ],
+            [
+                'class' => SendEmailBehavior::className()
             ]
         ];
     }
