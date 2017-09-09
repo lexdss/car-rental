@@ -93,7 +93,7 @@ class UserController extends Controller
             }
         }
 
-        return $this->goHome();
+        return $this->renderPartial('login', ['loginForm' => $model]);
     }
 
     /**
@@ -103,9 +103,10 @@ class UserController extends Controller
      */
     public function actionLogout()
     {
-        if (!Yii::$app->user->logout())
+        if (!Yii::$app->user->logout()) {
             throw new ErrorException('Ошибка при попытке выхода');
+        }
 
-        return $this->goHome();
+        return $this->renderPartial('login'); // TODO выход в админке
     }
 }

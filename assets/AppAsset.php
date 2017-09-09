@@ -24,7 +24,7 @@ class AppAsset extends AssetBundle
         'css/media.css'
     ];
     public $js = [
-        'js/script.js',
+        //'js/script.js',
         'libs/bootstrap/js/bootstrap.min.js'
     ];
     public $depends = [

@@ -5,10 +5,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\Breadcrumbs;
+use yii\widgets\Pjax;
 
 AppAsset::register($this);
-
-$loginForm = new app\models\forms\LoginForm();
 
 $this->beginPage();
 
@@ -48,24 +47,9 @@ $this->beginPage();
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <?php if (Yii::$app->user->isGuest): ?>
-                        <?php $form = ActiveForm::begin(['action' => '/login', 'options' => ['class' => 'navbar-form navbar-right']]); ?>
 
-                            <?= $form->field($loginForm, 'email', ['template' => '{input}'])->textInput(['placeholder' => 'E-mail']); ?>
-                            <?= $form->field($loginForm, 'password', ['template' => '{input}'])->passwordInput(['placeholder' => 'Пароль']); ?>
-
-                            <a href="<?= Url::to(['user/register']); ?>" class="navbar-text visible-xs">Регистрация</a>
-                            <button type="submit" class="btn btn-default">Войти</button>
-
-                        <?php ActiveForm::end(); ?>
-                    <?php else: ?>
-                        <a href="<?= Url::to(['user/logout']); ?>" class="navbar-text navbar-right">Выход</a>
-                        <?php if (Yii::$app->user->identity->role === 'admin'): ?>
-                            <a href="<?= Url::to(['admin/admin/index']) ?>" class="navbar-text navbar-right">Администрирование</a>
-                        <?php else: ?>
-                            <a href="" class="navbar-text navbar-right">Профиль</a>
-                        <?php endif; ?>
-                    <?php endif; ?>
+                    <!--Include login part-->
+                    <?= $this->render('@app/views/user/login') ?>
 
                     <ul class="nav navbar-nav navbar-right top-menu visible-xs">
                         <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>

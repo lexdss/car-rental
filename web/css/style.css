@@ -17,6 +17,12 @@ section {
 .container > h2 {
 	margin-bottom: 30px;
 }
+.login-error, .login-error ul, .login-error ul li {
+	display: inline;
+}
+.login-message {
+	margin-bottom: 10px;
+}
 /*Header*/
 .top-navbar .brand span {
 	color: #ccc;
