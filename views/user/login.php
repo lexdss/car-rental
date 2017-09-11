@@ -16,10 +16,10 @@ if (!isset($loginForm)) {
 
 ?>
 
-<?php Pjax::begin(['options' => ['class' => 'navbar-right']]); ?>
+<?php Pjax::begin(['enablePushState' => false, 'linkSelector' => '#logout', 'options' => ['class' => 'navbar-right']]); ?>
 
     <?php if (Yii::$app->user->isGuest): ?>
-        <?php $form = ActiveForm::begin(['action' => '/login', 'errorSummaryCssClass' => 'login-error text-warning', 'options' => ['class' => 'navbar-form navbar-right', 'data' => ['pjax' => true]]]); ?>
+        <?php $form = ActiveForm::begin(['action' => '/login', 'errorSummaryCssClass' => 'login-error text-warning', 'options' => ['class' => 'navbar-form navbar-right', 'data-pjax' => '']]); ?>
 
             <?= $form->field($loginForm, 'email', ['template' => '{input}'])->textInput(['placeholder' => 'E-mail']); ?>
             <?= $form->field($loginForm, 'password', ['template' => '{input}'])->passwordInput(['placeholder' => 'Пароль']); ?>
@@ -36,7 +36,7 @@ if (!isset($loginForm)) {
 
     <?php else: ?>
 
-        <a href="<?= Url::to(['user/logout']); ?>" class="navbar-text navbar-right">Выход</a>
+        <a href="<?= Url::to(['user/logout']); ?>" class="navbar-text navbar-right" id="logout">Выход</a>
         <?php if (Yii::$app->user->identity->role === 'admin'): ?>
             <a href="<?= Url::to(['admin/admin/index']) ?>" class="navbar-text navbar-right">Администрирование</a>
         <?php else: ?>

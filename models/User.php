@@ -57,6 +57,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return ($this->role == 'admin') ? true : false;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getOrders()

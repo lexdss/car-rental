@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\widgets\Pjax;
 use app\assets\AdminAsset;
 
 if (Yii::$app->user->isGuest) {
@@ -38,6 +39,7 @@ AdminAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    Pjax::begin(['enablePushState' => false, 'linkSelector' => '#logout']);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -48,9 +50,14 @@ AdminAsset::register($this);
             ['label' => 'Категории', 'url' => ['/admin/category']],
             ['label' => 'Пользователи', 'url' => ['/admin/user']],
             ['label' => 'Заказы', 'url' => ['/admin/order']],
-            ['label' => 'Выход (' . Yii::$app->user->identity->email . ')', 'url' => ['/user/logout']]
+            [
+                'label' => 'Выход',
+                'url' => ['/user/logout'],
+                'linkOptions' => ['id' => 'logout']
+            ],
         ],
     ]);
+    Pjax::end();
     NavBar::end();
     ?>
 

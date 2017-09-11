@@ -93,7 +93,7 @@ class UserController extends Controller
             }
         }
 
-        return $this->renderPartial('login', ['loginForm' => $model]);
+        return $this->renderPartial('login', ['loginForm' => $model]); // TODO если AJAX отключен
     }
 
     /**
@@ -103,10 +103,12 @@ class UserController extends Controller
      */
     public function actionLogout()
     {
-        if (!Yii::$app->user->logout()) {
-            throw new ErrorException('Ошибка при попытке выхода');
+        if (Yii::$app->user->identity->isAdmin()) {
+            Yii::$app->user->logout();
+            return $this->goHome();
+        } else {
+            Yii::$app->user->logout();
+            return $this->renderPartial('login'); // TODO выход в админке
         }
-
-        return $this->renderPartial('login'); // TODO выход в админке
     }
 }
