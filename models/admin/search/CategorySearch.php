@@ -18,8 +18,8 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['name', 'slug', 'short_description'], 'trim'],
-            [['name', 'slug', 'short_description'], 'safe']
+            [['name', 'slug', 'previewContent'], 'trim'],
+            [['name', 'slug', 'previewContent'], 'safe']
         ];
     }
 
@@ -29,7 +29,7 @@ class CategorySearch extends Category
     public function scenarios()
     {
         return [
-            self::SCENARIO_SEARCH => ['name', 'slug', 'short_description']
+            self::SCENARIO_SEARCH => ['name', 'slug', 'previewContent']
         ];
     }
 
@@ -48,7 +48,7 @@ class CategorySearch extends Category
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'up_date' => SORT_DESC
+                    'upDate' => SORT_DESC
                 ]
             ]
         ]);
@@ -59,7 +59,7 @@ class CategorySearch extends Category
             return $dataProvider;
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'short_description', $this->short_description])
+            ->andFilterWhere(['like', 'previewContent', $this->previewContent])
             ->andFilterWhere(['like', 'slug', $this->slug]);
 
         return $dataProvider;

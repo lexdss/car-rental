@@ -5,9 +5,7 @@ namespace app\controllers\admin;
 use Yii;
 use app\models\Page;
 use app\models\admin\search\PageSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PageController implements the CRUD actions for Page model.

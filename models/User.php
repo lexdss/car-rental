@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
@@ -11,26 +12,29 @@ use yii\web\IdentityInterface;
  * This is the model class for table "user".
  *
  * @property integer $id
- * @property string $type
+ * @property integer $role
  * @property string $name
- * @property string $role
  * @property string $surname
  * @property string $patronymic
  * @property string $email
  * @property string $phone
  * @property string $password
- * @property integer $add_date
+ * @property integer $addDate
+ * @property string $fullName
  *
  * @property Order[] $orders
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const ROLE_USER = 1;
+    const ROLE_ADMIN = 2;
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user';
+        return '{{user}}';
     }
 
     /**
@@ -42,7 +46,7 @@ class User extends ActiveRecord implements IdentityInterface
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    self::EVENT_BEFORE_INSERT => 'add_date'
+                    self::EVENT_BEFORE_INSERT => 'addDate'
                 ]
             ]
         ];
@@ -53,7 +57,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getFullName()
     {
-        return $this->name . ' ' . $this->surname . ' ' . $this->patronymic;
+        return $this->surname . ' ' . $this->name . ' ' . $this->patronymic;
     }
 
     /**
@@ -61,7 +65,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function isAdmin()
     {
-        return ($this->role == 'admin') ? true : false;
+        return ($this->role == self::ROLE_ADMIN) ? true : false;
     }
 
     /**
@@ -69,7 +73,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['user_id' => 'id']);
+        return $this->hasMany(Order::className(), ['userId' => 'id']);
     }
 
     /**
@@ -116,5 +120,22 @@ class User extends ActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         throw new NotSupportedException('validateAuthKey не реализован');
+    }
+
+    /**
+     * @param string $password
+     * @return string
+     */
+    public static function getPasswordHash($password)
+    {
+        return Yii::$app->getSecurity()->generatePasswordHash($password);
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setNewPassword($password)
+    {
+        $this->password = self::getPasswordHash($password);
     }
 }

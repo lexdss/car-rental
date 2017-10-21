@@ -6,7 +6,7 @@ use yii\db\ActiveRecord;
 
 /**
  * @property integer $id
- * @property integer $car_id
+ * @property integer $carId
  * @property integer $days
  * @property integer $discount
  */
@@ -25,7 +25,7 @@ class Discount extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'discount';
+        return '{{discount}}';
     }
 
     public function attributeLabels()

@@ -10,24 +10,35 @@ class m170323_162306_create_order_table extends Migration
     /**
      * @inheritdoc
      */
-    public function up()
+    public function safeUp()
     {
         $this->createTable('order', [
             'id' => $this->primaryKey(),
-            'car_id' => $this->integer()->notNull(),
-            'price' => $this->integer()->notNull(),
-            'start_rent' => $this->integer()->notNull(),
-            'end_rent' => $this->integer()->notNull(),
-            'create_date' => $this->integer()->notNull()
+            'carId' => $this->integer()->notNull(),
+            'userId' => $this->integer()->notNull(),
+            'amount' => $this->integer()->notNull(),
+            'pickupDate' => $this->integer()->notNull(),
+            'dropOffDate' => $this->integer()->notNull(),
+            'status' => $this->integer(1)->notNull(),
+            'createDate' => $this->integer()->notNull()
         ]);
 
-        $this->createIndex('idx-order-car_id', 'order', 'car_id');
-
+        $this->createIndex('idx-order-carId', 'order', 'carId');
         $this->addForeignKey(
-            'fk-order-car_id',
+            'fk-order-carId',
             'order',
-            'car_id',
+            'carId',
             'car',
+            'id',
+            'CASCADE'
+        );
+
+        $this->createIndex('idx-order-userId', 'order', 'userId');
+        $this->addForeignKey(
+            'fk-order-userId',
+            'order',
+            'userId',
+            'user',
             'id',
             'CASCADE'
         );
@@ -36,10 +47,12 @@ class m170323_162306_create_order_table extends Migration
     /**
      * @inheritdoc
      */
-    public function down()
+    public function safeDown()
     {
-        $this->dropForeignKey('fk-order-car_id', 'order');
-        $this->dropIndex('idx-order-car_id', 'order');
+        $this->dropForeignKey('fk-order-userId', 'order');
+        $this->dropIndex('idx-order-userId', 'order');
+        $this->dropForeignKey('fk-order-carId', 'order');
+        $this->dropIndex('idx-order-carId', 'order');
         $this->dropTable('order');
     }
 }

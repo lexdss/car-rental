@@ -9,6 +9,7 @@ use yii\helpers\Html;
 
 $this->title = 'Новости';
 $this->params['breadcrumbs'][] = 'Новости';
+// TODO Html link, dates
 ?>
 
 <section class="news">
@@ -17,9 +18,11 @@ $this->params['breadcrumbs'][] = 'Новости';
             <?php foreach ($models as $model): ?>
 
                 <div class="news-item">
-                    <h2><a href="<?= Url::to(['site/page', 'type' => 'news', 'value' => $model->slug]) ?>"><?= Html::encode($model->name) ?></a></h2>
+                    <h2>
+                        <a href="<?= Url::to(['site/page', 'type' => 'news', 'value' => $model->slug]) ?>"><?= Html::encode($model->name) ?></a>
+                    </h2>
                     <p class="text-muted"><small>14.07.2017 17:53</small></p>
-                    <p><?= $model->shortDescription ?></p>
+                    <p><?= $model->previewContent ?></p>
                 </div>
 
             <?php endforeach; ?>

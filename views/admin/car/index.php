@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fullName',
             'price',
             'categoryName',
-            'up_date:date',
+            'upDate:date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

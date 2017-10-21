@@ -12,10 +12,10 @@ use app\components\behaviors\UploadFileBehavior;
  * @property integer $id
  * @property string $name
  * @property string $slug
- * @property string $short_description
- * @property string $description
+ * @property string $previewContent
+ * @property string $content
  * @property string $img
- * @property integer $up_date
+ * @property integer $upDate
  *
  * @property Car[] $cars
  */
@@ -28,7 +28,7 @@ class Category extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'category';
+        return '{{category}}';
     }
 
     /**
@@ -46,8 +46,8 @@ class Category extends ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    self::EVENT_BEFORE_INSERT => ['up_date'],
-                    self::EVENT_BEFORE_UPDATE => ['up_date'],
+                    self::EVENT_BEFORE_INSERT => ['upDate'],
+                    self::EVENT_BEFORE_UPDATE => ['upDate'],
                 ],
             ]
         ];
@@ -60,11 +60,10 @@ class Category extends ActiveRecord
     {
         return [
             [['name', 'slug'], 'required'],
-            [['name', 'slug', 'description', 'short_description'], 'required'],
-            [['name', 'slug', 'description', 'short_description'], 'trim'],
-            ['description', 'string'],
-            ['short_description', 'string', 'max' => 500],
-            [['name', 'slug'], 'string', 'max' => 255],
+            [['name', 'slug', 'content', 'previewContent'], 'trim'],
+            ['content', 'string', 'max' => 10000],
+            ['previewContent', 'string', 'max' => 500],
+            [['name', 'slug'], 'string', 'max' => 30, 'min' => 2],
             [['slug'], 'unique'],
             ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5]
         ];
@@ -79,11 +78,11 @@ class Category extends ActiveRecord
             'id' => 'ID',
             'name' => 'Имя',
             'slug' => 'Символьный код',
-            'short_description' => 'Короткое описание',
+            'previewContent' => 'Анонс',
             'description' => 'Описание',
             'img' => 'Изображение',
             'file' => 'Изображение',
-            'up_date' => 'Изменение',
+            'upDate' => 'Изменение',
         ];
     }
 
@@ -92,6 +91,6 @@ class Category extends ActiveRecord
      */
     public function getCars()
     {
-        return $this->hasMany(Car::className(), ['category_id' => 'id']);
+        return $this->hasMany(Car::className(), ['categoryId' => 'id']);
     }
 }

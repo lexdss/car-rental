@@ -26,12 +26,12 @@ echo GridView::widget([
         'userEmail',
         'carFullName',
         [
-            'attribute' => 'price',
+            'attribute' => 'amount',
             'label' => 'Цена, руб.'
         ],
-        'start_rent:date',
-        'end_rent:date',
-        'create_date:date',
+        'pickupDate:date',
+        'dropOffDate:date',
+        'createDate:date',
         [
             'class' => 'yii\grid\ActionColumn',
             'visibleButtons' => [

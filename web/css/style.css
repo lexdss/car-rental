@@ -130,10 +130,104 @@ section.categories .item-category img {
 .brand .brand-item img{
 	width: 80px;
 }
+
 /*Car list*/
-section.car-list .car-panel button.info{
-	margin-bottom: 20px;
+section.car-list {
+	margin: 20px 0 20px 0;
 }
+.car-list .car-item {
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+.car-list .car-thumbnail img {
+	height: 250px;
+	width: 100%;
+}
+.car-list .car-thumbnail {
+	border: 2px solid #b9d1ea;
+	border-radius: 0;
+	box-shadow: 0 0 5px 1px rgba(124, 156, 158, .5);
+	padding: 0;
+	position: relative;
+}
+.car-item .thumbnail-body {
+	padding: 10px 15px;
+	text-align: center;
+}
+.car-list .car-item .price-item {
+	display: inline-block;
+	background-color: #F5F5F5;
+	padding: 10px 10px;
+	font-size: 2em;
+	font-weight: bold;
+}
+.car-list .car-item .price-item .small-text {
+	font-size: .6em;
+	font-weight: normal;
+}
+.car-list .car-item .price-item a {
+	background-color: #f48413;
+	border-radius: 2px;
+	border: none;
+	width: 100%;
+	text-transform: uppercase;
+	color: #fff;
+	font-weight: bold;
+}
+.car-list .car-item .price-item a:hover {
+	background-color: #e87d12;
+}
+.car-list .thumbnail-body h3 {
+	font-size: 1.3em;
+}
+.car-list .thumbnail-body h3 a {
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #333333;
+}
+.car-list .thumbnail-body h3 a:hover {
+	text-decoration: none;
+}
+.car-list .car-item .option-icons {
+	margin: 30px 0;
+}
+.car-list .car-item .option-icons > div {
+	display: inline-block;
+	min-width: 32px;
+	min-height: 32px;
+	margin-right: 40px;
+	background-repeat: no-repeat;
+	background-position: 50% 0;
+	position: relative;
+}
+.car-list .car-item .option-icons > div:last-child {
+	margin-right: 0;
+}
+.car-list .car-item .option-icons > div > abbr {
+	position: absolute;
+	left: 13px;
+	bottom: -25px;
+	cursor: help;
+}
+.car-list .option-icons .conditioner{
+	background: url('../img/conditioner.png');
+}
+.car-list .option-icons .passengers{
+	background: url('../img/passengers.png');
+}
+.car-list .option-icons .transmission{
+	background: url('../img/transmission.png');
+}
+.car-list .option-icons .doors{
+	background: url('../img/doors.png');
+}
+.car-list .thumbnail-body .car-description {
+	margin: 50px 0;
+}
+.car-list .car-description span {
+	font-size: .9em;
+}
+
 /*Advenages*/
 .advantages .advantages-item{
 	margin-bottom: 30px;

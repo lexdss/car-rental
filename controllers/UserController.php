@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use Symfony\Component\Yaml\Yaml;
+use app\models\User;
 use Yii;
 use yii\base\ErrorException;
 use yii\web\Controller;
@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\models\forms\UserRegisterForm;
 use app\models\forms\LoginForm;
+use app\models\RecoveryPassword;
 
 class UserController extends Controller
 {
@@ -47,7 +48,8 @@ class UserController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'login' => ['post']
+                    'login' => ['post'],
+                    'recovery-password' => ['post']
                 ]
             ]
         ];
@@ -93,7 +95,11 @@ class UserController extends Controller
             }
         }
 
-        return $this->renderPartial('login', ['loginForm' => $model]); // TODO если AJAX отключен
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('_login', ['loginForm' => $model]);
+        }
+
+        return $this->goHome(); // If JS disabled
     }
 
     /**
@@ -103,12 +109,73 @@ class UserController extends Controller
      */
     public function actionLogout()
     {
-        if (Yii::$app->user->identity->isAdmin()) {
-            Yii::$app->user->logout();
-            return $this->goHome();
-        } else {
-            Yii::$app->user->logout();
-            return $this->renderPartial('login'); // TODO выход в админке
+        Yii::$app->user->logout();
+
+        return $this->goHome();
+    }
+
+    /**
+     * Recovery user password
+     * @return string
+     * @throws ErrorException;
+     */
+    public function actionRecoveryPassword()
+    {
+        $recoveryPassword = new RecoveryPassword();
+
+        if ($recoveryPassword->load(Yii::$app->request->post()) && $recoveryPassword->validate()) {
+            $user = User::findOne(['email' => $recoveryPassword->email]);
+
+            $recoveryPassword->userId = $user->id;
+            $recoveryPassword->userHash = Yii::$app->security->generateRandomString();
+
+            if (!$recoveryPassword->save(false)) {
+                throw new ErrorException();
+            }
+
+            //TODO раскомментировать
+            /*Yii::$app->mailer->compose('recovery_password', ['userHash' => $recoveryPassword->userHash])
+                ->setFrom(Yii::$app->params['adminEmail'])
+                ->setTo($user->email)
+                ->setSubject('Запрос на восстановление пароля на сайте EasyRent')
+                ->send();*/
+
+            return $this->renderAjax('_forgot_password_body', ['recoveryPassword' => $recoveryPassword, 'success' => true]);
         }
+
+        return $this->renderAjax('_forgot_password_body', ['recoveryPassword' => $recoveryPassword]);
+    }
+
+    /**
+     * @param null|string $userHash
+     * @return string
+     * @throws ErrorException
+     * @throws NotFoundHttpException
+     */
+    public function actionSetNewPassword($userHash = null)
+    {
+        $userNewPassword = new UserRegisterForm(['scenario' => UserRegisterForm::SCENARIO_SET_NEW_PASSWORD]);
+
+        if ($userNewPassword->load(Yii::$app->request->post()) && $userNewPassword->validate()) {
+            $user = User::findOne(['email' => $userNewPassword->email]);
+            $user->setNewPassword($userNewPassword->password);
+
+            if (!$user->save(false)) {
+                throw new ErrorException();
+            }
+            RecoveryPassword::deleteAll(['userId' => $user->id]);
+
+            return $this->renderAjax('_set_new_password_body', ['success' => true]);
+        }
+
+        $recoveryPassword = RecoveryPassword::findOne(['userHash' => $userHash]);
+        if (!$recoveryPassword || !User::findOne($recoveryPassword->userId)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('@app/views/site/index', [
+            'userNewPassword' => $userNewPassword,
+            'userEmail' => $recoveryPassword->user->email
+        ]);
     }
 }

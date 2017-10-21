@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @var $registerModel app\models\forms\UserRegisterForm
- * @var $orderModel app\models\Order;
- * @var $car app\models\Car
+ * @var app\models\forms\UserRegisterForm $registerModel
+ * @var app\models\Order $orderModel
+ * @var app\models\Car $car
  */
 
 use yii\widgets\ActiveForm;
@@ -41,12 +41,12 @@ $session = Yii::$app->session;
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach ($car->discount as $discount): ?>
-                                            <tr class="">
-                                                <td>От <?= Html::encode($discount->days) ?></td>
-                                                <td><?= Html::encode($discount->discount) ?>%</td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                            <?php foreach ($car->discount as $discount): ?>
+                                                <tr>
+                                                    <td>От <?= Html::encode($discount->days) ?></td>
+                                                    <td><?= Html::encode($discount->discount) ?>%</td>
+                                                </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 <?php endif; ?>
@@ -79,7 +79,7 @@ $session = Yii::$app->session;
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
-                                    <?= $form->field($orderModel, 'start_rent', ['template' => '{input}'])
+                                    <?= $form->field($orderModel, 'pickupDate', ['template' => '{input}'])
                                         ->textInput()
                                         ->widget(DatePicker::className(), ['options' => ['class' => 'form-control']]);
                                     ?>
@@ -90,7 +90,7 @@ $session = Yii::$app->session;
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
-                                    <?= $form->field($orderModel, 'end_rent', ['template' => '{input}'])
+                                    <?= $form->field($orderModel, 'dropOffDate', ['template' => '{input}'])
                                         ->textInput()
                                         ->widget(DatePicker::className(), ['options' => ['class' => 'form-control']]);
                                     ?>

@@ -14,11 +14,15 @@ class m170706_100014_create_page_table extends Migration
     {
         $this->createTable('page', [
             'id' => $this->primaryKey(),
-            'slug' => $this->string(25)->notNull()->unique(),
+            'slug' => $this->string(30)->notNull()->unique(),
             'name' => $this->string()->notNull(),
-            'type' => $this->string()->notNull(),
+            'type' => $this->string(50)->notNull(),
+            'previewContent' => $this->text()->notNull(),
             'content' => $this->text()->notNull(),
-            'up_date' => $this->integer()->notNull()
+            'title' => $this->string(),
+            'keywords' => $this->string(),
+            'description' => $this->string(),
+            'upDate' => $this->integer()->notNull()
         ]);
     }
 

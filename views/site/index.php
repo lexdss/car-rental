@@ -1,8 +1,8 @@
 <?php
 /**
  * Main page
- * @var $companies \app\models\Company[]
- * @var $categories \app\models\Category[]
+ * @var \app\models\Company[] $companies
+ * @var \app\models\Category[] $categories
  */
 
 use app\widgets\CarsBlock\CarsBlock;
@@ -92,7 +92,7 @@ $this->title = 'Главная страница';
     </div>
 </section>
 
-<?php if ($categories): ?>
+<?php if (!empty($categories)): ?>
     <section class="categories">
         <div class="container">
             <h2 class="text-center">Наши предложения</h2>
@@ -103,7 +103,7 @@ $this->title = 'Главная страница';
                         <figure class="item-category">
                             <img src="<?= $category->img ?>" class="img-responsive center-block">
                             <h3><a href="<?= Url::to(['site/category', 'value' => $category->slug]) ?>"><?= Html::encode($category->name) ?></a></h3>
-                            <figcaption><?= $category->short_description ?></figcaption>
+                            <figcaption><?= $category->previewContent ?></figcaption>
                         </figure>
                     </div>
 
@@ -113,7 +113,7 @@ $this->title = 'Главная страница';
     </section>
 <?php endif; ?>
 
-<?php if ($companies): ?>
+<?php if (!empty($companies)): ?>
     <section class="brand">
         <div class="container">
             <div class="row">
@@ -144,7 +144,9 @@ $this->title = 'Главная страница';
 <section class="car-list">
     <div class="container">
         <h2 class="text-center">Популярные предложения</h2>
-        <?= CarsBlock::widget() ?>
+        <div class="row">
+            <?= CarsBlock::widget() ?>
+        </div>
     </div>
 </section>
 
@@ -197,3 +199,9 @@ $this->title = 'Главная страница';
         </div>
     </div>
 </section>
+
+<!-- Set new password modal window -->
+<?php if (isset($userNewPassword)): ?>
+    <?= $this->render('@app/views/user/_set_new_password', ['userNewPassword' => $userNewPassword, 'userEmail' => $userEmail]) ?>
+    <?php $this->registerJs("$('#set-new-password-modal').modal('show')");?>
+<?php endif; ?>

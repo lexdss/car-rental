@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use Yii;
+use app\models\User;
 
 class AdminController extends  Controller
 {
@@ -16,8 +17,9 @@ class AdminController extends  Controller
      */
     public function getViewPath()
     {
-        if ($this->id == 'admin/admin')
+        if ($this->id == 'admin/admin') {
             return '@app/views/admin';
+        }
 
         return '@app/views/' . $this->id;
     }
@@ -35,7 +37,7 @@ class AdminController extends  Controller
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->user->identity->role == 'admin';
+                            return Yii::$app->user->identity->role == User::ROLE_ADMIN;
                         }
                     ]
                 ]

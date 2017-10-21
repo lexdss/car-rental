@@ -9,8 +9,6 @@ class UserSearch extends User
 {
     const SCENARIO_SEARCH = 'search';
 
-    public $fullName;
-
     /**
      * @inheritdoc
      */
@@ -52,7 +50,7 @@ class UserSearch extends User
                     'id',
                     'email',
                     'phone',
-                    'add_date',
+                    'addDate',
                     'fullName' => [
                         'asc' => ['name' => SORT_ASC, 'surname' => SORT_ASC, 'patronymic' => SORT_ASC],
                         'desc' => ['name' => SORT_DESC, 'surname' => SORT_DESC, 'patronymic' => SORT_DESC]

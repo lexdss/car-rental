@@ -9,7 +9,9 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use app\widgets\CarsBlock\CarsBlock;
 
-$this->title = 'Аренда автомобиля ' . $model->fullName;
+$this->title = ($model->title) ?: $model->fullName ;
+$this->params['keywords'] = $model->keywords;
+$this->params['description'] = $model->description;
 $this->params['breadcrumbs'][] = ['label' => Html::encode($model->companyName), 'url' => ['site/company', 'value' => Html::encode($model->company->slug)]];
 $this->params['breadcrumbs'][] = Html::encode($model->fullName);
 ?>
@@ -29,20 +31,14 @@ $this->params['breadcrumbs'][] = Html::encode($model->fullName);
                     <dd><?= Html::encode($model->companyName) ?></dd>
                     <dt>Класс авто</dt>
                     <dd><?= Html::encode($model->categoryName) ?></dd>
-                    <dt>Год выпуска</dt>
-                    <dd><?= Html::encode($model->year) ?></dd>
-                    <dt>Макс. скорость</dt>
-                    <dd><?= Html::encode($model->speed) ?></dd>
-                    <dt>Двигатель</dt>
-                    <dd><?= Html::encode($model->engine) ?></dd>
-                    <dt>Цвет кузова</dt>
-                    <dd><?= Html::encode($model->color) ?></dd>
-                    <dt>КПП</dt>
-                    <dd><?= Html::encode($model->transmission) ?></dd>
-                    <dt>Привод</dt>
-                    <dd><?= Html::encode($model->privod) ?></dd>
-                    <dt>Цена</dt>
-                    <dd><?= Html::encode($model->price) ?></dd>
+
+                    <?php foreach ($model->options as $name => $value): ?>
+                        <?php if(isset($value)): ?>
+                            <dt><?= $name ?></dt>
+                            <dd><?= $value ?></dd>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
                 </dl>
                 <a href="<?= Url::to(['site/order', 'id' => $model->id]) ?>" class="btn btn-primary btn-lg btn-block">Оформить заказ</a>
             </div>
@@ -50,18 +46,17 @@ $this->params['breadcrumbs'][] = Html::encode($model->fullName);
         <div class="description">
             <h3>Описание</h3>
             <div class="hr"></div>
-            <?= $model->description ?>
+            <?= $model->content ?>
         </div>
     </div>
 </section>
 
-<section>
+<section class="car-list">
     <div class="container">
         <div class="row">
             <h3 class="text-center">Похожие автомобили</h3>
             <div class="hr"></div>
-
-            <?= CarsBlock::widget(['option' => 'category', 'value' => $model->category_id, 'except' => $model->id]) ?>
+            <?= CarsBlock::widget(['option' => 'category', 'value' => $model->categoryId, 'except' => $model->id]) ?>
         </div>
     </div>
 </section>

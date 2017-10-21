@@ -22,11 +22,11 @@ class CarsBlock extends Widget
 
 		switch ($this->option) {
 			case 'company':
-				$this->model = Car::find()->where(['company_id' => $this->value])->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
+				$this->model = Car::find()->where(['companyId' => $this->value])->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
 				break;
 
 			case 'category':
-				$this->model = Car::find()->where(['and', 'category_id=' . "'$this->value'", ['not in', 'id', [$this->except]]])->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
+				$this->model = Car::find()->where(['and', 'categoryId=' . "'$this->value'", ['not in', 'id', [$this->except]]])->orderBy(['id' => SORT_DESC])->limit($this->count)->all();
 				break;
 
             case 'car':

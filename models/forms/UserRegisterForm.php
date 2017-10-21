@@ -9,6 +9,8 @@ use app\models\User;
 
 class UserRegisterForm extends Model
 {
+    const SCENARIO_SET_NEW_PASSWORD = 'set_new_password';
+
     public $name;
     public $surname;
     public $patronymic;
@@ -40,17 +42,25 @@ class UserRegisterForm extends Model
     public function rules()
     {
         return [
-            [['role'], 'default', 'value' => 'user'], // Default user role == 'user'
+            [['role'], 'default', 'value' => User::ROLE_USER], // Default - user
             [['name', 'surname', 'email', 'phone', 'password', 'password_repeat'], 'required'],
             [['name', 'surname', 'patronymic', 'email', 'phone', 'password', 'password_repeat'], 'trim'],
             [['name', 'surname', 'patronymic', 'email', 'phone'], 'string', 'max' => 25],
             [['password', 'password_repeat'], 'string', 'min' => 5, 'max' => 255],
             ['password', 'compare'],
-            ['password', 'filter', 'filter' => function($value) {
-                return Yii::$app->getSecurity()->generatePasswordHash($value);
-            }],
-            [['email'], 'unique', 'targetClass' => 'app\models\User'],
+            [['email'], 'unique', 'targetClass' => 'app\models\User', 'except' => self::SCENARIO_SET_NEW_PASSWORD],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_SET_NEW_PASSWORD] = ['password', 'password_repeat', 'email'];
+
+        return $scenarios;
     }
 
     /**
@@ -68,7 +78,7 @@ class UserRegisterForm extends Model
         $user->email = $this->email;
         $user->phone = $this->phone;
         $user->role = $this->role;
-        $user->password = $this->password;
+        $user->password = User::getPasswordHash($this->password);
 
         if ($user->save(false) && Yii::$app->user->login($user)) {
             return $user;

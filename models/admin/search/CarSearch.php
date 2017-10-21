@@ -52,10 +52,10 @@ class CarSearch extends Car
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'up_date' => SORT_DESC
+                    'upDate' => SORT_DESC
                 ],
                 'attributes' => [
-                    'up_date',
+                    'upDate',
                     'price',
                     'fullName' => [
                         'asc' => ['company.name' => SORT_ASC, 'name' => SORT_ASC],
@@ -71,8 +71,9 @@ class CarSearch extends Car
 
         $this->load($params);
 
-        if (!$this->validate())
+        if (!$this->validate()) {
             return $dataProvider;
+        }
 
         $query->andFilterWhere(['like', "CONCAT(`company`.`name`, ' ', `car`.`name`)", $this->fullName])
             ->andFilterWhere(['like', 'category.name', $this->categoryName])

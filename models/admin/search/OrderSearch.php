@@ -51,10 +51,10 @@ class OrderSearch extends Order
                 ],
                 'attributes' => [
                     'id',
-                    'price',
-                    'start_rent',
-                    'end_rent',
-                    'create_date',
+                    'amount',
+                    'pickupDate',
+                    'dropOffDate',
+                    'createDate',
                     'status' => [
                         'asc' => ['status' => SORT_ASC],
                         'desc' => ['status' => SORT_DESC],

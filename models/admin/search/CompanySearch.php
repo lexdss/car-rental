@@ -48,7 +48,7 @@ class CompanySearch extends Company
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'up_date' => SORT_DESC
+                    'upDate' => SORT_DESC
                 ]
             ]
         ]);

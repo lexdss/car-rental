@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'fullName',
                 'email',
                 'phone',
-                'add_date:date'
+                'addDate:date'
             ]
         ]);
 

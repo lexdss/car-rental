@@ -20,7 +20,7 @@ echo GridView::widget([
         'fullName',
         'email',
         'phone',
-        'add_date:date',
+        'addDate:date',
         [
             'class' => 'yii\grid\ActionColumn',
             'visibleButtons' => [

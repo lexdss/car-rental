@@ -12,9 +12,9 @@ use app\components\behaviors\UploadFileBehavior;
  * @property integer $id
  * @property string $name
  * @property string $slug
- * @property string $description
+ * @property string $content
  * @property string $img
- * @property integer $up_date
+ * @property integer $upDate
  *
  * @property Car[] $cars
  */
@@ -39,8 +39,8 @@ class Company extends ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    self::EVENT_BEFORE_INSERT => ['up_date'],
-                    self::EVENT_BEFORE_UPDATE => ['up_date']
+                    self::EVENT_BEFORE_INSERT => ['upDate'],
+                    self::EVENT_BEFORE_UPDATE => ['upDate']
                 ]
             ]
         ];
@@ -51,7 +51,7 @@ class Company extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'company';
+        return '{{company}}';
     }
 
     /**
@@ -60,9 +60,9 @@ class Company extends ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'name', 'slug'], 'required'],
-            [['description', 'name', 'slug'], 'trim'],
-            [['description'], 'string', 'max' => 2000],
+            [['name', 'slug'], 'required'],
+            [['name', 'slug', 'content'], 'trim'],
+            [['content'], 'string', 'max' => 10000],
             [['name', 'slug'], 'string', 'max' => 30, 'min' => 2],
             ['file', 'file', 'extensions' => ['jpg', 'png', 'gif'], 'maxSize' => 1024 * 1024 * 5],
         ];
@@ -76,10 +76,10 @@ class Company extends ActiveRecord
         return [
             'name' => 'Имя',
             'slug' => 'Символьный код',
-            'description' => 'Описание',
+            'content' => 'Описание',
             'file' => 'Логотип',
             'img' => 'Логотип',
-            'up_date' => 'Изменение'
+            'upDate' => 'Изменение'
         ];
     }
 
@@ -88,6 +88,6 @@ class Company extends ActiveRecord
      */
     public function getCars()
     {
-        return $this->hasMany(Car::className(), ['company_id' => 'id']);
+        return $this->hasMany(Car::className(), ['companyId' => 'id']);
     }
 }

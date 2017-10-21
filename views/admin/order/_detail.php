@@ -11,7 +11,7 @@ echo DetailView::widget([
     'model' => $model,
     'attributes' => [
         'id',
-        'create_date:date',
+        'createDate:date',
         'statusName',
         [
             'attribute' => 'carFullName',
@@ -19,17 +19,17 @@ echo DetailView::widget([
             'value' => Html::a($model->carFullName, ['admin/car/view', 'id' => $model->car->id])
         ],
         [
-            'attribute' => 'start_rent',
+            'attribute' => 'pickupDate',
             'format' => ['date', 'php:Y-m-d']
         ],
         [
-            'attribute' => 'end_rent',
+            'attribute' => 'dropOffDate',
             'format' => ['date', 'php:Y-m-d']
         ],
         'userEmail',
         [
             'label' => 'Цена',
-            'value' => $model->price . ' руб.'
+            'value' => $model->amount . ' руб.'
         ]
     ]
 ]);

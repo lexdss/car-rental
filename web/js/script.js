@@ -2,6 +2,10 @@ $(document).ready(function(){
 
     (function() {
 
+        $( "#order-start_rent" ).datepicker({
+            minDate: new Date()
+        });
+        /*
         var datesStr = {};
 
         var dates = $( "#order-start_rent, #order-end_rent" ).datepicker({
@@ -56,6 +60,7 @@ $(document).ready(function(){
             $('#discount').text(returnData.discount);
             $('#amount').text(returnData.amount);
         }
-
+        */
     })()
+
 });

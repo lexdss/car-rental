@@ -17,8 +17,9 @@ class UploadFileBehavior extends AttributeBehavior
     public function getValue($event)
     {
         // Only save|update
-        if ($this->owner->scenario != ActiveRecord::SCENARIO_DEFAULT)
+        if ($this->owner->scenario != ActiveRecord::SCENARIO_DEFAULT) {
             return null;
+        }
 
         if ($file = UploadedFile::getInstance($this->owner, 'file')) {
             $fileName = FileHelper::getRandomPath($file);

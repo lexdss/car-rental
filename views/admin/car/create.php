@@ -5,8 +5,6 @@ use yii\helpers\Html;
 /**
  * @var $this yii\web\View
  * @var $model app\models\Car
- * @var $company app\models\Company
- * @var $category app\models\Category
  * @var $modelDiscount app\models\Discount
  */
 
@@ -20,8 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'company' => $company,
-        'category' => $category
     ]) ?>
 
 </div>

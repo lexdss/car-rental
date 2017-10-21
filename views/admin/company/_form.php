@@ -18,7 +18,7 @@ use vova07\imperavi\Widget;
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->widget(Widget::className(), [
+    <?= $form->field($model, 'content')->widget(Widget::className(), [
         'settings' => [
             'lang' => 'ru',
             'minHeight' => 200,

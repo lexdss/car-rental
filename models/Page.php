@@ -14,9 +14,8 @@ use Yii;
  * @property string $name
  * @property string $type
  * @property string $content
- * @property integer $up_date
- * @property string $upDate
- * @property string $shortDescription
+ * @property string $previewContent
+ * @property integer $upDate
  */
 class Page extends ActiveRecord
 {
@@ -33,7 +32,7 @@ class Page extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'page';
+        return '{{page}}';
     }
 
     public function behaviors()
@@ -42,8 +41,8 @@ class Page extends ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    self::EVENT_BEFORE_INSERT => ['up_date'],
-                    self::EVENT_BEFORE_UPDATE => ['up_date']
+                    self::EVENT_BEFORE_INSERT => ['upDate'],
+                    self::EVENT_BEFORE_UPDATE => ['upDate']
                 ]
             ]
         ];
@@ -55,10 +54,10 @@ class Page extends ActiveRecord
     public function rules()
     {
         return [
-            [['slug', 'name', 'type', 'content'], 'required'],
-            [['slug', 'name', 'type', 'content'], 'trim'],
-            [['slug'], 'string', 'max' => 25],
-            ['name', 'string', 'max' => 255],
+            [['slug', 'name', 'content', 'previewContent', 'type'], 'required'],
+            [['slug', 'name', 'content', 'previewContent', 'title', 'keywords', 'description'], 'trim'],
+            [['slug'], 'string', 'max' => 30],
+            [['name', 'title', 'keywords', 'description'], 'string', 'max' => 255],
             ['content', 'string', 'max' => 65000],
             [['slug'], 'unique'],
         ];
@@ -75,23 +74,8 @@ class Page extends ActiveRecord
             'name' => 'Название',
             'type' => 'Тип страницы',
             'content' => 'Текст',
-            'up_date' => 'Изменение',
+            'previewContent' => 'Анонс',
+            'upDate' => 'Изменение',
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getShortDescription()
-    {
-        return strip_tags(trim(mb_substr($this->content, 0, 400))); // TODO Другой способ вывода анонсов
-    }
-
-    /**
-     * @return string
-     */
-    public function getUpDate()
-    {
-        return Yii::$app->formatter->asDate($this->up_date);
     }
 }

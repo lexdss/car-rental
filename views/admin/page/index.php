@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Page::TYPES
             ],
             'slug',
-            'up_date:date',
+            'upDate:date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

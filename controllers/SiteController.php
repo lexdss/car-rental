@@ -66,8 +66,9 @@ class SiteController extends Controller
      */
     public function actionCompany($value)
     {
-        if (!$company = Company::findOne(['slug' => $value]))
+        if (!$company = Company::findOne(['slug' => $value])) {
             throw new NotFoundHttpException('Такая марка не найдена');
+        }
 
         return $this->render('company', ['company' => $company]);
     }
@@ -80,8 +81,9 @@ class SiteController extends Controller
      */
     public function actionCar($value)
     {
-        if (!$model = Car::findOne(['slug' => $value]))
+        if (!$model = Car::findOne(['slug' => $value])) {
             throw new NotFoundHttpException('Такой автомобиль не найден');
+        }
 
         return $this->render('detail', ['model' => $model]);
     }
@@ -94,8 +96,9 @@ class SiteController extends Controller
      */
     public function actionCategory($value)
     {
-        if (!$category = Category::findOne(['slug' => $value]))
+        if (!$category = Category::findOne(['slug' => $value])) {
             throw new NotFoundHttpException();
+        }
 
         return $this->render('category', ['category' => $category]);
     }
@@ -145,8 +148,8 @@ class SiteController extends Controller
      */
     private function getAjaxOrderInfo(Order $order)
     {
-        $order->start_rent = Yii::$app->request->get('start_rent');
-        $order->end_rent = Yii::$app->request->get('end_rent');
+        $order->pickupDate = Yii::$app->request->get('pickupDate');
+        $order->dropOffDate = Yii::$app->request->get('dropOffDate');
 
         $data['days'] = $order->getDays();
         $data['discount'] = $order->getDiscount();

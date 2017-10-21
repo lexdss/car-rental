@@ -10,61 +10,66 @@ class m170323_162104_create_car_table extends Migration
     /**
      * @inheritdoc
      */
-    public function up()
+    public function safeUp()
     {
         $this->createTable('car', [
             'id' => $this->primaryKey(),
-            'company_id' => $this->integer(),
-            'category_id' => $this->integer(),
-            'name' => $this->string(50)->notNull(),
-            'slug' => $this->string(50)->notNull()->unique(),
-            'year' => $this->integer(4)->notNull(),
-            'speed' => $this->integer(3)->notNull(),
-            'engine' => $this->string(25)->notNull(),
-            'color' => $this->string(25)->notNull(),
-            'transmission' => $this->string(25)->notNull(),
-            'privod' => $this->string(25)->notNull(),
-            'description' => $this->text(),
+            'companyId' => $this->integer()->notNull(),
+            'categoryId' => $this->integer()->notNull(),
+            'name' => $this->string(30)->notNull(),
+            'slug' => $this->string(30)->notNull()->unique(),
+            'title' => $this->string(),
+            'keywords' => $this->string(),
+            'description' => $this->string(),
+            'content' => $this->text(),
             'price' => $this->integer(6)->notNull(),
-            'discount_1' => $this->integer(2),
-            'discount_2' => $this->integer(2),
+            'doors' => $this->integer(1)->notNull(),
+            'passengers' => $this->integer(2)->notNull(),
+            'conditioner' => $this->integer(1)->notNull(),
+            'transmission' => $this->string()->notNull(),
+            'engine' => $this->string()->notNull(),
+            'speed' => $this->integer(3)->notNull(),
+            'fuelConsumption' => $this->integer(2),
+            'drive' => $this->string()->notNull(),
+            'trunkVolume' => $this->integer(3),
+            'bodyStyle' => $this->string()->notNull(),
+            'color' => $this->string(),
+            'year' => $this->integer(4)->notNull(),
             'img' => $this->string()->notNull(),
-            'up_date' => $this->integer(11)->notNull()
+            'upDate' => $this->integer(11)->notNull()
         ]);
 
-        $this->createIndex('idx-car-company_id', 'car', 'company_id');
-
+        $this->createIndex('idx-car-companyId', 'car', 'companyId');
         $this->addForeignKey(
-            'fk-car-company_id',
+            'fk-car-companyId',
             'car',
-            'company_id',
+            'companyId',
             'company',
             'id',
             'CASCADE'
         );
 
-        $this->createIndex('idx-car-category_id', 'car', 'category_id');
-
+        $this->createIndex('idx-car-categoryId', 'car', 'categoryId');
         $this->addForeignKey(
-            'fk-car-category_id',
+            'fk-car-categoryId',
             'car',
-            'category_id',
+            'categoryId',
             'category',
             'id',
-            'SET NULL'
+            'CASCADE'
         );
     }
 
     /**
      * @inheritdoc
      */
-    public function down()
+    public function safeDown()
     {
-        $this->dropForeignKey('fk-car-category_id', 'car');
-        $this->dropIndex('idx-car-category_id', 'car');
+        $this->dropForeignKey('fk-car-categoryId', 'car');
+        $this->dropIndex('idx-car-categoryId', 'car');
 
-        $this->dropForeignKey('fk-car-company_id', 'car');
-        $this->dropIndex('idx-car-company_id', 'car');
+        $this->dropForeignKey('fk-car-companyId', 'car');
+        $this->dropIndex('idx-car-companyId', 'car');
 
         $this->dropTable('car');
     }

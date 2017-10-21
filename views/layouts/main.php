@@ -1,11 +1,9 @@
 <?php
 
-use app\assets\AppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
 use yii\widgets\Breadcrumbs;
-use yii\widgets\Pjax;
+use app\assets\AppAsset;
 
 AppAsset::register($this);
 
@@ -13,15 +11,22 @@ $this->beginPage();
 
 ?>
 
-
     <!DOCTYPE html>
     <html lang="en">
         <head>
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?= Html::encode($this->title); ?></title>
 
+            <?php if(isset($this->params['description'])): ?>
+                <meta name="description" content="<?= $this->params['description'] ?>">
+            <?php endif; ?>
+
+            <?php if(isset($this->params['keywords'])): ?>
+                <meta name="keywords" content="<?= $this->params['keywords'] ?>">
+            <?php endif; ?>
+
+            <title><?= Html::encode($this->title); ?></title>
             <?php $this->head(); ?>
         </head>
     <body>
@@ -49,7 +54,7 @@ $this->beginPage();
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <!--Include login part-->
-                    <?= $this->render('@app/views/user/login') ?>
+                    <?= $this->render('@app/views/user/_login') ?>
 
                     <ul class="nav navbar-nav navbar-right top-menu visible-xs">
                         <li><a href="<?= Url::to(['site/index']); ?>">Главная</a></li>
@@ -124,6 +129,9 @@ $this->beginPage();
             </div>
         </div>
     </footer>
+
+    <!--  Include forgot password modal window  -->
+    <?= $this->render('@app/views/user/_forgot_password') ?>
 
     <?php $this->endBody(); ?>
     </body>

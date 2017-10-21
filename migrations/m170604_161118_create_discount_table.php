@@ -14,12 +14,12 @@ class m170604_161118_create_discount_table extends Migration
     {
         $this->createTable('discount', [
             'id' => $this->primaryKey(),
-            'car_id' => $this->integer(),
-            'days' => $this->integer()->notNull(),
-            'discount' => $this->integer()->notNull()
+            'carId' => $this->integer(),
+            'days' => $this->integer(3)->notNull(),
+            'discount' => $this->integer(2)->notNull()
         ]);
-        $this->createIndex('idx-car_id', 'discount', 'car_id');
-        $this->addForeignKey('fk-car_id', 'discount', 'car_id', 'car', 'id', 'CASCADE');
+        $this->createIndex('idx-discount-carId', 'discount', 'carId');
+        $this->addForeignKey('fk-discount-carId', 'discount', 'carId', 'car', 'id', 'CASCADE');
     }
 
     /**
@@ -27,8 +27,8 @@ class m170604_161118_create_discount_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-car_id', 'discount');
-        $this->dropIndex('idx-car_id', 'discount');
+        $this->dropForeignKey('fk-discount-carId', 'discount');
+        $this->dropIndex('idx-discount-carId', 'discount');
         $this->dropTable('discount');
     }
 }

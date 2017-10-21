@@ -9,6 +9,7 @@ use app\models\Company;
 use app\models\admin\search\CarSearch;
 use app\models\Category;
 use app\models\Discount;
+use app\models\CarOptions;
 
 /**
  * CarController implements the CRUD actions for Car model.
@@ -51,13 +52,11 @@ class CarController extends AdminController
     {
         $model = new Car();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()){
+            return $this->render('view', ['model' => $model]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'company' => Company::find()->all(),
-                'category' => Category::find()->all()
             ]);
         }
     }
@@ -77,8 +76,6 @@ class CarController extends AdminController
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'company' => Company::find()->all(),
-                'category' => Category::find()->all(),
             ]);
         }
     }
@@ -91,7 +88,7 @@ class CarController extends AdminController
      */
     public function actionDelete($id)
     {
-        Discount::deleteAll(['car_id' => $id]);
+        Discount::deleteAll(['carId' => $id]); //TODO delete with discount
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

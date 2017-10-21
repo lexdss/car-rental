@@ -11,22 +11,17 @@ use app\components\behaviors\SendEmailBehavior;
  * This is the model class for table "order".
  *
  * @property integer $id
- * @property integer $car_id
- * @property integer $price // TODO переименовать
- * @property integer $status
- * @property integer $start_rent
- * @property integer $end_rent
- * @property integer $create_date
- * @property integer $user_id
- * @property integer $company_id
- * @property integer $discount
- * @property integer $days
+ * @property integer $carId
+ * @property integer $userId
  * @property integer $amount
+ * @property integer $status
+ * @property integer $pickupDate
+ * @property integer $dropOffDate
+ * @property integer $createDate
  * @property string $userEmail
- * @property string $statusName
  * @property string $carFullName
- * @property string $startRent
- * @property string $endRent
+ * @property string $statusName
+ * @property integer $discount
  *
  * @property Car $car
  * @property User $user
@@ -50,7 +45,7 @@ class Order extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'order';
+        return '{{order}}';
     }
 
     /**
@@ -62,7 +57,7 @@ class Order extends ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    self::EVENT_BEFORE_INSERT => 'create_date'
+                    self::EVENT_BEFORE_INSERT => 'createDate'
                 ]
             ],
             [
@@ -78,19 +73,22 @@ class Order extends ActiveRecord
     {
         return [
             ['status', 'default', 'value' => self::STATUS_NEW],
-            [['start_rent', 'end_rent'], 'required'],
-            ['start_rent', 'date', 'timestampAttribute' => 'start_rent'],
-            ['end_rent', 'date', 'timestampAttribute' => 'end_rent'],
-            ['car_id', 'default', 'value' => function($model) {
+            [['pickupDate', 'dropOffDate'], 'required'],
+            ['pickupDate', 'date', 'timestampAttribute' => 'pickupDate'],
+            ['dropOffDate', 'date', 'timestampAttribute' => 'dropOffDate'],
+            ['carId', 'default', 'value' => function($model) {
                 return $model->car->id;
             }],
-            ['user_id', 'default', 'value' => function() {
-                return Yii::$app->user->identity->getId();
+            ['userId', 'default', 'value' => function() {
+                return Yii::$app->user->identity->getId(); //TODO проверка
             }],
-            ['company_id', 'default', 'value' => function($model) {
+            ['companyId', 'default', 'value' => function($model) {
                 return $model->car->company->id;
             }],
-            ['price', 'default', 'value' => function($model) {
+            ['amount', 'default', 'value' => function($model) {
+                /**
+                 * @var Order $model
+                 */
                 return $model->getAmount();
             }]
         ];
@@ -103,15 +101,13 @@ class Order extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'car_id' => 'ID Автомобиля',
-            'price' => 'Цена',
-            'start_rent' => 'Начало аренды',
-            'end_rent' => 'Конец аренды',
-            'create_date' => 'Заказ создан',
-            'user_id' => 'ID пользователя',
+            'carId' => 'ID Автомобиля',
+            'amount' => 'Цена',
+            'pickupDate' => 'Начало аренды',
+            'dropOffDate' => 'Конец аренды',
+            'createDate' => 'Заказ создан',
+            'userId' => 'ID пользователя',
             'status' => 'Статус',
-            'userEmail' => 'Пользователь',
-            'carFullName' => 'Автомобиль',
         ];
     }
 
@@ -121,7 +117,7 @@ class Order extends ActiveRecord
      */
     public function getDiscount()
     {
-        $discount = Discount::find()->where(['car_id' => $this->car->id])
+        $discount = Discount::find()->where(['carId' => $this->car->id])
             ->andWhere(['<=', 'days', $this->getDays()])
             ->orderBy(['days' => SORT_DESC])
             ->one();
@@ -135,8 +131,8 @@ class Order extends ActiveRecord
      */
     public function getDays()
     {
-        $start = new \DateTime($this->startRent);
-        $end = new \DateTime($this->endRent);
+        $start = new \DateTime($this->pickupDate);
+        $end = new \DateTime($this->dropOffDate);
 
         return $start->diff($end)->days + 1;
     }
@@ -154,7 +150,7 @@ class Order extends ActiveRecord
      */
     public function getCar()
     {
-        return $this->hasOne(Car::className(), ['id' => 'car_id']);
+        return $this->hasOne(Car::className(), ['id' => 'carId']);
     }
 
     /**
@@ -170,15 +166,7 @@ class Order extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCompany()
-    {
-        return $this->hasOne(Company::className(), ['id' => 'company_id']);
+        return $this->hasOne(User::className(), ['id' => 'userId']);
     }
 
     /**
@@ -190,13 +178,16 @@ class Order extends ActiveRecord
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCarFullName()
     {
         return $this->car->fullName;
     }
 
+    /**
+     * @return string
+     */
     public function getStatusName()
     {
         return (self::STATUSES[$this->status]) ?: 'Ошибка';
@@ -207,7 +198,7 @@ class Order extends ActiveRecord
      */
     public function getStartRent()
     {
-        return Yii::$app->formatter->asDate($this->start_rent);
+        return Yii::$app->formatter->asDate($this->pickupDate);
     }
 
     /**
@@ -215,6 +206,6 @@ class Order extends ActiveRecord
      */
     public function getEndRent()
     {
-        return Yii::$app->formatter->asDate($this->end_rent);
+        return Yii::$app->formatter->asDate($this->dropOffDate);
     }
 }
