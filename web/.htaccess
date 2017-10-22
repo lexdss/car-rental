@@ -1,8 +1,5 @@
-RewriteEngine on
-RewriteBase /
-
-RewriteRule (.+)/$ /$1 [L,R=301]
-
+# Если это папка или файл, открываем его
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [L]
+# В противном случае перенаправляем на index.php
+RewriteRule . index.php
